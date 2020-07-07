@@ -1,0 +1,57 @@
+.transport-o{
+	background-color: #4285F4;
+	margin-top: -1px;
+}
+.transport-o .status, 
+.transport-o .express,
+.transport-o .express .city{
+	color: #fff;
+}
+.small-title{
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: 1px solid #F7F7F7;
+	padding: 0 15px;
+	line-height: 44px;
+	font-weight: bold;
+}
+.small-title text{
+	font-weight: normal;
+}
+.scroll-wrapper{
+	position: fixed;
+	top: 126px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+/* #ifdef H5 */
+.scroll-wrapper{
+	top: 170px;
+}
+/* #endif */
+.item-list{
+	position: relative;
+	padding: 15px 15px 15px 0;
+	margin-left: 35px;
+	border-bottom: 1px solid #F7F7F7;
+}
+.item-list image{
+	width: 12px;
+	height: 66px;
+	position: absolute;
+	left: -20px;
+	top: 30px;
+}
+.item-list text{
+	font-size: 12px;
+	display: block;
+	margin-top: 5px;
+	color: #999999;
+}
+.none{
+	padding: 15px;
+	color: #999999;
+}

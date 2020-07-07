@@ -1,0 +1,42 @@
+
+.v-modal.data-v-72168fc1 {
+		position: fixed;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 999;
+}
+.hiop.data-v-72168fc1{
+}
+#guanbi.data-v-72168fc1{
+	width: 30px;
+	    height: 30px;
+	    position: absolute;
+	    right: 0px;
+	    top: 0px;
+}
+.kuayue.data-v-72168fc1{
+	position: relative;
+	margin: 0px auto;
+}
+.mint-popup.data-v-72168fc1 {
+		position: fixed;
+		top: 50%;
+		left: 0;
+		right: 0;
+		-webkit-transform: translate3d(0, -50%, 0);
+		transform: translate3d(0, -50%, 0);
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		-webkit-transition: .2s ease-out;
+		transition: .2s ease-out;
+		z-index: 1000;
+}
+.mint-popup image.data-v-72168fc1 {
+		display: block;
+		width: 90%;
+		margin: 0 auto;
+}
+

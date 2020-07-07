@@ -1,0 +1,108 @@
+<script>
+	export default {
+		globalData: {  
+			isDiscountActive: false,
+			isDiscountYHJ: false, //优惠券
+			isDiscountSF: false //顺丰9折
+		},
+		onLaunch: function() {
+			console.log('App Launch');
+			this.isToken(this);
+			//用户首次进入需提示活动
+			let discountSF = uni.getStorageSync('isDiscountSF');
+			let discount = uni.getStorageSync('isDiscountYHJ');
+			if(discountSF == "true" && discount == "true") return false;
+			if(discountSF == "true"){
+				this.globalData.isDiscountActive = true;
+				this.globalData.isDiscountYHJ = true;
+				uni.setStorage({key: "isDiscountYHJ", data: "true"});
+			}else{
+				this.globalData.isDiscountActive = true;
+				this.globalData.isDiscountSF = true;
+				uni.setStorage({key: "isDiscountSF", data: "true"});
+			}
+		},
+		onShow: function() {
+			console.log('App Show')
+		},
+		onHide: function() {
+			console.log('App Hide')
+		},
+		methods: {
+			isToken: function(_this){
+				const that = this;
+				uni.getStorage({
+				    key: 'token',
+				    success: function (res) {
+				        // console.log('token:',res.data);
+				    },
+					fail: function(){
+						// #ifdef MP-WEIXIN
+						that.authorize_mp_wx(_this);
+						// #endif
+						// #ifdef H5
+						that.authorize_H5(_this);
+						// #endif
+					}
+				});
+			},
+			//H5授权登录
+			authorize_H5: function(_this){
+				if(this.isWechat()){
+					var pages = getCurrentPages();  
+					var wx_h5_code = (pages[pages.length - 1]).$route.query.code;
+					var $route = window.location.href;
+					var validCode = uni.getStorageSync("validCode");//防止重复刷新
+					//如果拿到code，调用授权接口，没有拿到就跳转微信授权链接获取
+					if(validCode != 1 || (wx_h5_code == undefined || wx_h5_code == "")){
+						uni.setStorage({key: 'validCode', data: 1});
+						window.location.href =
+								"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
+								this.wxappid +
+								"&redirect_uri=" +
+								encodeURIComponent($route) +
+								"&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
+					}else{
+						this.$util._h5_login('logs', wx_h5_code);
+					}
+				}else{
+					this.$util.isGoLogin = false;
+					uni.navigateTo({url: "/pages/logs/logs"});
+				}
+			},
+			//小程序授权登录
+			authorize_mp_wx: function(that){
+				//判断用户是否授权
+				wx.getSetting({
+					success (res) {
+						if(res.authSetting["scope.userInfo"] == true){
+							//已授权
+							console.log('已授权');
+							that.$util._mp_wx_login('logs');
+						}
+						if(res.authSetting["scope.userInfo"] == false||res.authSetting["scope.userInfo"] == undefined){
+							// 未授权
+							console.log('未授权');
+							that.$util.isGoLogin = false;
+							uni.navigateTo({url: "/pages/logs/logs?state=false"});
+						}
+					}
+				})
+			},
+			isWechat: function() {
+				var ua = navigator.userAgent.toLowerCase();
+				if (ua.match(/MicroMessenger/i) == "micromessenger") {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+	}
+</script>
+
+<style>
+	/*每个页面公共css */
+	@import './common/css/iconfont.css';
+	@import './common/css/style.css';
+</style>

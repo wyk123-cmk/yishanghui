@@ -1,0 +1,122 @@
+
+.page-bg.data-v-044bfca0{
+	padding-bottom: 20px;
+}
+.account.data-v-044bfca0{
+	background: #4385f5;
+	padding: 15px;
+}
+.account .cmpy-name.data-v-044bfca0{
+	font-size: 16px;
+	padding: 5px 0 30px;
+	color: #FFFFFF;
+	display: block;
+}
+.account .amount-title.data-v-044bfca0{
+	font-size: 13px;
+	color: #eee;
+	padding-bottom: 15px;
+	display: block;
+}
+.account .amount.data-v-044bfca0{
+	font-size: 36px;
+	font-weight: bold;
+	color: #fff;
+	padding-bottom: 10px;
+}
+.account .amount > view.data-v-044bfca0{
+	font-size: 12px;
+	font-weight: normal;
+	color: #fff;
+	background: rgba(0, 0, 0, 0.1);
+	padding: 3px 10px;
+	margin-left: 10px;
+	border-radius: 20px;
+	display: inline;
+	vertical-align: middle;
+}
+.account .amount > view .num.data-v-044bfca0{
+	color: #ff822e;
+	font-size: 14px;
+}
+.me-comp.data-v-044bfca0{
+	background-color: #FFFFFF;
+	position: relative;
+	line-height: 40px;
+}
+.me-comp .pattern.data-v-044bfca0{
+	font-size: 22px;
+	position: absolute;
+	left: 15px;
+}
+.me-comp .words.data-v-044bfca0{
+	border-bottom: 1px solid #F7F7F7;
+	margin-left: 45px;
+}
+.me-comp .pattern.blue.data-v-044bfca0{
+	color: #4385f5;
+}
+.me-comp .pattern.orange.data-v-044bfca0{
+	color: #ff822e;
+}
+.me-comp .pattern.red.data-v-044bfca0{
+	color: #ff4544;
+}
+.me-comp .icon--right-jian.data-v-044bfca0{
+	float: right;
+	padding-right: 13px;
+	font-size: 14px;
+	color: #999;
+}
+.icon--right-jian.data-v-044bfca0:before{
+	float: right;
+	padding-left: 5px;
+}
+.exit.data-v-044bfca0{
+	background-color: #FFFFFF;
+	margin-top: 10px;
+	line-height: 44px;
+}
+.marginT.data-v-044bfca0{
+	margin-top: 10px;
+}
+.leiji.data-v-044bfca0{
+	background: #fff;
+	    border-radius: 10px;
+	    box-shadow: 0px 0px 5px #ccc;
+	    display: -webkit-box;
+	    display: -webkit-flex;
+	    display: flex;
+	    -webkit-box-align: center;
+	    -webkit-align-items: center;
+	            align-items: center;
+	    -webkit-justify-content: space-around;
+	            justify-content: space-around;
+	    padding: 14px;
+	    text-align: center;
+}
+.ljys.data-v-044bfca0{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+}
+.ljys label.data-v-044bfca0{
+	    font-size: 12px;
+	    line-height: 20px;
+	    color: #999;
+}
+.ljys text.data-v-044bfca0{
+	    font-size: 16px;
+	    color: #FD9523;
+	    font-weight: bold;
+}
+.bordr_s.data-v-044bfca0{
+	width: 1px;
+	    height: 32px;
+	    background: #eee;
+}
+

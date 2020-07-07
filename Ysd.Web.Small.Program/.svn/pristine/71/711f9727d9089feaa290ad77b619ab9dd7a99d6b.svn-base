@@ -1,0 +1,240 @@
+<template>
+	<view>
+		<view class="content" style="padding-bottom: 60px;">
+			<view class="nrwk" style="border-top:6px solid #eee; position: fixed;left: 0;right: 0;">
+				<view class="li_pi"><span class="iconfont yjt">今天一小时内</span>期望上门时间</view>
+				<view class="li_pi2">启用电子面单<switch></switch>
+				</view>
+			</view>
+			<view class="plj-viewst" style="padding-top:95px;border-top:6px solid #eee;">
+				<view class="list_1">
+					<view class="name_jk">
+						<view class="name_god">
+							<checkbox value="cb" checked="true" /><text>气象色谱仪</text></view>
+						<label class="btn_up"><img src="../../static/images/edit.svg"><img src="../../static/images/delete.svg"></label>
+					</view>
+					<view class="plj-xq">
+						<view><span>北京市-廉佳瑞</span><br><span>山西省-李小默</span></view>
+						<span>气相色谱仪<br><i>￥22.2</i></span>
+					</view>
+				</view>
+				<view class="list_1">
+					<view class="name_jk">
+						<view class="name_god">
+							<checkbox value="cb" checked="true" /><text>气象色谱仪</text></view>
+						<label class="btn_up"><img src="../../static/images/edit.svg"><img src="../../static/images/delete.svg"></label>
+					</view>
+					<view class="plj-xq">
+						<view><span>北京市-廉佳瑞</span><br><span>山西省-李小默</span></view>
+						<span>气相色谱仪<br><i>￥22.2</i></span>
+					</view>
+				</view>
+				<view class="list_1">
+					<view class="name_jk">
+						<view class="name_god">
+							<checkbox value="cb" checked="true" /><text>气象色谱仪</text></view>
+						<label class="btn_up"><img src="../../static/images/edit.svg"><img src="../../static/images/delete.svg"></label>
+					</view>
+					<view class="plj-xq">
+						<view><span>北京市-廉佳瑞</span><br><span>山西省-李小默</span></view>
+						<span>气相色谱仪<br><i>￥22.2</i></span>
+					</view>
+				</view>
+			</view>
+
+		</view>
+		<view class="gjljxdwk">
+			<label class="check_gj"><checkbox value="cb" checked="true" />全选</label>
+			<view class="yg_f"><label class="yg_r">预估：￥--</label><label>最终费用以快递小哥核实为准</label></view>
+			<view class="ljxd">立即下单</view>
+			
+
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+
+			}
+		},
+		methods: {
+
+		}
+	}
+</script>
+
+<style>
+	.name_god {}
+
+	.list_1 {
+		border-top: 6px solid #eee;
+	}
+	.check_gj{
+		padding-top: 20px;
+		padding-left: 10px;
+	}
+.gjljxdwk{
+	height: 60px;
+	    position: fixed;
+	    bottom: 0px;
+	    background-color: #FFFFFF;
+	    width: 100%;
+	    max-width: 768px;
+		display: flex;
+		justify-content: space-between;
+}
+.yg_r{
+	text-align: right;
+}
+.yg_f{
+	display: flex;
+	flex-direction: column;
+	    padding-top: 10px;
+}
+.ljxd {
+    float: right;
+    line-height: 60px;
+    font-size: 14px;
+    color: #FFFFFF;
+    background-color: #4285F4;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+	.name_jk {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding: 5px 10px;
+		border-bottom: 1px solid #eee;
+	}
+
+	.btn_up {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+
+
+	.plj-list li {
+		margin-top: 6px;
+		background: #fff;
+	}
+
+	.plj-list li>p {
+		display: flex;
+		align-items: center;
+		border-bottom: 1px solid #eee;
+		padding: 10px 14px;
+		justify-content: space-between;
+	}
+
+	.plj-list li>p label {
+		display: flex;
+		align-items: center;
+	}
+
+	.plj-list li label button {
+		background: #fff;
+	}
+
+	.plj-list li label button img {
+		width: 16px;
+		height: 16px;
+		margin-left: 10px;
+	}
+
+	.gjljxdwk input,
+	.plj-list li label input {
+		width: 16px;
+		height: 16px;
+		-webkit-appearance: none;
+		border-radius: 8px;
+		border: 1px solid #ccc;
+		margin-right: 4px;
+	}
+
+	.gjljxdwk input:checked,
+	.plj-list li label input:checked {
+		width: 16px;
+		height: 16px;
+		background: url(../../static/images/xz2.svg) no-repeat center;
+		border: none;
+	}
+
+	.plj-xq {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 10px 14px;
+	}
+
+	.plj-xq span {
+		text-align: right;
+		line-height: 24px;
+		color: #4285F4;
+	}
+
+	.plj-xq p {
+		line-height: 24px;
+	}
+
+	.plj-xq span {
+		color: #666;
+	}
+
+	.plj-xq span i {
+		color: red;
+	}
+
+	view img {
+		width: 18px;
+		height: 18px;
+		vertical-align: middle;
+		margin: 0px 3px;
+	}
+
+	.nrwk {
+		padding-left: 14px;
+		padding-right: 14px;
+		border-top: 4px solid #F7F7F7;
+		background: #fff;
+		height: 30px;
+		line-height: 30px;
+	}
+
+	.li_pi {
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+
+	.li_pi span {
+		float: right;
+		font-weight: bold;
+		overflow: hidden;
+		display: block;
+		font-size: 14px;
+	}
+
+	.yjt:after {
+		content: ">";
+		color: #DBDBDB;
+		padding-left: 6px;
+		font-weight: normal;
+	}
+
+	.li_pi2 {
+		display: flex;
+		justify-content: space-between;
+		border-top: 1px solid #EEEEEE;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+
+	.switch.switch-animbg {
+		transition: background-color ease 0.4s;
+	}
+</style>

@@ -1,0 +1,30 @@
+
+.way.data-v-29eccc64{
+	padding: 30px 0px 20px;
+	border-bottom: 1px solid #f7f7f7;
+	margin: 0 14px 20px;
+	font-size: 16px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	text-align: center;
+}
+.way text.data-v-29eccc64{
+	font-size: 28px;
+	font-weight: bold;
+}
+.detail-li.data-v-29eccc64{
+	padding: 8px 15px;
+	display: box;
+	display: -webkit-box;
+}
+.detail-li text.data-v-29eccc64{
+	display: block;
+	width: 70px;
+	color: #999;
+}
+

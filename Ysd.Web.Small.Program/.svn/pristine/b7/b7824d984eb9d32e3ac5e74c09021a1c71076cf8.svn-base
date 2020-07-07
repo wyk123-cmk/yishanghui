@@ -1,0 +1,9 @@
+<template>
+	<view class="">
+		我的海报
+	</view>
+</template>
+<script>
+</script>
+<style scoped>
+</style>

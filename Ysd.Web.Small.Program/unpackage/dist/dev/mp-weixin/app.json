@@ -1,0 +1,105 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/index/expressDelivery",
+    "pages/index/goodsInfo",
+    "pages/index/insuredPrice",
+    "pages/index/addedService",
+    "pages/index/noticeList",
+    "pages/index/noticeDetails",
+    "pages/order/orderSuccess",
+    "pages/order/orderList",
+    "pages/order/orderDetail",
+    "pages/order/logistics",
+    "pages/order/cancel",
+    "pages/estimate/estimate",
+    "pages/batchSend/index",
+    "pages/batchSend/batchGoodsInfo",
+    "pages/me/userInfo",
+    "pages/logs/logs",
+    "pages/me/addressList",
+    "pages/me/addressEdit",
+    "pages/me/invoice",
+    "pages/me/historicalInvoice",
+    "pages/me/invoiceSubmit",
+    "pages/logs/peopleInfo",
+    "pages/me/myWallet",
+    "pages/me/myWalletInfo",
+    "pages/me/myCash",
+    "pages/me/myRefill",
+    "pages/wx/wxpay",
+    "pages/me/myWalletDetail",
+    "pages/me/bounty",
+    "pages/me/bonusCash",
+    "pages/me/cashApply",
+    "pages/me/withdrawalRecord",
+    "pages/me/bountySharePoster",
+    "pages/me/explain",
+    "pages/me/coupon",
+    "pages/me/moreCoupon",
+    "pages/me/shareImage",
+    "pages/me/myCompany",
+    "pages/me/claimStatus",
+    "pages/me/claim",
+    "pages/me/companyRecharge",
+    "pages/me/rechargeRecord",
+    "pages/me/moneyDetail",
+    "pages/me/companyExpress",
+    "pages/me/companyInvoice",
+    "pages/me/cmpInvoiceSubmit",
+    "pages/me/cmpHistoricalInvoice",
+    "pages/me/memberList",
+    "pages/me/addMember",
+    "pages/me/setPayPassword",
+    "pages/me/balanceAlert",
+    "pages/me/exportbill",
+    "pages/me/companyLog",
+    "pages/me/feedback",
+    "pages/me/feedbackList",
+    "pages/web-view/index",
+    "pages/me/userEvaluation"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#4285F4",
+    "backgroundColor": "#f8f8f8",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/images/tabbar1.png",
+        "selectedIconPath": "static/images/tabbar1-active.png",
+        "text": "寄快递"
+      },
+      {
+        "pagePath": "pages/order/orderList",
+        "iconPath": "static/images/tabbar2.png",
+        "selectedIconPath": "static/images/tabbar2-active.png",
+        "text": "查快递"
+      },
+      {
+        "pagePath": "pages/estimate/estimate",
+        "iconPath": "static/images/tabbar3.png",
+        "selectedIconPath": "static/images/tabbar3-active.png",
+        "text": "运费估算"
+      },
+      {
+        "pagePath": "pages/me/userInfo",
+        "iconPath": "static/images/tabbar4.png",
+        "selectedIconPath": "static/images/tabbar4-active.png",
+        "text": "我"
+      }
+    ]
+  },
+  "usingComponents": {
+    "page-imges": "/components/page-discount/page-discount"
+  },
+  "sitemapLocation": "sitemap69.json"
+}

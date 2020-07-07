@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "新增地址",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "address-picker": "/components/address-picker/address-picker"
+  }
+}

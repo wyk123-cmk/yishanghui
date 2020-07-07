@@ -1,0 +1,25 @@
+
+.status.data-v-386da78d{
+	text-align: center;
+	padding-top: 74px;
+	color: #999;
+}
+.status image.data-v-386da78d{
+	width: 116px;
+	height: 116px;
+}
+.status .title.data-v-386da78d{
+	font-size: 16px;
+	font-weight: bold;
+	padding: 20px 0;
+}
+.status  button.data-v-386da78d{
+	width: 160px;
+	height: 44px;
+	line-height: 44px;
+	border-radius: 44px;
+	color: #fff;
+	background: #4285F4;
+	margin-top: 20px;
+}
+

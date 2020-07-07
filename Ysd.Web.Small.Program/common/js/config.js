@@ -1,0 +1,16 @@
+// export let apiHost = 'http://kyun.yshdev.cn'; //开发环境
+// export let apiHost = 'https://test3.1718china.cn'; //测试环境
+export let apiHost = 'https://express.1718china.cn'; //正式环境
+export let apiUrl = apiHost + '/api';
+// export let feedBackApiUrl = 'http://wx.1718china.cn/api'; //测试环境
+// export let imgApiUrl = 'http://wx.1718china.cn/'; //测试环境
+export let feedBackApiUrl = 'https://yqcapi.1718china.net/api'; //正式环境
+export let imgApiUrl = 'https://yqcapi.1718china.net/'; //正式环境
+export let appId = '17181718h5';
+//#ifdef H5
+	// export let wxappid = 'wxd0a14981b5ea4134'; //测试环境
+	export let wxappid = 'wx951db03601305d9f'; //正式环境
+//#endif
+//#ifdef MP-WEIXIN
+	export let wxappid = 'wxeb078e68d7650a40';
+//#endif

@@ -1,0 +1,211 @@
+<template>
+	<view class="page-bg">
+		<view class="mian">
+			<view class="service-item" v-for="(item, i) in newData" :key="i" @click="open(i)">
+				{{item.serviceTitle}}
+				<view :style="item.sub.isDefault==1?'color:#999':'color:#333'">
+					{{item.sub.remark}}
+					<text class="iconfont icon--right-jian"></text>
+				</view>
+			</view>
+		</view>
+		<button class="btn-default-css" @click="btnConfirm">确认</button>
+		<view class="min-popup" v-if="isShow" :class="[isShow?'min-show':'min-hide']">
+			<view class="min-overlay" @click="close"></view>
+			<view class="min-content">
+				<text class="small-title">{{serviceList[index].serviceTitle}}</text>
+				<view class="sub-list">
+					
+					<text v-bind:class="{'active': newData[index].sub.remark==sub.remark}" v-for="(sub, j) in serviceList[index].listDetail" :key="j" @click="btnSelTH(sub)">{{sub.remark}}</text>
+				</view>
+				<text class="note" v-bind:class="{'red':serviceList[index].serviceKey=='PayType'}">{{serviceList[index].remark}}</text>
+			</view>
+		</view>
+	</view>
+</template>
+<script>
+export default {
+	data() {
+		return {
+			code: "",
+			serviceList: [],
+			isShow: false,
+			newData: [],
+			index: 0
+		}
+	},
+	onLoad(options){
+		this.code = options.code;
+		this.init();
+	},
+	methods: {
+		init(){
+			const that = this;
+			if(JSON.stringify(that.$store.state.expressDeliveryInfo.service) != "{}"){
+				that.newData = that.$store.state.expressDeliveryInfo.service
+			}
+			that.$util.networkRequest({
+				url : "/ExpressService/GetList",
+				data: {companyCode: that.code},
+				success : function(res){
+					that.serviceList = res;
+					if(that.newData.length != 0) return false;
+					let newData = [];
+					res.forEach(item => {
+						let _subData = item.listDetail[0];
+						if(that.code == "db001" && item.serviceKey == "DeliveryType"){
+							//若是德邦:提货方式默认“送货（不含上楼）”
+							item.listDetail.forEach(sub => {
+								if(sub.remark == "送货（不含上楼）"){
+									_subData = sub;
+								}
+							});
+						}
+						newData.push({
+							serviceTitle: item.serviceTitle,
+							sub: {
+								remark: _subData.remark,
+								serviceKey: _subData.serviceKey,
+								serviceValue: _subData.serviceValue,
+								isDefault:_subData.isDefault
+							}
+						})
+					})
+					that.newData = newData;
+				}
+			});
+		},
+		btnConfirm: function(){
+			this.$store.state.expressDeliveryInfo.service = this.newData;
+			this.$util.navigateBack(this);
+		},
+		btnSelTH($data){
+			this.newData[this.index].sub = {
+				remark: $data.remark,
+				serviceKey: $data.serviceKey,
+				serviceValue: $data.serviceValue
+			}
+		},
+		open(i){
+			this.isShow = true;
+			this.index = i;
+		},
+		close(){
+			this.isShow = false;
+			setTimeout(() => { this.$emit('close') }, 100)
+		},
+	}
+}
+</script>
+<style scoped>
+.mian{
+	margin-top: 5px;
+	padding: 0 15px;
+	background-color: #FFFFFF;
+}
+.service-item{
+	padding: 15px 0;
+	border-top: 1px solid #F7F7F7;
+	
+}
+.service-item > view{
+	float: right;
+	font-weight: bold;
+}
+.service-item > view text{
+	color: #DBDBDB;
+	padding-left: 5px;
+	font-size: 14px;
+	font-weight: normal;
+}
+.min-popup{
+	position: fixed;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 999;
+}
+.min-hide .min-content{
+	animation: hide .5s linear forwards;
+}
+.min-hide .min-overlay{
+	opacity: 0;
+}
+.min-show .min-content{
+	animation: show .5s linear forwards;
+}
+.min-show .min-overlay{
+	opacity: 1;
+}
+.min-overlay{
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.6);
+	z-index: 200;
+	transition: .3s;
+}
+.min-content{
+	background: #fff;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 300;
+	overflow: hidden;
+	padding: 25px 15px;
+}
+
+@keyframes hide {
+	0% {
+		transform: translateY(0);
+	}
+	100% {
+		transform: translateY(100%);
+	}
+}
+@keyframes show {
+	0% {
+		transform: translateY(100%);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
+.min-content .small-title{
+	font-size: 15px;
+	display: block;
+}
+.sub-list{
+	display: flex;
+	flex-flow: wrap;
+	margin: 10px 0;
+}
+.sub-list text{
+	display: block;
+	margin-right: 10px;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 14px;
+	background: #f7f7f7;
+	margin-bottom: 10px;
+}
+.sub-list text.active{
+	background-color: #d6ebff;
+	background-image: url(../../static/images/icon-active.png);
+	background-repeat: no-repeat;
+	background-size: 18px;
+	background-position: bottom right;
+}
+.note{
+	display: block;
+	font-size: 12px;
+	color: #666;
+}
+.note.red{
+	color: #FF0000;
+}
+</style>

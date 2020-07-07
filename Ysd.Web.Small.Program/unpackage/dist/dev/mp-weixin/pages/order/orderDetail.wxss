@@ -1,0 +1,114 @@
+.border.data-v-03d093b8{
+	border-top: 6px solid #EEEEEE;
+}
+.user-info.data-v-03d093b8{
+	background-color: #F7F7F7;
+	margin: 0 15px 15px;
+	padding: 0 15px 15px;
+	line-height: 24px;
+}
+.user-info .iconfont.data-v-03d093b8{
+	font-size: 24px;
+	margin-right: 8px;
+}
+.user-info .iconfont.data-v-03d093b8,
+.user-info .name.data-v-03d093b8{
+	float: left;
+	display: block;
+	padding-top: 20px;
+}
+.user-info .name.data-v-03d093b8{
+	font-size: 16px;
+}
+.user-info .iconfont.icon-shou.data-v-03d093b8{
+	color: #EF9A42;
+}
+.user-info .phone.data-v-03d093b8{
+	float: right;
+	padding-top: 20px;
+}
+.user-info .address.data-v-03d093b8{
+	display: block;
+	font-size: 13px;
+	color: #666666;
+	padding: 5px 0;
+	clear: both;
+}
+.item-list.data-v-03d093b8{
+	padding: 15px 15px 25px;
+}
+.item-list .samll-title.data-v-03d093b8{
+	border-left: 2px solid #fd9523;
+	padding-left: 5px;
+}
+.item-list .label.data-v-03d093b8{
+	font-size: 12px;
+	padding-left: 8px;
+	padding-top: 8px;
+	color: #666;
+}
+.item-list .label text.data-v-03d093b8{
+	float: right;
+}
+.item-list .label .market.data-v-03d093b8{
+	text-decoration: line-through;
+	color: #999;
+	padding-right: 10px;
+}
+.item-list .label.price-title.data-v-03d093b8{
+	font-size: 14px;
+	color: #333;
+}
+.item-list .label.price-title text.data-v-03d093b8{
+	color: #fd9523;
+}
+.item-list .label .iconfont.data-v-03d093b8{
+	float: inherit;
+	margin-left: 3px;
+}
+.remark.data-v-03d093b8{
+	background-color: #F5F5F5;
+	font-size: 12px;
+	margin-top: 15px;
+	padding: 10px;
+	border-radius: 3px;
+}
+.take-list .pic.data-v-03d093b8{
+	display: inline-block;
+	width: 80px;
+	height: 80px;
+	overflow: hidden;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin-right: 8px;
+	margin-top: 10px;
+	border: 1px solid #eee;
+}
+.take-list .file.data-v-03d093b8{
+	font-size: 12px;
+}
+.take-list .file > view.data-v-03d093b8{
+	display: inline-block;
+	width: 50%;
+	margin-top: 10px;
+}
+.take-list .file image.data-v-03d093b8{
+	width: 20px;
+	float: left;
+}
+.take-list .file text.data-v-03d093b8{
+	float: left;
+	line-height: 20px;
+}
+.take-list .file text.name.data-v-03d093b8{
+	max-width: 40%;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.take-list .file text.down.data-v-03d093b8{
+	color: #0F74EB;
+	text-decoration: underline;
+}
+

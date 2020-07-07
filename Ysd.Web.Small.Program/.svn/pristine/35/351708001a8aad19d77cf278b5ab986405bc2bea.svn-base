@@ -1,0 +1,206 @@
+<template>
+	<view class="page-bg">
+		<navigator url="/pages/me/addMember"><text class="iconfont icon-add-cy"></text></navigator>
+		<view class="search">
+			<text class="iconfont icon-chaxun"></text>
+			<input type="text" placeholder="搜索" v-model="keyword" @input="inputSearch" />
+		</view>
+		<view v-if="total==0" class="none-data-list"><image src="../../static/images/none-ry.svg"></image>暂无内容</view>
+		<scroll-view v-else class="scroll-wrapper" scroll-y="true" @scrolltolower="scrolltolower">
+			<view class="list-call" v-for="(item, i) in dataList" :key="i" @click="actionSheet(item.id)">
+				{{item.userName}}
+				<text class="phone">{{item.phone}}</text>
+				<text class="admin" v-if="item.isMaster">管理员</text>
+			</view>
+		</scroll-view>
+	</view>
+</template>
+<script>
+export default {
+	data() {
+		return {
+			page: 1,
+			limit: 15,
+			total: 0,
+			keyword: "",
+			dataList: []
+		}
+	},
+	onShow() {
+		this.keyword = "";
+		this.init();
+	},
+	methods: {
+		init: function(){
+			this.page = 1;
+			this.dataList = [];
+			this.getList();
+		},
+		inputSearch: function(e){
+			this.keyword = e.detail.value;
+			this.init();
+		},
+		actionSheet: function(id){
+			const that = this;
+			uni.showActionSheet({
+			    itemList: ['设置管理员', '删除'],
+			    success: function (res) {
+			        if(res.tapIndex == 0){
+						//设置管理员
+						that.setAdmin(id);
+					}
+					if(res.tapIndex == 1){
+						//删除
+						that.deleteAdmin(id);
+					}
+			    }
+			});
+		},
+		//设置管理员
+		setAdmin: function(id){
+			const that = this;
+			uni.showLoading({ title: '加载中...' });
+			that.$util.networkRequest({
+				url : "/CompanyUser/SetMaster",
+				method: "POST",
+				data: {value: id},
+				success: function(res){
+					that.$util.showToast("管理员设置成功");
+					// that.$util.navigateBack(that);
+				}
+			})
+		},
+		//删除
+		deleteAdmin:  function(id) {
+			const that = this;
+			if(id<= 0){
+				that.$util.showToast("请选择删除的员工信息")
+			}else{
+				uni.showModal({
+				    title: '提示',
+				    content: '确定要删除吗?',
+					success: function (res) {
+						if(res.confirm){
+							uni.showLoading({ mask: true, title: '加载中...' });
+							that.$util.networkRequest({
+								url : "/CompanyUser/DelUser",
+								method: "POST",
+								data: JSON.stringify([id]),
+								success: function(res){
+									uni.showModal({
+									    title: '提示',
+									    content: '删除成功',
+										showCancel: false,
+										success: function () {
+											that.init()
+										}
+									});
+								}
+							})
+						}
+					}
+				});
+			}
+		},
+		scrolltolower:  function() {
+			if(Math.ceil(this.total / this.limit) >= this.page){
+				this.getList();
+			}
+		},
+		getList: function(){
+			const that = this;
+			uni.showLoading({ title: '加载中...' });
+			that.$util.networkRequest({
+				url: "/CompanyUser/GetList",
+				data: {
+					page: that.page,
+					limit: that.limit,
+					keyWord: that.keyword
+				},
+				success: function(res){
+					let total = res.total;
+					that.total = total;
+					if(total == 0 || res.list.length == 0) return false;
+					that.page++;
+					that.dataList = that.dataList.concat(res.list);
+				}
+			})
+		}
+	}
+}
+</script>
+<style scoped>
+.iconfont.icon-add-cy{
+	position: fixed;
+	z-index: 1000;
+	color: #4385f5;
+}
+/* #ifdef H5 */
+.iconfont.icon-add-cy{
+	top: 10px;
+	right: 10px;
+	font-size: 20px;
+}
+/* #endif */
+/* #ifdef MP-WEIXIN */
+.iconfont.icon-add-cy{
+	bottom: 20%;
+	right: 10px;
+	font-size: 30px;
+}
+/* #endif */
+.search{
+	border-top: 1px solid #F7F7F7;
+	display: box;
+	display: -webkit-box;
+	padding: 10px 15px;
+	line-height: 34px;
+	background-color: #FFFFFF;
+}
+.search text{
+	background-color: #F7F7F7;
+	display: block;
+	width: 30px;
+	text-align: center;
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
+}
+.search input{
+	height: 34px;
+	line-height: 34px;
+	background-color: #F7F7F7;
+	width: calc(100% - 30px);
+	width: -webkit-calc(100% - 30px);
+	border-top-right-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
+.scroll-wrapper{
+	position: absolute;
+	top: 55px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding-top: 8px;
+}
+.list-call{
+	display: flex;
+	display: -webkit-flex;
+	background-color: #FFFFFF;
+	padding: 10px 15px;
+	align-items: center;
+	line-height: 26px;
+	margin-bottom: 8px;
+}
+.list-call .phone{
+	color: #999999;
+	padding: 0 5px;
+}
+.list-call .admin{
+	background: #fd9523;
+	color: #fff;
+	font-size: 12px;
+	line-height: 20px;
+	padding: 0 2px;
+	border-radius: 4px;
+}
+</style>

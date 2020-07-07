@@ -1,0 +1,268 @@
+<template>
+	<view style="background-color:#f7f7f7;">
+		<view class="label-input-item">
+			<input type="text" placeholder="姓名" v-model="addressInfo.name" />
+		</view>
+		<view class="label-input-item">
+			<input type="number" maxlength="11" placeholder="手机号" v-model="addressInfo.phone" />
+		</view>
+		<view class="label-input-item">
+			<address-picker class="address" @change="cityPickerChange" :defaultValue="areaCode" :disabled="false">
+				<text class="txt" v-bind:class="[city==''?'no-checked':'']">{{city==''?'省市区':city}}</text>
+			</address-picker>
+		</view>
+		<view class="label-input-item">
+			<input type="text" placeholder="详细地址（精确到门牌号）" v-model="addressInfo.address" />
+		</view>
+		<view class="label-input-item">
+			<input type="text" placeholder="公司名称（选填)"  v-model="addressInfo.companyName" />
+		</view>
+		<view class="label-input-item">
+			<text class="clean" @click="cleanInfo">清空当前信息</text>
+			<checkbox-group @change="checkboxChange">
+				<checkbox class="orange" :checked="addressInfo.isDefault"></checkbox>
+				<text>设为默认地址</text>
+			</checkbox-group>
+		</view>
+		<view class="label-input-item textarea">
+			<textarea maxlength="-1" v-model="txtContent" @confirm="btnCopyOk" @input="textareaInput" placeholder="粘贴地址信息,例:姓名,手机号,地址" cursor-spacing="150" :show-confirm-bar="false"></textarea>
+			<text v-if="isCopyShow" @click="btnCopyOk">确定</text>
+		</view>
+		<view class="btn">
+			<button @click="btnSubmit">确定</button>
+		</view>
+	</view>
+	
+</template>
+<script>
+import addressPicker from "../../components/address-picker/address-picker.vue"
+export default {
+	data() {
+		return {
+			code: "",
+			type: "",
+			city: "",
+			areaCode: "",
+			isCopyShow: false,
+			txtContent: "",
+			addressInfo: {
+				name: "",
+				companyName:  "",
+				phone:  "",
+				address:  "",
+				isDefault: false
+			},
+			url: "/AddressBook/Post"
+		}
+	},
+	onLoad(options) {
+		this.code = options.code;
+		if(this.code != '') {
+			this.getAddressInfo();
+			this.url = "/AddressBook/Change";
+			uni.setNavigationBarTitle({ title: "编辑地址" });
+		}
+		if(options.type != undefined) this.type = options.type;
+	},
+	methods: {
+		btnSubmit: function(){
+			const that = this;
+			if (!that.Valid()) return false;
+			let param = {
+				contactsCode: that.code,
+				name: that.addressInfo.name,
+				phone: that.addressInfo.phone,
+				companyName: that.addressInfo.companyName,
+				areaCode: that.areaCode,
+				address: that.addressInfo.address,
+				isDefault: that.addressInfo.isDefault
+			}
+			uni.showLoading({title:"更新中...",mask: true});
+			that.$util.networkRequest({
+				url: that.url,
+				method: "POST",
+				data: param,
+				success: function(res){
+					that.setAddressEdit(res);
+					uni.showModal({
+					    title: '提示',
+					    content: '更新成功',
+						showCancel: false,
+					    success: function (res) {
+					        if (res.confirm) {
+					           that.$util.navigateBack(that);
+					        }
+					    }
+					});
+				}
+			})
+		},
+		setAddressEdit: function(data){
+			if(this.type == "") return false;
+			let newData = {
+				name: data.name,
+				contactsCode: data.contactsCode,
+				address: data.areaInfo.province+data.areaInfo.city+data.areaInfo.area+data.address,
+				ad: data.address,
+				areaCode: data.areaInfo.areaCode
+			};
+			if(this.type == "send"){
+				this.$store.state.expressDeliveryInfo["sendAddress"] = newData;
+			}
+			if(this.type == "rep"){
+				this.$store.state.expressDeliveryInfo["repAddress"] = newData;
+			}
+		},
+		//清空信息
+		cleanInfo(){
+			this.addressInfo.name = "";
+			this.addressInfo.phone = "";
+			this.addressInfo.companyName = "";
+			this.addressInfo.address = "";
+			this.addressInfo.isDefault = false;
+			this.city = "";
+			this.areaCode = "";
+			this.txtContent = "";
+			this.isCopyShow = false;
+		},
+		textareaInput: function(e){
+			let _val = e.detail.value;
+			if(_val == "") this.isCopyShow = false;
+			else this.isCopyShow = true;
+		},
+		//复制信息
+		btnCopyOk: function(){
+			uni.pageScrollTo({
+			scrollTop: 0,
+			duration: 0
+			});
+			let that = this;
+			let addText = that.$util.stripAddress(that.txtContent);
+			uni.showLoading({title:"智能识别中..."});
+			that.$util.networkRequest({
+				url: "/AddressBook/GetAddressAutoInfo",
+				data: {addressText: addText},
+				success: function(res){
+					that.addressInfo.name = res.name;
+					that.addressInfo.phone = res.phone;
+					that.addressInfo.address = res.detail;
+					that.areaCode = res.areaCode;
+					if(!that.$util.isNotEmpty(res.province) && !that.$util.isNotEmpty(res.city) && !that.$util.isNotEmpty(res.area)){
+						that.$util.showToast("自动识别失败,请手动选择省市区");
+						return false;
+					}
+					that.city = res.province+"-"+res.city+"-"+res.area;
+				}
+			})
+		},
+		Valid(){
+			if(!this.$util.isNotEmpty(this.addressInfo.name)){
+				this.$util.showToast("姓名不能为空");
+				return false;
+			}
+			if(!this.$util.isNotEmpty(this.addressInfo.phone)){
+				this.$util.showToast("手机号不能为空");
+				return false;
+			}else{
+				if (this.addressInfo.phone.indexOf("*") < 0) {
+					if(!this.$util.isPhoneNumber(this.addressInfo.phone)){
+						this.$util.showToast("联系电话格式不正确");
+						return false;
+					}
+				}
+			}
+			if(!this.$util.isNotEmpty(this.areaCode)){
+				this.$util.showToast("请选择省市区");
+				return false;
+			}
+			if(!this.$util.isNotEmpty(this.addressInfo.address)){
+				this.$util.showToast("详细地址不能为空");
+				return false;
+			}
+			return true;
+		},
+		checkboxChange(){
+			this.addressInfo.isDefault = !this.addressInfo.isDefault;
+		},
+		cityPickerChange(e){
+			this.city = e.detail.value[0]+'-'+e.detail.value[1]+'-'+e.detail.value[2];
+			this.areaCode = e.detail.code[2];
+		},
+		getAddressInfo(){
+			const that = this;
+			uni.showLoading({mask: true, title: '加载中...'});
+			that.$util.networkRequest({
+				url: "/AddressBook/Get",
+				data: {contactsCode: that.code},
+				success: function(res){
+					that.addressInfo = res;
+					that.city = res.areaInfo.province+'-'+res.areaInfo.city+'-'+res.areaInfo.area;
+					that.areaCode = res.areaInfo.areaCode;
+				}
+			})
+		}
+		
+	}
+}
+</script>
+<style scoped>
+.label-input-item{
+	border-top: 1px solid #EEEEEE;
+	background-color: #FFFFFF;
+	padding: 10px 15px;
+	position: relative;
+}
+.label-input-item input{
+	line-height: 30px;
+	height: 30px;
+}
+.label-input-item checkbox-group{
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
+}
+.label-input-item .clean{
+	float: right;
+	color: #FD9523;
+}
+.label-input-item.textarea{
+	margin-top: 5px;
+	padding: 20px 15px;
+	border: 0;
+}
+.label-input-item.textarea textarea{
+	border: 1px solid #EEEEEE;
+	color: #999999;
+	border-radius: 4px;
+	padding: 8px;
+	width: calc(100% - 16px);
+	width: -webkit-calc(100% - 16px);
+	height: 115px;
+}
+.label-input-item.textarea text{
+	background: #fd9523;
+	color: #fff;
+	position: absolute;
+	bottom: 25px;
+	right: 20px;
+	padding: 5px 8px;
+	border-radius: 4px;
+	font-size: 12px;
+	z-index: 99;
+}
+.label-input-item checkbox-group,
+.label-input-item .no-checked{
+	color: #808080;
+}
+.btn{
+	background-color: #FFFFFF;
+	
+	padding: 10px 15px;
+}
+.btn button{
+	background-color: #4285F4;
+	color: #FFFFFF;
+	line-height: 44px;
+	border-radius: 20px;
+}
+</style>

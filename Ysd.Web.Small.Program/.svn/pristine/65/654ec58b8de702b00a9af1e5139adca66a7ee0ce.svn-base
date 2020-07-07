@@ -1,0 +1,51 @@
+<template>
+	<view class="page-bg">
+		<view class="details">
+			<view class="title">
+				跨越接口调整通知
+				<text>07-10</text>
+			</view>
+			<view class="con">
+				因跨越服务接口调整因跨越服务接口调整因因跨越服务接口调整因跨越服务接口调整因因跨越服务接口调整因跨越服务接口调整因因跨越服务接口调整因跨越服务接口调整因因跨越服务接口调整因跨越服务接口调整因因跨越服务接口调整因跨越服务接口调整因因跨越服务接口调整因跨越服务接口调整因因跨越服务接口调整因跨越服务接口调整因因跨越服务接口调整因跨越服务接口调整因因跨越服务接口调整因跨越服务接口调整因因跨越服务接口调整因跨越服务接口调整因因跨越服务接口调整因跨越服务接口调整因因跨越服务接口调整因跨越服务接口调整因因跨越服务接口调整因跨越服务接口调整因因跨越服务接口调整因跨越服务接口调整因
+			</view>
+		</view>
+	</view>
+</template>
+<script>
+export default {
+	data() {
+		return {
+		}
+	},
+	created(){
+		
+	},
+	methods: {
+		
+	}
+}
+</script>
+<style scoped>
+.details{
+	background-color: #FFFFFF;
+	margin: 15px;
+	padding: 14px;
+}
+.details .title{
+	font-weight: bold;
+	padding-top: 4px;
+	display: block;
+}
+.details .title text{
+	font-weight: normal;
+	color: #989898;
+	padding-left: 15px;
+	float: right;
+}
+.details .con{
+	font-size: 12px;
+	color: #999999;
+	padding-top: 7px;
+	line-height: 22px;
+}
+</style>

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "用户评价",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "userevaluation": "/components/user-evaluation/user-evaluation"
+  }
+}

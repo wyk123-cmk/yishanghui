@@ -1,0 +1,147 @@
+<style scoped>
+	@import "../../common/css/me/userInfo.css";
+</style>
+<template>
+	<view class="page-bg">
+		<page-imges :show="showImage"></page-imges>
+		<view class="content">
+			<view class="bg"></view>
+			<view class="user-box">
+				<view v-if="!isLogin" class="user-heard" @click="goLogin">
+					<view class="pic"><image src="../../static/images/user.jpg"></image></view>
+					<text class="txt" style="font-size: 14px;">点击登录/注册</text>
+				</view>
+				<view v-else class="user-heard">
+					<view class="pic" @click="uploadUserPic()"><image :src="userInfo.logo" mode="aspectFill"></image></view>
+					<text class="txt" @click="UpdeteUseInfo()">{{userInfo.userName}}</text>
+				</view>
+				<view class="user-icon">
+					<view class="u-i-l" @click="goOrderList(1)"><text class="iconfont icon-jijian-"></text>我寄的</view>
+					<view class="u-i-l" @click="goOrderList(2)"><text class="iconfont icon-shoujian"></text>我收的</view>
+				</view>
+			</view>
+			<view class="icon-list">
+				<view class="list" @click="goPage('addressList')"><image mode="widthFix" src="../../static/images/user-icon1.svg" ></image>地址薄</view>
+				<view class="list" @click="goPage('myWallet')"><image mode="widthFix" src="../../static/images/user-icon2.svg" ></image>钱包</view>
+				<view class="list" @click="goPage('coupon?type=indi')"><image mode="widthFix" src="../../static/images/user-icon5.svg" ></image>优惠券</view>
+				<view class="list" @click="goPage('invoice')"><image mode="widthFix" src="../../static/images/user-icon3.svg" ></image>发票申请</view>
+				<view class="list" @click="goOrderList(1)"><image mode="widthFix" src="../../static/images/user-icon4.svg"></image>我的订单</view>
+			</view>
+			<view class="item-list" @click="goPage('myCompany')">
+				我的企业
+				<image class="new" mode="widthFix" src="../../static/images/new.svg"></image>
+				<text class="iconfont icon--right-jian"></text>
+			</view>
+			<view class="item-list" @click="goPage('bounty')">
+				奖励金
+				<text class="iconfont icon--right-jian"></text>
+			</view>
+			<view class="item-list" @click="phoneCall()">
+				客服电话
+				<text class="tel">{{tel}}</text>
+			</view>
+			<view class="item-list" @click="goPage('feedback')">
+				问题反馈
+				<text class="iconfont icon--right-jian"></text>
+			</view>
+		</view>
+		<!-- <button class="exit" v-if="isLogin" @click="btnExit">退出登录</button> -->
+	</view>
+</template>
+<script>
+export default {
+	data() {
+		return {
+			tel: "010-51285752",
+			showImage: false,
+			isLogin: false,
+			userInfo: [],
+			token: "",
+		}
+	},
+	onShow(){
+		let _token = uni.getStorageSync("token");
+		if(_token == "" || _token == undefined){
+			this.isLogin = false;
+		}else{
+			this.isLogin = true;
+			this.token = _token;
+			this.getUserInfo();
+		}
+		let app = getApp();
+		app.isToken();
+		this.showImage = app.globalData.isDiscountActive;
+	},
+	methods: {
+		getUserInfo: function(){
+			const that = this;
+			that.$util.networkRequest({
+				url : "/Account/Get",
+				success: function(res){
+					that.userInfo = res;
+				}
+			});
+		},
+		goOrderList(type){
+			if(this.goLogin() != false) return false;
+			this.$store.state.orderType = type;
+			uni.switchTab({
+				url: '/pages/order/orderList'
+			});
+		},
+		UpdeteUseInfo(){
+			uni.navigateTo({
+				url:"/pages/logs/peopleInfo?type=1"
+			})
+		},
+		//上传头像
+		uploadUserPic(){
+			let that = this;
+			uni.chooseImage({
+				count: 1,
+				success: (chooseImageRes) => {
+					const tempFilePaths = chooseImageRes.tempFilePaths;
+					uni.uploadFile({
+						url: that.apiUrl + '/Account/ChangeLogo', //仅为示例，非真实的接口地址
+						header: { "token": that.token, "appId": that.appId },
+						filePath: tempFilePaths[0],
+						name: 'file',
+						success: (res) => {
+							let data = JSON.parse(res.data);
+							if(data.errCode == 200){
+								that.userInfo.logo = data.data;
+							}
+						}
+					});
+				},
+			});
+		},
+		//退出登录
+		btnExit(){
+			let that = this;
+			that.$util.networkRequest({
+				url: "/Account/Logout",
+				method: "POST",
+				success: res => {
+					uni.removeStorageSync('token');
+					uni.navigateTo({url: "/pages/logs/logs"});
+				}
+			});
+		},
+		goPage(_url){
+			if(this.goLogin() != false) return false;
+			uni.navigateTo({ url:'/pages/me/' + _url })
+		},
+		goLogin(){
+			if(this.isLogin) return false;
+			uni.navigateTo({url: "/pages/logs/logs"});
+		},
+		//拨打电话
+		phoneCall(){
+			uni.makePhoneCall({
+				phoneNumber: this.tel //仅为示例
+			});
+		}
+	}
+}
+</script>
