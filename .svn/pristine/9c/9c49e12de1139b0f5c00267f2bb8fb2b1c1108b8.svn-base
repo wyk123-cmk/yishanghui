@@ -1,0 +1,96 @@
+<style scoped>
+	@import '../../common/css/me/reportForms.css';
+</style>
+<template>
+<view>
+	<view class="e-s-t">员工发货地统计</view>
+	<view class="e-time">2020年8月</view>
+	<view class="total-con">
+		<view class="sort" @click="isSort=true">
+			<text class="iconfont icon-paixu"></text>
+			<text class="txt">{{sortIndex==0?'按金额':'按发货单'}}</text>
+		</view>
+		<text>共发货280单</text>
+		<text>¥3290.56</text>
+		<view class="select" v-if="isSort">
+			<view :style="sortIndex==0?'color: #4285F4':''" @click="sortClick(0)">按金额</view>
+			<view :style="sortIndex==1?'color: #4285F4':''" @click="sortClick(1)">按发货单</view>
+		</view>
+	</view>
+	<scroll-view class="scroll-wrapper employee" scroll-y="true" @scrolltolower="scrolltolower">
+		<view class="list">
+			<view class="name">张三
+				<text>{{sortIndex==1?'¥1934.01':'50单'}}</text>
+			</view>
+			<view class="classify">
+				<view>
+					<image src="../../static/images/caigou.png"></image>
+					30单&nbsp;&nbsp;¥1652.67
+				</view>
+				<view>
+					<image src="../../static/images/kuaidixiaoge.png"></image>
+					20单&nbsp;&nbsp;¥264.34
+				</view>
+			</view>
+			<view class="total-num">{{sortIndex==0?'¥1934.01':'50单'}}</view>
+		</view>
+	</scroll-view>
+</view>
+</template>
+<script>
+export default {
+	data() {
+		return {
+			isSort: false,
+			sortIndex: 0,
+			page: 1,
+			limit: 5,
+			total: 0,
+			dataList: []
+		}
+	},
+	onLoad(){
+		this.sortClick(1);
+	},
+	methods: {
+		sortClick: function(type){
+			this.isSort = false;
+			if(this.sortIndex == type) return false;
+			this.sortIndex = type;
+			
+			this.page = 1;
+			this.total = 0;
+			this.dataList = [];
+			this.getList()
+		},
+		scrolltolower: function(){
+			if(Math.ceil(this.total / this.limit) >= this.page){
+				this.getList();
+			}
+		},
+		getList: function(){
+			// const that = this;
+			// uni.showLoading({ title: '加载中...' });
+			// that.$util.networkRequest({
+			// 	url: "/Invoice/GetList",
+			// 	data: {
+			// 		page: that.page,
+			// 		limit: that.limit
+			// 	},
+			// 	success: function(res){
+			// 		let total = res.total;
+			// 		if(total == 0 || res.list.length == 0) return false;
+			// 		res.list.filter(item => {
+			// 			if(item.postTime != null && item.postTime != ""){
+			// 				item.postTime = that.$util.formatDate.format(item.postTime,"yyyy-MM-dd hh:mm")
+			// 			}
+			// 		});
+			// 		that.page++;
+			// 		that.total = total;
+			// 		that.dataList = that.dataList.concat(res.list);
+			// 	}
+			// })
+		}
+	}
+}
+</script>

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "运费估算",
+  "usingComponents": {
+    "address-picker": "/components/address-picker/address-picker",
+    "send-time-picker": "/components/sendTime-picker/sendTime-picker"
+  }
+}

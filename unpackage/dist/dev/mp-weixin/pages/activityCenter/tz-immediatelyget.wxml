@@ -1,0 +1,1 @@
+<view class="bg_bod data-v-695629a6"><image class="img_lp data-v-695629a6" src="../../static/images/lq.png"></image><button data-event-opts="{{[['tap',[['immediatelyget']]]]}}" class="btn_lq data-v-695629a6" bindtap="__e">{{btntext}}</button></view>

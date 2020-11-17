@@ -1,0 +1,63 @@
+<template>
+	<view>
+		<button @click="immediatelyget()">立即领取</button>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		methods: {
+			immediatelyget(){
+					console.log(uni.getStorageSync('token'));
+			
+				if(uni.getStorageSync("token")=="" || uni.getStorageSync('token')==undefined  || uni.getStorageSync('token')==null){
+						let app = getApp();
+					// #ifdef H5
+						app.isToken();
+					// #endif
+					// #ifdef MP-WEIXIN
+					   this.authorize_mp_wx();
+					// #endif
+				
+				
+				}
+				else{
+					this.$util.showToast('领取成功');
+					uni.switchTab({
+						url:"/pages/index/index"
+					})
+				}
+			},
+			//小程序授权登录
+			authorize_mp_wx: function(){
+				let that = this;
+				//判断用户是否授权
+				wx.getSetting({
+					success (res) {
+						if(res.authSetting["scope.userInfo"] == true){
+							//已授权
+							console.log('已授权');
+							that.$util._mp_wx_login("logs");
+						}
+						if(res.authSetting["scope.userInfo"] == false||res.authSetting["scope.userInfo"] == undefined){
+							// 未授权
+							console.log('未授权');
+							console.log(that);
+							that.$util.isGoLogin = false;
+							uni.navigateTo({url: "/pages/logs/logs?state=false"});
+						}
+					}
+				})
+			},
+		}
+	}
+</script>
+
+<style>
+
+</style>

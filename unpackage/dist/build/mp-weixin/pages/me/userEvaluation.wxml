@@ -1,0 +1,1 @@
+<view><page-imges vue-id="b168c1de-1" show="{{showImage}}" bind:__l="__l"></page-imges><userevaluation vue-id="b168c1de-2" show="{{shoupj}}" bind:__l="__l"></userevaluation></view>

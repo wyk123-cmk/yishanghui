@@ -1,0 +1,111 @@
+
+.tips.data-v-55644bfe{
+	color: #999999;
+	font-size: 12px;
+	padding: 10px 15px;
+	display: block;
+}
+.label-list.data-v-55644bfe{
+	background-color: #FFFFFF;
+	padding: 0 15px;
+	line-height: 44px;
+	display: box;
+	display: -webkit-box;
+	border-bottom: 1px solid #F7F7F7;
+	position: relative;
+}
+.label-list picker.data-v-55644bfe,
+.label-list input.data-v-55644bfe{
+	line-height: 44px;
+	height: 44px;
+	width: 77%;
+	margin-left: 10px;
+}
+.label-list .iconfont.data-v-55644bfe{
+	position: absolute;
+	right: 10px;
+	color: #DBDBDB;
+}
+.company-name-list.data-v-55644bfe{
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 44px;
+	z-index: 2;
+	padding: 0 15px;
+	background-color: #FFFFFF;
+	border: 1px solid #F7F7F7;
+}
+.company-name-list text.data-v-55644bfe{
+	display: block;
+	line-height: 36px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.upload-box.data-v-55644bfe{
+	background-color: #FFFFFF;
+	margin-top: 10px;
+	padding: 15px;
+}
+.upload-box .pic-list.data-v-55644bfe{
+	display: -webkit-box;
+	display: flex;
+	display: -webkit-flex;
+	margin-top: 15px;
+}
+.upload-box .pic-list > view.data-v-55644bfe{
+	width: 50%;
+	text-align: center;
+	color: #666;
+	font-size: 12px;
+	position: relative;
+}
+.upload-box .pic-list .img.data-v-55644bfe{
+	width: 100%;
+	display: block;
+	margin-bottom: 5px;
+}
+.upload-box .doc.data-v-55644bfe{
+	margin-top: 10px;
+}
+.upload-box .doc text.data-v-55644bfe{
+	color: #FF0000;
+}
+.upload-box .note.data-v-55644bfe{
+	font-size: 12px;
+	color: #999;
+}
+.agree.data-v-55644bfe{
+	display: -webkit-box;
+	display: flex;
+	display: -webkit-flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	margin: 10px 12px;
+}
+.agree radio.data-v-55644bfe{
+	-webkit-transform: scale(0.7);
+	        transform: scale(0.7);
+}
+.agree text.data-v-55644bfe{
+	color: #4285f4;
+}
+.notice-popup.data-v-55644bfe{
+	top: 20px;
+	position: fixed;
+	background: #fff;
+	left: 10px;
+	right: 10px;
+	bottom: 20px;
+	overflow-y: auto;
+	font-size: 15px;
+	z-index: 1000;
+}
+
+
+
+
+
+

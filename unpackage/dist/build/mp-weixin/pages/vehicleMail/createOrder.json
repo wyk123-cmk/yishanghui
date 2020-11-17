@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "创建订单",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "send-time-picker": "/components/sendTime-picker/sendTime-picker"
+  }
+}

@@ -1,0 +1,116 @@
+
+.tab-nav.data-v-c74e76c6{
+	border-top: 1px solid #EFEFEF;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	padding: 0 15px;
+}
+.tab-nav > view.data-v-c74e76c6{
+	text-align: center;
+	padding: 10px 5px;
+	border-bottom: 2px solid #FFFFFF;
+}
+.tab-nav > view.active.data-v-c74e76c6{
+	color: #4285F4;
+	border-color: #4285F4;
+}
+.search.data-v-c74e76c6{
+	background-color: #F7F7F7;
+	padding: 5px 10px;
+}
+.search input.data-v-c74e76c6{
+	display: block;
+	width: calc(100% - 10px);
+	background-color: #FFFFFF;
+	height: 40px;
+	border-radius: 3px;
+	padding: 0 5px;
+	font-size: 14px;
+}
+.scroll-wrapper.data-v-c74e76c6{
+	position: absolute;
+	top: 93px;
+	bottom: 46px;
+	left: 0;
+	right: 0;
+	overflow-y: auto;
+	background-color: #F7F7F7;
+}
+.mail-list.data-v-c74e76c6{
+	background-color: #FFFFFF;
+	margin: 0 10px 10px;
+	border-radius: 3px;
+}
+.mail-list .qy_img.data-v-c74e76c6{
+	width: 18px;
+	height: 15px;
+	float: left;
+	margin-top: 3px;
+	margin-right: 3px;
+}
+.mail-list .num.data-v-c74e76c6{
+	border-bottom: 1px solid #f7f7f7;
+	padding: 10px;
+}
+.mail-list .order-con.data-v-c74e76c6{
+	padding: 15px 10px;
+	display: box;
+	display: -webkit-box;
+	display: -moz-box;
+}
+.mail-list .order-con .info.data-v-c74e76c6{
+	width: calc(100% - 10px);
+	width: -moz-calc(100% - 10px);
+}
+.mail-list .order-con .info text.data-v-c74e76c6{
+	display: block;
+	width: 100%;
+	color: #9B9B9B;
+}
+.mail-list .order-con .info .name.data-v-c74e76c6{
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	color: #333333;
+	font-size: 16px;
+	margin: 5px 0;
+}
+.mail-list .order-con .info .money.data-v-c74e76c6{
+	color: #F09236;
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 10px;
+}
+.mail-list .state.data-v-c74e76c6{
+	border-top: 1px solid #f7f7f7;
+}
+.mail-list .state > view.data-v-c74e76c6{
+	width: calc(100% / 3 - 1px);
+	width: -moz-calc(100% / 3 - 1px);
+	display: inline-block;
+	text-align: center;
+	border-left: 1px solid #f7f7f7;
+	margin: 10px 0;
+}
+.mail-list .state > view.data-v-c74e76c6:first-child{
+	border-left: 0;
+}
+.mail-list .state text.data-v-c74e76c6{
+	display: block;
+}
+.mail-list .state text.data-v-c74e76c6:first-child{
+	color: #9B9B9B;
+	padding-bottom: 5px;
+}
+.mail-list .state text.data-v-c74e76c6:last-child{
+	width: 90%;
+	margin: 0 auto;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+

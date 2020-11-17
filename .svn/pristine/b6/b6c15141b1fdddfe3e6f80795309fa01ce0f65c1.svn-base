@@ -1,0 +1,361 @@
+<template>
+<view class="page-bg">
+	<view class="price-item-list" v-for="(item, i) in platformList" :key="i">
+		<view class="big-title">
+			{{item.companyCode != code?"平台保险 · ":""}}
+			{{item.companyName}}
+			<checkbox class="scale9" :checked="isChecke==i" @click="goChecke(i)"></checkbox>
+		</view>
+		<view class="input-price">
+			<view>
+				¥<input type="number" placeholder="输入保价金额" @input="inputAmount($event,i,item.companyCode)" v-model="item.amount" />
+			</view>
+			<view>
+				<text class="money">¥ {{item.money}}</text>
+				<text>预估费用</text>
+			</view>
+		</view>
+		<view class="note" v-if="item.isShow">注:保费不能超过{{item.insuranceUpper}}元</view>
+		<view class="additional" v-if="item.companyCode != code">
+			<view>附加险(不收费)</view>
+			<view><text class="iconfont icon-dui"></text>国内公路货物运输盗抢险</view>
+			<view><text class="iconfont icon-dui"></text>货物运输罢工险</view>
+			<view><text class="iconfont icon-dui"></text>货运险附加哄抢责任条款</view>
+			<view><text class="iconfont icon-dui"></text>偷窃提货不着险</view>
+		</view>
+		<view class="explain" v-if="item.insuranceMemo!=''" @click="clickPopupHtml(item.insuranceMemo)">
+			<text class="iconfont icon-yiwen"></text>
+			<text>{{item.companyCode != code?"平台保险 · ":item.companyName}}保险说明</text>
+			<text class="iconfont icon--right-jian"></text>
+		</view>
+	</view>
+	<view class="agree" v-if="isChecke!=0&&isChecke!=null">
+		<checkbox class="check" :checked="checkedAgree" @click="checkedAgree=!checkedAgree"></checkbox>
+			请阅读并同意
+			<text @click="clickPopupHtml(platformList[isChecke].agreementContent)">《{{platformList[isChecke].agreementUrl}}》</text>
+	</view>
+	<view class="footer">
+		<view>
+			预估保费: ¥<text>{{checkeMoney}}</text>
+		</view>
+		<button @click="btnOkPrice">我要投保</button>
+		<button @click="btnNoPrice" class="no" v-if="isPrice">不报价</button>
+	</view>
+	<view v-if="isPopup" @click="isPopup=false">
+		<view class="v-model"></view>
+		<view class="popup-txt" v-html="popupHtml"></view>
+	</view>
+</view>
+</template>
+<script>
+	export default {
+		data() {
+			return {
+				type: "",
+				code: "",
+				mark: "", //标示1--整车寄件
+				checkeMoney: "0.00",
+				platformList: [],
+				isChecke: null,
+				isPopup: false,
+				checkedAgree: false,
+				popupHtml: "",
+				isPrice: false,
+			}
+		},
+		onLoad(options) {
+			const that = this;
+			that.type = options.type;
+			that.code = options.code;
+			that.mark = options.mark;
+			that.isPrice = that.type == "small" ? true : false;
+			let companyTxt = "";
+			if(that.code == "db001") companyTxt = "德邦保价";
+			else if(that.code == "sf001") companyTxt = "顺丰保价";
+			else if(that.code == "ky001") companyTxt = "快运保价";
+			let compayData = [
+				{
+					companyCode: that.code,
+					companyName: companyTxt,
+					insuranceUpper: options.upperAmount,
+					insuranceMemo: that.$store.state.expressDeliveryInfo.companyAgreement,
+					amount: "", 
+					money: "0.00", 
+					isShow: false
+				}
+			]
+			that.platformList = compayData;
+			that.getList();
+		},
+		methods: {
+			//不保价
+			btnNoPrice: function(){
+				this.$store.state.expressDeliveryInfo.insuredPrice = {
+					price: 0,
+					amount: "不保价"
+				}
+				this.$util.navigateBack(this);
+			},
+			//确认保价
+			btnOkPrice: function(){
+				let i = this.isChecke;
+				if( i == null){
+					this.$util.showToast("请选择保价方式");
+					return false;
+				}
+				let param = {
+					amount: this.platformList[i].amount,
+					price: this.platformList[i].money,
+				}
+				if (parseFloat(param.amount) > parseFloat(this.platformList[i].insuranceUpper)) {
+					this.$util.showToast("保费不能超过￥" + this.platformList[i].insuranceUpper);
+					return false;
+				}
+				if (!this.$util.isNotEmpty(param.amount)) {
+					this.$util.showToast("请填写保价金额");
+					return false;
+				}
+				if(this.type == "big" && Number(param.amount) == 0){
+					this.$util.showToast("请填写保价金额");
+					return false;
+				}
+				if (!this.checkedAgree&&this.isChecke!=0) {
+					this.$util.showToast("请勾选同意保险条款");
+					return false;
+				}
+				uni.setStorage({key: 'insuredPrice', data: JSON.stringify({
+					amount: this.platformList[i].amount,
+					price: this.platformList[i].money,
+					index: this.isChecke
+				})});
+				this.$store.state.expressDeliveryInfo.insuredPrice = param;
+				this.$util.navigateBack(this);
+			},
+			//输入金额
+			inputAmount: function(e, index){
+				let that = this;
+				let val = e.detail.value;
+				that.isChecke = index;
+				if (val != "") {
+					if (parseFloat(val) > that.platformList[index].insuranceUpper) {
+						that.platformList[index].isShow = true;
+					} else {
+						that.platformList[index].isShow = false;
+						that.setPrice(index, val, that.platformList[index].companyCode);
+					}
+				} else {
+					that.platformList[index].isShow = false;
+					that.checkeMoney = that.platformList[index].money = "0.00";
+				}
+			},
+			//设置预估费用
+			setPrice: function(i, val, code){
+				let that = this;
+				let _url = "/InsuranceCompany/InsurancePrice";
+				if(that.platformList[i].companyCode == that.code){
+					_url = "/Price/InsurancePrice";
+				}
+				that.$util.networkRequest({
+					url: _url,
+					method: "POST",
+					data: {
+					  companyCode: code,
+					  amount: val
+					},
+					success: function(res) {
+						that.checkeMoney = that.platformList[i].money = res.toFixed(2);
+					}
+				});
+			},
+			goChecke: function(key){
+				this.isChecke = key;
+			},
+			clickPopupHtml: function(html){
+				this.popupHtml = html;
+				this.isPopup = true;
+			},
+			getList: function(){
+				let that = this;
+				uni.showLoading({
+					title: "数据加载..."
+				})
+				that.$util.networkRequest({
+					url: "/InsuranceCompany/GetList",
+					success: function(res) {
+						if(res.length == 0) return false;
+						res.forEach(item => {
+							item["amount"] = "";
+							item["money"] = "0.00";
+							item["isShow"] = false;
+						});
+						that.platformList = that.platformList.concat(res);
+						let storage = uni.getStorageSync("insuredPrice");
+						if(storage != "" && storage != undefined){
+							storage = JSON.parse(storage);
+							that.isChecke = storage.index;
+							that.platformList[storage.index].amount = storage.amount;
+							that.platformList[storage.index].money = storage.price;
+						}
+					}
+				});
+			}
+		}
+	}
+</script>
+<style scoped>
+.page-bg{
+	padding-bottom: 100px;
+}
+.price-item-list{
+	background-color: #FFFFFF;
+	border-radius: 10px;
+	margin: 15px 15px 10px;
+	padding: 10px;
+	box-shadow: 0 1px 5px #e4e4e4;
+}
+.price-item-list .big-title{
+	font-weight: bold;
+	font-size: 16px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.price-item-list .big-title text{
+	display: block;
+	background-color: #4285F4;
+	border-radius: 3px;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: normal;
+	padding: 2px 5px;
+	margin-right: 10px;
+}
+.price-item-list .note{
+	color: #FF0000;
+	font-size: 12px;
+	margin-left: 20px;
+}
+.price-item-list .input-price{
+	padding: 30px 0 0 20px;
+}
+.price-item-list .input-price > view{
+	width: 40%;
+}
+.price-item-list .input-price > view text{
+	display: block;
+	color: #999999;
+}
+.price-item-list .input-price > view:first-child{
+	font-size: 16px;
+	font-weight: bold;
+	width: 60%;
+}
+.price-item-list .input-price input{
+	width: 80%;
+	margin-left: 5px;
+	font-weight: normal;
+	line-height: 20px;
+}
+.price-item-list .input-price .money{
+	color: #FF0000;
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+.price-item-list .explain{
+	border-top: 1px solid #F5F5F5;
+	padding-top: 10px;
+	margin-top: 10px;
+	position: relative;
+	color: #999999;
+}
+.price-item-list .explain .icon-yiwen{
+	color: #4285F4;
+	font-size: 20px;
+	margin-right: 5px;
+}
+.price-item-list .explain .icon--right-jian{
+	position: absolute;
+	right: 0;
+	font-size: 14px;
+}
+.additional{
+	border-top: 1px solid #F5F5F5;
+	margin: 10px 20px 20px;
+	padding-top: 10px;
+}
+.additional > view{
+	margin-top: 8px;
+	color: #999999;
+}
+.additional > view text{
+	padding-right: 5px;
+	color: #4285F4;
+	font-size: 14px;
+}
+.agree{
+	margin: 0 10px;
+}
+.agree .check{
+	margin-top: -2px;
+	margin-right: -4px;
+	float: left;
+}
+.agree text{
+	color: #4285F4;
+}
+.footer{
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #FFFFFF;
+	border-top: 1px solid #F5F5F5;
+	padding: 15px;
+}
+.footer view{
+	float: left;
+	color: #FF0000;
+	height: 40px;
+	line-height: 40px;
+}
+.footer view text{
+	font-size: 22px;
+	padding-left: 3px;
+}
+.footer button{
+	float: right;
+	background-color: #4285F4;
+	border: 1px solid #4285F4;
+	width: 90px;
+	line-height: 40px;
+	color: #FFFFFF;
+	border-radius: 3px;
+	margin-left: 10px;
+}
+.footer button.no{
+	background-color: #FFFFFF;
+	color: #4285F4;
+}
+.popup-txt{
+	position: fixed;
+	top: 44px;
+	left: 15px;
+	right: 15px;
+	bottom: 50px;
+	overflow-y: auto;
+	z-index: 1000;
+	padding: 20px 15px;
+	background-color: #FFFFFF;
+}
+
+.price-item-list .big-title,
+.price-item-list .input-price,
+.price-item-list .input-price > view:first-child,
+.price-item-list .explain{
+	display: flex;
+	align-items: center;
+}
+
+</style>
+

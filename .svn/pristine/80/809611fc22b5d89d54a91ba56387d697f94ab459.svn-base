@@ -1,0 +1,412 @@
+<template>
+	<view>
+		<navigator url="/pages/me/explain?type=4" class="head-right">奖励金说明</navigator>
+		<view class="head-con">
+			<text>可提现金额</text>
+			<text class="money">¥200.00</text>
+			<text>本月预期收入不计入可提现余额</text>
+			<view class="btn-list">
+				<navigator class="btn" url="/pages/me/withdrawalRecord">资金明细</navigator>
+				<navigator class="btn" url="/pages/me/bonusCash">立即提现</navigator>
+			</view>
+		</view>
+		<view class="money-list">
+			<view>
+				<text>累计收益</text>
+				<text class="num">¥420.00</text>
+			</view>
+			<view>
+				<text>本月预期收益</text>
+				<text class="num">¥20</text>
+			</view>
+		</view>
+		<view class="small-title">
+			我的企业
+			<view @click="isCompany=true">3<text class="iconfont icon--right-jian"></text></view>
+		</view>
+		<view class="small-title">
+			奖励金收益
+		</view>
+		<view class="qiun-columns">
+			<view class="qiun-charts" >
+				<canvas canvas-id="canvasColumn" id="canvasColumn" class="charts"></canvas>
+			</view>
+		</view>
+		<view class="bounty-list">
+			<view class="date">
+				<picker class="picker" mode="multiSelector" :range="startArray" :value="startIndex" @change="startPickerChange" @columnchange="startPickerColumn">
+					{{startDate}}<text class="iconfont icon-shouqi"></text>
+				</picker>
+				<view class="profit">
+					<text>累计运费 ￥2000</text>
+					<text>收益 ￥20</text>
+				</view>
+			</view>
+			<view class="item-list">
+				<view>
+					<text>运费金额</text>
+					<text class="time">4-25 15:23</text>
+				</view>
+				<view class="num">+3000</view>
+			</view>
+		</view>
+		<view class="share-img">
+			<button>生成我的分享海报</button>
+		</view>	
+		<view v-if="isCompany">
+			<view class="v-model" @click="isCompany=false"></view>
+			<view class="company-con">
+				<view class="title">我邀请的企业<text @click="isCompany=false" class="iconfont icon-quxiao"></text></view>
+				<view class="note">共有6家企业，4家已为您产生收益</view>
+				<view class="company-list">
+					<view>
+						<text class="name">仪众宏鑫北京科技发展有限公司</text>
+						<text class="time">2019.09.12-2020.09.12</text>
+						<image src="../../static/images/ygq.png"></image>
+					</view>
+				</view>
+				
+				<button>继续邀请企业</button>
+			</view>
+		</view>
+	</view>
+</template>
+<script>
+import uCharts from '../../components/u-charts/u-charts.js';
+export default {
+	data() {
+		return {
+			startYear: 2019,
+			startDate: "",
+			startArray: [],
+			startIndex: [0, 0],
+			isCompany: false,
+			
+			canvasObj: {},
+		}
+	},
+	onLoad(){
+		
+		this.getServerData();
+		//this.fillData(Data);
+		// const that = this;
+		// that.$util.networkRequest({
+		// 	url : "/Referral/GetReferralInfo",
+		// 	success: function(res){
+		// 		that.amount = res.amount.toFixed(2);
+		// 		that.count = res.count;
+		// 	}
+		// });
+		// that.getList();
+	},
+	created(){
+		const date = new Date();
+		var yearArr = [];
+		for(var i = this.startYear; i <= date.getFullYear(); i++){
+			yearArr.push(i+"年")
+		}
+		this.startArray[0] = yearArr;
+		let len = (yearArr.length - 1);
+		var start_m = this.$util.getMonth(yearArr[len]);
+		this.startArray[1] = start_m;
+		this.startIndex = [len, start_m.length - 1];
+		this.startDate = date.getFullYear()+"年"+(date.getMonth() + 1)+"月";
+	},
+	methods: {
+		getServerData() {
+			let chartData = {
+					"categories":["1","2","3","4","5","6","本月","8","9","10","11","12"],
+					"series":[
+						{"data":[{value: 52,color: "#fa414b,#F4B769"},20,45,37,52,34]},
+					]
+				}
+			const that = this;
+			let cWidth = uni.upx2px(750);
+			let cHeight = uni.upx2px(320);
+			
+			let a = this.canvasObj["canvasColumn"] = new uCharts({
+				$this: that,
+				canvasId: "canvasColumn",
+				type: 'column',
+				padding: [15,15,15,0],
+				legend:{ show: false },
+				fontSize: 12,
+				animation: true,
+				categories: chartData.categories,
+				series: chartData.series,
+				colors: ['#ff8b00,#FFFFFF'],
+				xAxis: {
+					disableGrid: true
+				},
+				yAxis: {
+					gridColor:'#EB784C',
+					format:(val)=>{ return ""; }
+				},
+				width: cWidth,
+				height: cHeight,
+				extra: {
+					column: {
+						type: 'group',
+						width: 15
+					}
+				}
+			});
+		},
+		
+		//时间
+		startPickerChange: function(e){
+			var index = e.detail.value;
+			var y = this.startArray[0][index[0]].split("年")[0];
+			var m = this.startArray[1][index[1]].split("月")[0];
+			var _date = y+'年'+m+'月';
+			this.startDate = _date;
+			this.page = 1;
+			this.dataList = [];
+			this.getList();
+		},
+		startPickerColumn: function(e){
+			let date = new Date();
+			var _value = e.detail.value;
+			this.startIndex[e.detail.column] = _value;
+			switch (e.detail.column) {
+				case 0: //拖动第1列
+					this.startArray[1] = this.$util.getMonth(this.startArray[0][_value]);
+					this.startIndex.splice(1, 1, 0)
+					break;
+			}
+			this.$forceUpdate()
+		},
+		// scrolltolower:  function() {
+		// 	if(Math.ceil(this.total / this.limit) >= this.page){
+		// 		this.getList();
+		// 	}
+		// },
+		// getList: function(){
+		// 	const that = this;
+		// 	uni.showLoading({ title: '加载中...' });
+		// 	that.$util.networkRequest({
+		// 		url: "/Referral/GetReferralDetail",
+		// 		data: {
+		// 			page: that.page,
+		// 			limit: that.limit
+		// 		},
+		// 		success: function(res){
+		// 			let total = res.total;
+		// 			if(total == 0 || res.list.length == 0) return false;
+		// 			res.list.filter(item => {
+		// 				item.date = that.$util.formatDate.format(item.date,"yyyy年MM月");
+		// 			});
+		// 			that.page++;
+		// 			that.total = total;
+		// 			that.dataList = that.dataList.concat(res.list);
+		// 		}
+		// 	})
+		// }
+	}
+}
+</script>
+<style scoped>
+/* #ifdef MP-WEIXIN */
+.head-right{
+	background: rgba(255, 255, 255, 0.2);
+}
+/* #endif */
+.head-con{
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	background-image: linear-gradient(26deg ,#fa414b, #fc6926, #fd8c05);
+	color: #fff;
+	padding: 30px 0 60px;
+}
+.head-con text{
+	display: block;
+	text-align: center;
+	font-size: 12px;
+}
+.head-con text.money{
+	font-size: 30px;
+	margin: 0px 0 10px;
+}
+.head-con .btn-list{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 30px;
+}
+.head-con .btn{
+	display: block;
+	border-radius: 50px;
+	border: 1px solid #FFFFFF;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+	color: #FA4548;
+	width: 40%;
+	background-color: #FFFFFF;
+	font-size: 14px;
+	line-height: 14px;
+	margin: 0 10px;
+}
+.head-con .btn:first-child{
+	color: #FFFFFF;
+	background-color: transparent;
+}
+.money-list{
+	background-color: #FFFFFF;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 2px 4px #eee;
+	margin: -35px 15px 0;
+	padding: 14px 0;
+	border-radius: 6px;
+}
+.money-list > view{
+	text-align: center;
+	border-left: 1px solid #F0F0F0;
+	width: 50%;
+}
+.money-list > view text{
+	display: block;
+	font-size: 15px;
+}
+.money-list > view text.num{
+	color: #999;
+	font-size: 12px;
+}
+.small-title{
+	height: 40px;
+	line-height: 40px;
+	padding: 0 15px;
+	border-top: 10px solid #F7F7F7;
+	margin-top: 10px;
+	font-weight: bold;
+}
+.small-title > view{
+	float: right;
+	color: #999;
+	font-weight: normal;
+}
+.small-title > view .iconfont{
+	color: #999;
+	font-size: 12px;
+}
+
+.bounty-list{
+	padding-bottom: 80px;
+	border-top: 10px solid #F7F7F7;
+}
+.bounty-list .date{
+	background-color: #F7F7F7;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	/* height: 40px; */
+	padding: 0 15px 10px;
+}
+.bounty-list .date .iconfont{
+	font-size: 12px;
+	padding-left: 2px;
+}
+.bounty-list .date .profit{
+	color: #999999;
+}
+.bounty-list .date .profit text{
+	margin-left: 14px;
+}
+.item-list{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 15px;
+	border-bottom: 1px solid #eee;
+}
+.item-list text{
+	display: block;
+}
+.item-list .time{
+	font-size: 12px;
+	color: #999;
+}
+.item-list .num{
+	color: #FA4548;
+}
+.share-img{
+	position: fixed;
+	bottom: 0;
+	left: 15px;
+	right: 15px;
+	padding-bottom: 20px;
+	background-color: #FFFFFF;
+}
+.share-img button,
+.company-con button{
+	background-image: linear-gradient( #fd8c05, #fa414b);
+	font-size: 16px;
+	color: #FFFFFF;
+	text-align: center;
+	border-radius: 4px;
+	line-height: 46px;
+}
+.company-con{
+	-webkit-transform: translate3d(0, -50%, 0);
+	transform: translate3d(0, -50%, 0);
+	background-color: #fff;
+	position: absolute;
+	top: 50%;
+	left: 20px;
+	right: 20px;
+	z-index: 1000;
+	border-radius: 10px;
+	padding: 0 10px 20px;
+}
+.company-con .title{
+	font-size: 18px;
+	text-align: center;
+	margin-top: 15px;
+}
+.company-con .title .iconfont{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 20px;
+}
+.company-con .note{
+	text-align: center;
+	font-size: 12px;
+	color: #999999;
+}
+.company-con .company-list{
+	height: 220px;
+	overflow-y: auto;
+	margin-bottom: 10px;
+}
+.company-con .company-list > view{
+	position: relative;
+	border-bottom: 1px solid #F7F7F7;
+	margin: 0 15px;
+	padding: 10px 0;
+}
+.company-con .name{
+	display: block;
+	font-size: 14px;
+}
+.company-con .time{
+	display: block;
+	color: #999999;
+	font-size: 12px;
+	padding-top: 3px;
+}
+.company-con image{
+	position: absolute;
+	right: 10px;
+	top: 20px;
+	width: 30px;
+	height: 30px;
+}
+
+.charts{
+	width: 100%; 
+	height: 320upx;
+}
+</style>

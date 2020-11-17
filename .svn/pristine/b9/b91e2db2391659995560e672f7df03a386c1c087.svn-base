@@ -1,0 +1,114 @@
+.border{
+	border-top: 6px solid #EEEEEE;
+}
+.user-info{
+	background-color: #F7F7F7;
+	margin: 0 15px 15px;
+	padding: 0 15px 15px;
+	line-height: 24px;
+}
+.user-info .iconfont{
+	font-size: 24px;
+	margin-right: 8px;
+}
+.user-info .iconfont,
+.user-info .name{
+	float: left;
+	display: block;
+	padding-top: 20px;
+}
+.user-info .name{
+	font-size: 16px;
+}
+.user-info .iconfont.icon-shou{
+	color: #EF9A42;
+}
+.user-info .phone{
+	float: right;
+	padding-top: 20px;
+}
+.user-info .address{
+	display: block;
+	font-size: 13px;
+	color: #666666;
+	padding: 5px 0;
+	clear: both;
+}
+.item-list{
+	padding: 15px 15px 25px;
+}
+.item-list .samll-title{
+	border-left: 2px solid #fd9523;
+	padding-left: 5px;
+}
+.item-list .label{
+	font-size: 12px;
+	padding-left: 8px;
+	padding-top: 8px;
+	color: #666;
+}
+.item-list .label text{
+	float: right;
+}
+.item-list .label .market{
+	text-decoration: line-through;
+	color: #999;
+	padding-right: 10px;
+}
+.item-list .label.price-title{
+	font-size: 14px;
+	color: #333;
+}
+.item-list .label.price-title text{
+	color: #fd9523;
+}
+.item-list .label .iconfont{
+	float: inherit;
+	margin-left: 3px;
+}
+.remark{
+	background-color: #F5F5F5;
+	font-size: 12px;
+	margin-top: 15px;
+	padding: 10px;
+	border-radius: 3px;
+}
+.take-list .pic{
+	display: inline-block;
+	width: 80px;
+	height: 80px;
+	overflow: hidden;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin-right: 8px;
+	margin-top: 10px;
+	border: 1px solid #eee;
+}
+.take-list .file{
+	font-size: 12px;
+	
+}
+.take-list .file > view{
+	display: inline-block;
+	width: 50%;
+	margin-top: 10px;
+}
+.take-list .file image{
+	width: 20px;
+	float: left;
+}
+.take-list .file text{
+	float: left;
+	line-height: 20px;
+}
+.take-list .file text.name{
+	max-width: 40%;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.take-list .file text.down{
+	color: #0F74EB;
+	text-decoration: underline;
+}

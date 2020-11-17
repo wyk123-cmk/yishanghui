@@ -1,0 +1,200 @@
+
+.top_user.data-v-d68a6d1a{
+	padding:10px 15px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	width:calc(100%-30px);
+	text-align: center;
+	height:40px;
+	line-height: 40px;
+	color: #000000;
+	font-weight: bold;
+}
+.name_ri.data-v-d68a6d1a{
+	margin-right: 8px;
+}
+.left_top image.data-v-d68a6d1a{
+	width:35px;
+	height:35px;
+	margin-right: 5px;
+	vertical-align: middle;
+}
+.left_top.data-v-d68a6d1a{
+	-webkit-align-self:flex-start;
+	        align-self:flex-start;
+	text-align: center;
+	margin-right:auto;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	line-height: 40px;
+	font-size: 16px;
+}
+.rigt_top.data-v-d68a6d1a{
+	font-size: 16px;
+	-webkit-align-self: flex-end;
+	        align-self: flex-end;
+}
+.account.data-v-d68a6d1a{
+	margin:10px 15px;
+	width:calc(100%-30px);
+	background: #4385f5;
+	border-radius: 12px;
+	padding: 15px;
+	position: relative;
+	background-image: -webkit-linear-gradient(top, #428bf4, #3ccafc);
+	background-image: linear-gradient(to bottom, #428bf4, #3ccafc);
+}
+.cz.data-v-d68a6d1a{
+	background-color: #FFFFFF;
+	padding: 2px 12px;
+	border:1px solid #FFFFFF;
+	border-radius: 3px;
+	color: #E7501E;
+	position: absolute;
+	right:15px;
+	top:50px;
+}
+.bot_view.data-v-d68a6d1a,
+.qy_blo.data-v-d68a6d1a{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	padding: 15px 15px 0;
+	-webkit-flex-wrap: wrap;
+	        flex-wrap: wrap;
+}
+.qy_one.data-v-d68a6d1a{
+	width:25%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-justify-content: space-around;
+	        justify-content: space-around;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	padding-bottom: 15px;
+	height:60px;
+}
+.qy_one image.data-v-d68a6d1a{
+	width:30px;
+	height:25px;
+	margin-bottom: 6px;
+}
+.account .cmpy-name.data-v-d68a6d1a{
+	font-size: 16px;
+	padding: 5px 0 20px;
+	color: #FFFFFF;
+	display: block;
+}
+.account .amount-title.data-v-d68a6d1a{
+	font-size: 13px;
+	color: #eee;
+	padding-bottom: 15px;
+	display: block;
+}
+.account .amount.data-v-d68a6d1a{
+	font-size: 36px;
+	font-weight: bold;
+	color: #fff;
+	padding-bottom: 10px;
+}
+.account .amount > view.data-v-d68a6d1a{
+	font-size: 12px;
+	font-weight: normal;
+	color: #fff;
+	background: rgba(0, 0, 0, 0.1);
+	padding: 3px 10px;
+	margin-left: 10px;
+	border-radius: 20px;
+	display: inline;
+	vertical-align: middle;
+}
+.account .amount > view .num.data-v-d68a6d1a{
+	color: #ff822e;
+	font-size: 14px;
+}
+.me-comp.data-v-d68a6d1a{
+	background-color: #FFFFFF;
+	position: relative;
+	line-height: 40px;
+}
+.me-comp .pattern.data-v-d68a6d1a{
+	font-size: 22px;
+	position: absolute;
+	left: 15px;
+}
+.me-comp .words.data-v-d68a6d1a{
+	border-bottom: 1px solid #F7F7F7;
+	margin-left: 45px;
+}
+.me-comp .pattern.blue.data-v-d68a6d1a{
+	color: #4385f5;
+}
+.me-comp .pattern.orange.data-v-d68a6d1a{
+	color: #ff822e;
+}
+.me-comp .pattern.red.data-v-d68a6d1a{
+	color: #ff4544;
+}
+.me-comp .icon--right-jian.data-v-d68a6d1a{
+	float: right;
+	padding-right: 13px;
+	font-size: 14px;
+	color: #999;
+}
+.icon--right-jian.data-v-d68a6d1a:before{
+	float: right;
+	padding-left: 5px;
+}
+.exit.data-v-d68a6d1a{
+	background-color: #FFFFFF;
+	margin-top: 10px;
+	line-height: 44px;
+	color: #FF0000;
+}
+.marginT.data-v-d68a6d1a{
+	margin-top: 10px;
+}
+.leiji.data-v-d68a6d1a{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-justify-content: space-around;
+	        justify-content: space-around;
+	text-align: center;
+}
+.ljys.data-v-d68a6d1a{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+}
+.ljys label.data-v-d68a6d1a{
+	font-size: 12px;
+	line-height: 20px;
+	color: #FFFFFF;
+}
+.ljys text.data-v-d68a6d1a{
+	font-size: 16px;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.bordr_s.data-v-d68a6d1a{
+	width: 1px;
+	height: 32px;
+	background: #eee;
+}
+

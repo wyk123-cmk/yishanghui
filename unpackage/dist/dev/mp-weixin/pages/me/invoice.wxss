@@ -1,0 +1,68 @@
+
+.invoice-item-list.data-v-121ce3ef{
+	background-color: #FFFFFF;
+	margin-top: 8px;
+}
+.checkbox-radio.data-v-121ce3ef{
+	color: #999999;
+	border-bottom: 1px solid #EEEEEE;
+	padding: 10px;
+	line-height: 14px;
+	display: -webkit-box;
+	display: flex;
+	display: -webkit-flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+.invoice-item-list .transport-o.data-v-121ce3ef{
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+.invoice-item-list .transport-o .price.data-v-121ce3ef{
+	color: #4285f4;
+	font-size: 22px;
+	border-left: 1px dashed #EEEEEE;
+	padding: 0 15px;
+}
+.scroll-wrapper.data-v-121ce3ef{
+	position: absolute;
+	top: 40px;
+	left: 0;
+	right: 0;
+	bottom: 60px;
+	padding-bottom: 10px;
+}
+.invoice-footer.data-v-121ce3ef{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #FFFFFF;
+	height: 60px;
+	line-height: 60px;
+}
+.invoice-footer .checkbox-radio.data-v-121ce3ef{
+	color: #333333;
+	float: left;
+	border: 0;
+	margin-top: 8px;
+	font-size: 14px;
+}
+.amount.data-v-121ce3ef{
+	float: right;
+	padding-right: 30px;
+}
+.amount text.data-v-121ce3ef{
+	color: #FF0004;
+}
+.next-step.data-v-121ce3ef{
+	float: right;
+	background-color: #4285F4;
+	color: #FFFFFF;
+	border-radius: 0;
+	padding: 0 20px;
+	line-height: 60px;
+}
+

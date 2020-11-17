@@ -1,0 +1,146 @@
+
+.insure-con.data-v-05652243{
+	border-top: 1px solid #F5F5F5;
+	border-bottom: 10px solid #F5F5F5;
+	padding: 15px;
+	position: relative;
+}
+.insure-con .title.data-v-05652243{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+}
+.insure-con .title > view.data-v-05652243:first-child{
+	font-size: 16px;
+	font-weight: bold;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+.insure-con .title text.iconfont.data-v-05652243{
+	font-size: 12px;
+	color: #4285F4;
+	padding-left: 5px;
+}
+.insure-con .title text.data-v-05652243{
+	font-size: 14px;
+	color: #777777;
+}
+.insure-con .title text.money.data-v-05652243{
+	color: #FF0000;
+	padding-left: 8px;
+}
+.insure-con .title text.icon-copy.data-v-05652243{
+	font-size: 16px;
+	color: #999999;
+	margin-top: -1px;
+	margin-left: 5px;
+    display: block;
+}
+.insure-con .info.data-v-05652243{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+}
+.insure-con .info > view.data-v-05652243{
+	width: 50%;
+	padding-right: 20px;
+}
+.insure-con .info .label.data-v-05652243{
+	margin-top: 15px;
+	min-height: 40px;
+}
+.insure-con .info .label text.data-v-05652243{
+	display: block;
+	color: #777777;
+	font-size: 12px;
+	padding-bottom: 3px;
+}
+.insure-con .additional.data-v-05652243{
+	position: absolute;
+	top: 50px;
+	left: 0;
+	right: 0;
+	padding: 10px 25px;
+	background-color: #FFFFFF;
+	box-shadow: 0 10px 10px #ececec;
+}
+.insure-con .additional > view.data-v-05652243{
+	color: #999999;
+	margin-bottom: 8px;
+}
+.insure-con .additional text.data-v-05652243{
+	color: #4285F4;
+	font-size: 12px;
+	font-weight: bold;
+	padding-right: 8px;
+}
+.form-insure.data-v-05652243{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	padding: 20px 15px 0;
+}
+.form-insure > text.data-v-05652243{
+	line-height: 36px;
+}
+.form-insure input.data-v-05652243{
+	width: calc(100% - 80px);
+	height: 36px;
+	line-height: 36px;
+	padding: 0 5px;
+}
+.form-insure .pic-list.data-v-05652243{
+	width: calc(100% - 80px);
+}
+.form-insure .upload.data-v-05652243{
+	width: 63px;
+	height: 63px;
+	overflow: hidden;
+	display: inline-block;
+	margin-bottom: 5px;
+	position: relative;
+}
+.form-insure .upload image.data-v-05652243{
+	width: 100%;
+	height: 100%;
+}
+.form-insure .upload .icon-guanbi.data-v-05652243{
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 9;
+	color: #FF0000;
+}
+.form-insure input.data-v-05652243,
+.form-insure .upload.data-v-05652243{
+	margin-left: 10px;
+	border: 1px solid #e6e6e6;
+	border-radius: 3px;
+	position: relative;
+}
+.textarea.data-v-05652243{
+	margin: 10px 15px 40px;
+	padding: 5px;
+	background-color: #F7F7F7;
+	width: calc(100% - 40px);
+	height: 100px;
+	border-radius: 5px;
+	margin-bottom: 100px;
+}
+.fixed-btn.data-v-05652243{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+

@@ -1,0 +1,109 @@
+
+.content.data-v-35398b34 {
+	padding: 0 25px;
+}
+.main .logo-img.data-v-35398b34 {
+	width: 50px;
+	height: 50px;
+	display: block;
+	padding-top: 45px;
+}
+.main text.data-v-35398b34 {
+	display: block;
+}
+.main .title.data-v-35398b34 {
+	font-size: 22px;
+	margin-top: 25px;
+	font-weight: bold;
+	letter-spacing: 2px;
+}
+.main .note.data-v-35398b34 {
+	color: #999;
+	font-size: 12px;
+}
+.main .form.data-v-35398b34 {
+	margin-top: 40px;
+	display: block;
+}
+.main .form .input-column.data-v-35398b34 {
+	border-bottom: 1px solid #EEEEEE;
+	display: -webkit-box;
+	display: flex;
+	display: -webkit-flex;
+	margin-top: 22px;
+	height: 26px;
+	line-height: 26px;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+}
+.main .form .input-column input.data-v-35398b34 {
+	line-height: 26px;
+	width: 70%;
+}
+.main .form .input-column .code-btn.data-v-35398b34 {
+	text-align: right;
+	color: #4285F4;
+}
+.main .form button.data-v-35398b34 {
+	background-color: #4285F4;
+	color: #FFFFFF;
+	width: 100%;
+	margin-top: 30px;
+}
+.login-model.data-v-35398b34 {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 98;
+}
+.v-modal.data-v-35398b34 {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.7);
+	z-index: 99;
+}
+.login-model .box.data-v-35398b34 {
+	background: #fff;
+	border-radius: 5px;
+	position: absolute;
+	top: 50%;
+	margin-top: -105px;
+	left: 25px;
+	right: 25px;
+	z-index: 100;
+}
+.login-model .box text.data-v-35398b34 {
+	display: block;
+	font-size: 15px;
+}
+.login-model .title.data-v-35398b34 {
+	text-align: center;
+	font-size: 16px;
+	height: 44px;
+	line-height: 44px;
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 10px;
+}
+.login-model .box text.icon-weixin.data-v-35398b34 {
+	text-align: center;
+	color: #46bb36;
+	font-size: 40px;
+}
+.login-model .box text.txt.data-v-35398b34 {
+	padding: 10px 15px 0;
+}
+.login-model .box text.note.data-v-35398b34 {
+	color: #888888;
+}
+.login-model .box button.data-v-35398b34 {
+	margin: 25px 15px;
+	border-radius: 25px;
+	font-size: 15px;
+}
+

@@ -1,0 +1,128 @@
+
+.cost.data-v-ca469a56{
+	margin: 20px 15px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	line-height: 35px;
+}
+.cost input.data-v-ca469a56{
+	width: calc(100% - 90px);
+	height: 35px;
+	border-radius: 3px;
+	margin-left: 10px;
+	padding: 0 10px;
+	border: 1px solid #F1F1F1;
+}
+.type-con.data-v-ca469a56{
+	margin: 0 15px;
+}
+.type-item-list.data-v-ca469a56 {
+	border: 1px solid #eee;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	min-height: 40px;
+	padding: 13px 15px;
+	border-radius: 4px;
+	margin: 10px 0;
+	position: relative;
+}
+.type-item-list.active.data-v-ca469a56{
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADIBAMAAABfdrOtAAAAElBMVEVHcExChPRDhfVDhfZDhfZDhfWSmUY3AAAABXRSTlMAhdAtXaCVAi4AAAPMSURBVHja7drNcpswFAVgZNO92xnt3XHZO57JnkmHBzDmvP+rNP6JjUGCe67DWZVtxBy+SFxJRkWx/BUEGUVUQKCAQAGBAgIFBAoIFBAoIFBAoIBAAYECAgUECggUECggUECggEABgQICBQQKCBQQKCBQQKCAQAGBAgIFBAoIFBAoIFBAoIBAAYECAgUECggUECggUECggEABgQICBQQKCBQQKCBQQKCAQAGBAgIFBAoIFBAoIFBAoIBAAYECAgUECggUECggUECggEABgQICBQQKCBQQKCBQQKCAQAGBAgIFBAoIFBAoIFBAoIBAAYECAgUECggUECggUECggEABgQICBQQKCBQQKCBQQKCAYEFI9UKIEXLcFx/ukGDOeOG0hxGyLV4IsULObX94Q4yQzblt4wxhIEXlDDFC6nPb0jmEjZDu0vjdGcJA1s6X0Qg5XRqvnGXFBmn3w8YLQHajxotBGl9IsBeUz253lnoj5Nr44AsJREHpve1cSCQKiveYDwdxHvOhIKVvjucgjS8kEpWxX7aYkEBUxqeyxYRQEOdZosAUFO9ZokhURu9ZIg5S+papHOTgCglMZRyNX2NIZN5D54GlwBQU74GllyH4dkjjCuEga9dOK1AFJTF+LSF9yM9fM5VxMO1aQ3qQts7+77ppNwE5rz7XyZS2nu5Aokfq7KP++WpeurbY45PYTb4y9ncLREgY16ayylbGVNkyhMREATzkISvPLxLPHbDPdO5m9r0lXvZMdWrn31viZe/S5ekBaTwhMfPIT/17r4y58TsdEnJF8KnvH5CDJyRmi0fvTw9IUTlCEt24H//tXlCy43cyJOZ2av0+7kzzDjWPPP43X31fm+YdbkIc/nNOxfz4nQgJEzvb+0M8Ckp62p0LidPLhetT7ArD+M2HhJn1wuf10YdMjN98SJz8bebW91vrcoNcorS9Rm/mdRO71tok25eOX7iDYYH1dL07QuL8TufpWld8SLCsR/vXyvFBIJpW1sRymV/97vnlMv9c29ENDR8y91xHcvwmQ2b3I/XghgMfMr8f2Q3uqPiQ+Y1Vy43fRIhlY1Wz2z3PDrHjun0UYtohttT4HYdwW925aTcdQn0fMY7fUYj1Y+ieu8P3MXTL3eH7qnvk7nB+nq7t43cQQnye3pqm3UQI8539aJp2EyEE5PaqrMCGcAcGOt/BPgpy6fo3sCHsyYfj31DRISSEuvxHOOxXq4C0Asg9ZElI+ovdd18nAeRW6JaF3Er2spBWAekEkGvBXhhy/A8hhla9PKRd/h1pf1+Xmv8ArGGVJsJQ+BsAAAAASUVORK5CYII=) no-repeat bottom right;
+	background-size: 28px;
+	border: 1px solid #0f84f3;
+}
+.type-item-list .company.data-v-ca469a56{
+	width: 68%;
+	line-height: 20px;
+}
+.type-item-list .company text.data-v-ca469a56{
+	color: #999999;
+	font-size: 13px;
+	margin-left: 10px;
+}
+.type-item-list .note.data-v-ca469a56{
+	font-size: 12px;
+	color: #F09759;
+	line-height: 16px;
+	margin-top: 10px;
+}
+.type-item-list .price.data-v-ca469a56{
+	position: absolute;
+	top: 50%;
+	right: 15px;
+	-webkit-transform: translate3d(0, -50%, 0);
+	        transform: translate3d(0, -50%, 0);
+}
+.type-item-list .price text.data-v-ca469a56{
+	display: block;
+	font-size: 20px;
+	color: #FF0000;
+	text-align: right;
+	margin-bottom: 8px;
+	height: 20px;
+}
+.type-item-list .price text.error.data-v-ca469a56{
+	font-size: 13px;
+}
+.type-item-list .price text.no-line.data-v-ca469a56{
+	font-size: 12px;
+	color: #999;
+	text-decoration: line-through;
+}
+.explain.data-v-ca469a56{
+	margin: 20px 15px;
+	padding-bottom: 80px;
+}
+.explain > view.data-v-ca469a56{
+	padding: 10px;
+	background-color: #F7F9FF;
+	border-radius: 4px;
+	margin-top: 10px;
+}
+.footer.data-v-ca469a56{
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #FFFFFF;
+}
+.footer.data-v-ca469a56{
+	border-top: 1px solid #F5F5F5;
+	padding: 15px;
+}
+.footer view.data-v-ca469a56{
+	float: left;
+	color: #FF0000;
+	height: 40px;
+	line-height: 40px;
+}
+.footer view text.data-v-ca469a56{
+	font-size: 22px;
+	padding-left: 3px;
+}
+.footer button.data-v-ca469a56{
+	float: right;
+	background-color: #4285F4;
+	border: 1px solid #4285F4;
+	width: 90px;
+	line-height: 40px;
+	color: #FFFFFF;
+	border-radius: 3px;
+	margin-left: 10px;
+}
+.footer button.no.data-v-ca469a56{
+	background-color: #FFFFFF;
+	color: #4285F4;
+}
+

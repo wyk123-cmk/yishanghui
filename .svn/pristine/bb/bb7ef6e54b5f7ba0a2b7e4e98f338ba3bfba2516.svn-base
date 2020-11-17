@@ -1,0 +1,287 @@
+<style scoped>
+	@import '../../common/css/me/reportForms.css';
+</style>
+<template>
+<view class="page-bg">
+	<view class="search-con">
+		<view class="years">
+			<text :class="dateType==0?'active':''" @click="dateClick(0)">按月</text>
+			<text :class="dateType==1?'active':''" @click="dateClick(1)">按年</text>
+		</view>
+		<view class="choice-time">
+			<text class="iconfont icon-fanhui-"></text>
+			<picker mode="multiSelector" :range="startArray" :value="startIndex" @change="startPickerChange" @columnchange="startPickerColumn">
+				<view class="txt">{{startDate}}</view>
+			</picker>
+			<text class="iconfont icon--right-jian"></text>
+		</view>
+	</view>
+	<view class="money-list">
+		<view>
+			<text class="title">结算金额</text>
+			<view class="money">¥<text>3278.89</text></view>
+		</view>
+		<view>
+			<text class="title">市场金额</text>
+			<view class="money">¥<text>4378.89</text></view>
+		</view>
+		<view>
+			<text class="title">节省金额</text>
+			<view class="money">¥<text>1221.00</text></view>
+		</view>
+	</view>
+	<!-- 发货单量 eachar -->
+	<view class="con">
+		<view class="big-title">8月发货单量</view>
+		<view class="delivery-num">共发货234单</view>
+		<canvas canvas-id="canvasRing" id="canvasRing" class="charts"></canvas>
+	</view>
+	<!-- 员工发货统计 -->
+	<view class="employee con">
+		<view class="big-title">员工发货统计</view>
+		<view class="list">
+			<view class="name">张三<text>50单</text></view>
+			<view class="classify">
+				<view>
+					<image src="../../static/images/caigou.png"></image>
+					30单&nbsp;&nbsp;¥1652.67
+				</view>
+				<view>
+					<image src="../../static/images/kuaidixiaoge.png"></image>
+					20单&nbsp;&nbsp;¥264.34
+				</view>
+			</view>
+			<view class="total-num">¥1934.01</view>
+		</view>
+		<view class="more" @click="goMore('placeDelivery')">查看全部</view>
+	</view>
+	<!-- 寄送地统计 -->
+	<view class="con statistics">
+		<view class="big-title">寄送地统计</view>
+		<!-- eachar -->
+		<view>
+			<canvas canvas-id="canvasMap" id="canvasMap" class="charts"></canvas>
+		</view>
+		<!-- statistics -->
+		<view class="local">
+			<view class="title">寄送地统计</view>
+			<view>
+				<text>北京寄出</text>
+				<text class="send">234</text>
+			</view>
+			<view>
+				<text>上海收件</text>
+				<text class="rep">177</text>
+			</view>
+			<view>
+				<text>其他地寄出</text>
+				<text>78</text>
+			</view>
+		</view>
+		<view class="table">
+			<view class="tr">
+				<view class="th">城市</view>
+				<view class="th">寄件数量</view>
+				<view class="th">收件数量</view>
+			</view>
+			<view class="tr">
+				<view class="td">北京</view>
+				<view class="td send-num"><text>234</text></view>
+				<view class="td rep-num"><text>20</text></view>
+			</view>
+			<view class="tr">
+				<view class="td">上海</view>
+				<view class="td send-num"><text>234</text></view>
+				<view class="td rep-num"><text>20</text></view>
+			</view>
+		</view>
+		<view class="more" @click="goMore('sendStatistics')">查看全部</view>
+	</view>
+	<button class="btn-default-css" @click="download">生成PDF并下载到本地</button>
+</view>
+</template>
+<script>
+import uCharts from '../../components/u-charts/u-charts.js';
+var _self;
+export default {
+	data() {
+		return {
+			dateType: 0,
+			startYear: 2019,
+			startDate: "",
+			startArray: [],
+			startIndex: [0, 0],
+			
+			
+			cWidth:'',
+			cHeight:'',
+		}
+	},
+	onLoad(){
+		_self = this;
+		this.cWidth = uni.upx2px(750);
+		this.cHeight = uni.upx2px(500);
+		this.setPickDate();
+		this.getServerData();
+	},
+	methods: {
+		dateClick: function(type){
+			if(this.dateType == type) return false;
+			this.dateType = type;
+			this.setPickDate();
+		},
+		getServerData: function(){
+			let ringData = {"series":[
+					{
+						"name":"快运",
+						"data":130,
+						"textColor": "#999",
+						format: ()=>{
+							return "¥120.11;10单";
+						}
+					},
+					{
+						"name":"快递",
+						"data":30,
+						"textColor": "#999",
+						format: ()=>{
+							return "¥120.11;10单"
+						}
+					},
+				],
+			}
+			
+			// console.log(map)
+			// let cMap = {series: map.features};
+			_self.showRing("canvasRing", ringData);
+			// _self.showMap("canvasMap", cMap)
+			
+		},
+		//圆环形
+		showRing(canvasId, chartData){
+			new uCharts({
+				$this: _self,
+				canvasId: canvasId,
+				type: 'ring',
+				legend:{
+					show: true,
+					position: 'top'
+				},
+				colors: ['#5585EC', '#F4BD41'],
+				extra: {
+					pie: {
+						offsetAngle: -100,
+						ringWidth: 45,
+						labelWidth: 15
+					},
+				},
+				background:'#FFFFFF',
+				series: chartData.series,
+				animation: true,
+				width: _self.cWidth,
+				height: _self.cHeight,
+				dataLabel: true,
+				disablePieStroke: true
+			});
+		},
+		//地图
+		showMap(canvasId, chartData){
+			new uCharts({
+				$this: _self,
+				canvasId: canvasId,
+				type: 'map',
+				fontSize:11,
+				padding:[0,0,0,0],
+				legend:{
+					show:false
+				},
+				extra: {
+					map: {
+						border:true,
+						borderWidth:1,
+						borderColor:'#666666',
+						fillOpacity:0.6
+					}
+				},
+				background: '#FFFFFF',
+				animation: true,
+				series: chartData.series,
+				width: _self.cWidth,
+				height: _self.cHeight,
+				dataLabel: true
+			});
+		},
+		setPickDate: function(){
+			const that = this;
+			that.startArray = [];
+			that.startIndex = [0, 0];
+			const date = new Date();
+			let _month = date.getMonth() + 1;
+			var yearArr = [];
+			for(var i = that.startYear; i <= date.getFullYear(); i++){
+				yearArr.push(i+"年")
+			}
+			that.startArray[0] = yearArr;
+			let len = (yearArr.length - 1);
+			if(that.dateType == 0){
+				var start_m = that.$util.getMonth(yearArr[len]);
+				that.startArray[1] = start_m;
+				that.startIndex = [len, start_m.length - 1];
+				that.startDate = date.getFullYear()+"-"+(_month>10?_month:"0"+_month);
+			}else{
+				that.startIndex = [len];
+				that.startDate = date.getFullYear();
+			}
+		},
+		//时间
+		startPickerChange: function(e){
+			var index = e.detail.value;
+			var y = this.startArray[0][index[0]].split("年")[0];
+			if(this.dateType == 1) {
+				this.startDate = y;
+			}else{
+				var m = this.startArray[1][index[1]].split("月")[0];
+				var _date = y+'-'+m;
+				this.startDate = _date;
+			}
+		},
+		startPickerColumn: function(e){
+			let date = new Date();
+			var _value = e.detail.value;
+			this.startIndex[e.detail.column] = _value;
+			if(this.dateType == 1) return false;
+			switch (e.detail.column) {
+				case 0: //拖动第1列
+					this.startArray[1] = this.$util.getMonth(this.startArray[0][_value]);
+					this.startIndex.splice(1, 1, 0)
+					break;
+			}
+			this.$forceUpdate()
+		},
+		//下载
+		download: function(){
+			const that = this;
+			uni.showLoading({
+				mask: true,
+				title: "正在下载"
+			});
+			// that.$util.networkRequest({
+			// 	url: "/CompanyReconciliation/ExcelCompanyCustomer",
+			// 	data: {
+			// 		startDate: that.startDate,
+			// 		endDate: that.endDate
+			// 	},
+			// 	success: data => {
+			// 		var content = JSON.parse(data);
+			// 		that.$util.downloadFile(content.filePath);
+			// 	}
+			// });
+		},
+		//查看更多
+		goMore: function(_url){
+			uni.navigateTo({ url: _url });
+		}
+		
+	}
+}
+</script>

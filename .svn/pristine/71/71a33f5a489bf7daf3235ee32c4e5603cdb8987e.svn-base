@@ -1,0 +1,133 @@
+<template>
+<view class="page-bg">
+	<view class="tips">
+		{{dataInfo.batchTime}} 共{{dataInfo.expressCount}}条待处理信息,处理进度<text>{{dataInfo.progress}}</text>/{{dataInfo.expressCount}}
+	</view>
+	<view class="item-list" v-for="(item, i) in dataInfo.orderList" :key="i" @click="goPage(item.enCode)">
+		<view class="info">
+			<text class="number">{{item.expressCode}}</text>
+			<text>寄件时间: {{item.sendTime}}</text>
+			<text v-if="item.status=='已投'">保单号: {{item.insuranceCode}}</text>
+		</view>
+		<view class="status">
+			<text class="txt" :class="item.status=='已投'?'active':''">{{item.status}}</text>
+			<text v-if="item.status=='已投'">{{item.insuranceTime}}</text>
+		</view>
+	</view>
+</view>
+</template>
+<script>
+export default {
+	data() {
+		return {
+			keys: "",
+			total: 0,
+			dataInfo: {
+				orderList:[],
+			},
+			dataList: []
+		}
+	},
+	onLoad(options) {
+		this.keys = options.keys;
+		this.getList();
+	},
+	methods: {
+		getList: function(){
+			const that = this;
+			// let res = {
+			//   "expressCount": 20, //总条数 
+			//   "batchTime": "2020-10-12",
+			//   "progress": "2",
+			//   "orderList": [
+			// 	{
+			// 	  "expressCode": "string",
+			// 	  "status": "已投",
+			// 	  "sendTime": "2020-10-13 11:23:34",
+			// 	  "insuranceTime": "2020-10-13 11:23:34",
+			// 	  "insuranceCode": "string",
+			// 	  "enCode": "string"
+			// 	},
+			// 	{
+			// 	  "expressCode": "string",
+			// 	  "status": "待投",
+			// 	  "sendTime": "2020-10-13 11:23:34",
+			// 	  "insuranceTime": "2020-10-13 11:23:34",
+			// 	  "insuranceCode": "string",
+			// 	  "enCode": "2333"
+			// 	}
+			//   ]
+			// }
+			// that.dataInfo = res;
+			uni.showLoading({ title: '加载中...' });
+			that.$util.networkRequest({
+				url: "/InsuranceCompany/GetExpressList",
+				data: { keys: this.keys },
+				success: function(res){
+					console.log("res:",res)
+					// if(total == 0 || res.list.length == 0) return false;
+					// res.list.filter(item => {
+					// 	if(item.createTime != null && item.createTime != ""){
+					// 		item.createTime = that.$util.formatDate.format(item.createTime,"yyyy-MM-dd hh:mm")
+					// 	}
+					// });
+					that.dataInfo = res;
+				}
+			})
+		},
+		goPage: function(code){
+			uni.navigateTo({
+				url: "warrantyDetail?code="+code
+			})
+		}
+	}
+}
+</script>
+<style scoped>
+.tips{
+	font-size: 12px;
+	color: #666666;
+	padding: 5px 0;
+	text-align: center;
+}
+.tips text{
+	color: #4285F4;
+	padding: 0 2px;
+}
+.item-list{
+	background-color: #FFFFFF;
+	margin: 0 15px 10px;
+	border-radius: 5px;
+	padding: 10px 10px 5px;
+	display: flex;
+	justify-content: space-between;
+}
+.item-list text{
+	display: block;
+	margin-bottom: 5px;;
+}
+.item-list .info{
+	width: calc(100% - 90px);
+	width: -webkit-calc(100% - 90px);
+	width: -moz-calc(100% - 90px);
+	color: #666666;
+}
+.item-list .info .number{
+	font-weight: bold;
+	font-size: 16px;
+	color: #333333;
+	margin-bottom: 5px;
+}
+.item-list .status{
+	width: 80px;
+	text-align: right;
+	color: #666;
+	font-size: 12px;
+}
+.item-list .status .txt{
+	font-size: 14px;
+}
+.item-list .status .txt.active{
+	color: #4285F4;
+}
+</style>

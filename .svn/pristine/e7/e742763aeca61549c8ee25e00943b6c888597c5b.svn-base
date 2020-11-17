@@ -1,0 +1,75 @@
+<template>
+	<view>
+		<view class="top">全部企业快递</view>
+		<view class="ones" v-for="(item,index) in SetList" :key="index" >
+			{{item.remark}}
+			<switch class="swi" v-if="index==0" @change="SwitchChange"></switch>
+			<view class="swi" @click="goPage()"  v-if="index==1"><text class="iconfont icon--right-jian"></text></view>
+		</view>
+		<!-- <view class="ones" >
+			允许他(她)查看
+		</view> -->
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				SetList: [],
+			}
+		},
+		onLoad() {
+			let that = this;
+
+			that.$util.networkRequest({
+				url: "/CmpyRole/GetRoleList",
+				data: {},
+				success: res => {
+					console.log(res);
+					this.SetList = res;
+				}
+			})
+		},
+		methods: {
+			goPage() {
+				uni.navigateTo({
+					url: "/pages/me/allowSee"
+				})
+			},
+			SwitchChange(e){
+				console.log(e.detail.value);
+			}
+		}
+	}
+</script>
+
+<style scoped>
+	page {
+		background-color: #f7f7f7;
+	}
+
+	.top {
+		padding: 5px 15px;
+
+
+	}
+
+	.ones {
+		padding: 5px 15px;
+		background-color: #FFFFFF;
+		position: relative;
+		width: calc(100%-30px);
+		display: flex;
+		height: 35px;
+		line-height: 35px;
+		border-bottom: 1px solid #EEEEEE;
+
+	}
+
+	.swi {
+		float: right;
+		position: absolute;
+		right: 15px;
+	}
+</style>

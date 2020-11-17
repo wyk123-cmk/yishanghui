@@ -1,0 +1,83 @@
+
+.head-right.data-v-3ddb429e{
+	top: 25px;
+}
+.tips.data-v-3ddb429e{
+	font-size: 12px;
+	color: #999;
+	padding: 4px 15px;
+	display: block;
+	line-height: 16px;
+}
+.list-call.data-v-3ddb429e{
+	background-color: #FFFFFF;
+	display: box;
+	display: -webkit-box;
+	padding: 10px 0;
+	border-bottom: 1px solid #EEEEEE;
+	position: relative;
+}
+.list-call .recharge text.data-v-3ddb429e{
+	display: block;
+	color: #999;
+	font-size: 12px;
+	margin-top: 3px;
+}
+.list-call .money.data-v-3ddb429e{
+	position: absolute;
+	top: 18px;
+	right: 15px;
+	color: #4285f4;
+	font-size: 18px;
+	font-weight: bold;
+}
+.checkbox-radio.data-v-3ddb429e{
+	color: #999999;
+	padding: 10px;
+	line-height: 14px;
+	display: -webkit-box;
+	display: flex;
+	display: -webkit-flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+.scroll-wrapper.data-v-3ddb429e{
+	position: absolute;
+	top: 40px;
+	left: 0;
+	right: 0;
+	bottom: 60px;
+}
+.invoice-footer.data-v-3ddb429e{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #FFFFFF;
+	height: 60px;
+	line-height: 60px;
+}
+.invoice-footer .checkbox-radio.data-v-3ddb429e{
+	color: #333333;
+	float: left;
+	border: 0;
+	margin-top: 8px;
+	font-size: 14px;
+}
+.amount.data-v-3ddb429e{
+	float: right;
+	padding-right: 30px;
+}
+.amount text.data-v-3ddb429e{
+	color: #FF0004;
+}
+.next-step.data-v-3ddb429e{
+	float: right;
+	background-color: #4285F4;
+	color: #FFFFFF;
+	border-radius: 0;
+	padding: 0 20px;
+	line-height: 60px;
+}
+

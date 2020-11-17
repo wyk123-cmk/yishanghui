@@ -1,0 +1,56 @@
+
+.date.data-v-6e732ef3{
+	background: #f7f7f7;
+	padding: 12px 15px;
+}
+.date .picker.data-v-6e732ef3{
+	text-align: center;
+	background: #fff;
+	height: 22px;
+	line-height: 22px;
+	padding: 0 10px;
+	display: inline-block;
+	border-radius: 14px;
+	font-size: 12px;
+	color: #666;
+}
+.date .picker .iconfont.data-v-6e732ef3{
+	font-size: 12px;
+	padding-left: 3px;
+}
+.scroll-wrapper.data-v-6e732ef3{
+	position: absolute;
+	top: 45px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow-y: auto;
+}
+.log-list.data-v-6e732ef3{
+	padding: 15px 15px 10px;
+	border-bottom: 1px solid #eee;
+	position: relative;
+}
+.log-list.data-v-6e732ef3:last-child{
+	margin-bottom: 20px;
+}
+.log-list text.data-v-6e732ef3{
+	display: block;
+}
+.log-list .remark.data-v-6e732ef3{
+	font-size: 12px;
+	color: #999;
+	margin-top: 5px;
+}
+.log-list .operator text.data-v-6e732ef3{
+	display: inline;
+	color: #4285f4;
+}
+.log-list .amount.data-v-6e732ef3{
+	position: absolute;
+	top: 24px;
+	right: 15px;
+	font-size: 18px;
+	font-weight: bold;
+}
+

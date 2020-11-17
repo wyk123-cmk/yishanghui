@@ -1,0 +1,164 @@
+<template>
+	<view>
+		<navigator url="/pages/me/withdrawalRecord" class="head-right">提现记录</navigator>
+		<view class="head-con">
+			<view>
+				<text class="count">共收入{{count}}笔，可用余额为</text>
+				￥<text class="amount">{{amount}}</text>
+				<navigator url="/pages/me/bonusCash" class="withdrawal"><text class="iconfont icon-jlj-tx"></text>提现</navigator>
+			</view>
+			<text class="samll-title">奖励收益</text>
+		</view>
+		<view v-if="total==0" class="none-data-list"><image src="../../static/images/none.svg"></image>暂无内容</view>
+		<scroll-view v-else class="scroll-wrapper" scroll-y="true" @scrolltolower="scrolltolower">
+			<view class="bounty-list" v-for="(item, i) in dataList" :key="i">
+				<view class="title">{{item.date}}<text>收入￥{{item.totalAmount.toFixed(2)}}</text></view>
+				<view class="sub-list" v-for="(detailItem, j) in item.detail" :key="j">
+					<view class="cmpy-name">
+						{{detailItem.cmpyName}}
+						<view><text>总运费{{detailItem.expressFeeAmount}}元</text>交易{{detailItem.count}}笔</view>
+					</view>
+					<text>+{{detailItem.referralFee.toFixed(2)}}</text>
+				</view>
+			</view>
+		</scroll-view>
+	</view>
+</template>
+<script>
+export default {
+	data() {
+		return {
+			amount: '0.00',
+			count: 0,
+			page: 1,
+			limit: 15,
+			total: 0,
+			dataList: []
+		}
+	},
+	onLoad(){
+		const that = this;
+		that.$util.networkRequest({
+			url : "/Referral/GetReferralInfo",
+			success: function(res){
+				that.amount = res.amount.toFixed(2);
+				that.count = res.count;
+			}
+		});
+		that.getList();
+	},
+	methods: {
+		scrolltolower:  function() {
+			if(Math.ceil(this.total / this.limit) >= this.page){
+				this.getList();
+			}
+		},
+		getList: function(){
+			const that = this;
+			uni.showLoading({ title: '加载中...' });
+			that.$util.networkRequest({
+				url: "/Referral/GetReferralDetail",
+				data: {
+					page: that.page,
+					limit: that.limit
+				},
+				success: function(res){
+					let total = res.total;
+					if(total == 0 || res.list.length == 0) return false;
+					res.list.filter(item => {
+						item.date = that.$util.formatDate.format(item.date,"yyyy年MM月");
+					});
+					that.page++;
+					that.total = total;
+					that.dataList = that.dataList.concat(res.list);
+				}
+			})
+		}
+	}
+}
+</script>
+<style scoped>
+.head-con{
+	position: relative;
+	display: box;
+	display: -wbkit-box;
+	background-color: #fe6603;
+}
+.head-con > view{
+	padding: 25px 15px;
+	color: #FFFFFF;
+	font-size: 16px;
+}
+.head-con .count{
+	color: #ffe0cc;
+	font-size: 12px;
+	display: block;
+	padding-bottom: 20px;
+}
+.head-con .amount{
+	font-size: 30px;
+}
+.head-con .withdrawal{
+	float: right;
+	color: #fff;
+	font-size: 12px;
+	border: 1px solid #fff;
+	padding: 1px 8px;
+	border-radius: 20px;
+	background: rgba(255, 255, 255, .2);
+	margin-top: 10px;
+}
+.head-con .withdrawal .iconfont{
+	font-size: 12px;
+	padding-right: 4px;
+}
+.head-con .samll-title{
+	background: #fff;
+	line-height: 40px;
+	display: block;
+	padding: 0 15px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+/* #ifdef MP-WEIXIN */
+.head-right{
+	background: rgba(255, 255, 255, 0.2);
+}
+/* #endif */
+.scroll-wrapper{
+	position: absolute;
+	top: 163px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.bounty-list .title,
+.sub-list{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.bounty-list .title{
+	background: #f7f7f7;
+    padding: 10px 15px;
+	color: #666;
+	font-size: 12px;
+}
+.sub-list{
+	padding: 10px 14px;
+	border-bottom: 1px solid #f7f7f7;
+}
+.sub-list .cmpy-name{
+	font-size: 15px;
+}
+.sub-list text{
+	color: #fe6603;
+}
+.sub-list .cmpy-name > view{
+	font-size: 12px;
+	color: #999;
+}
+.sub-list .cmpy-name text{
+	padding-right: 10px;
+}
+</style>

@@ -1,0 +1,98 @@
+<style scoped>
+	@import '../../common/css/me/reportForms.css';
+</style>
+<template>
+<view>
+	<view class="e-s-t">寄送地统计</view>
+	<view class="e-time">2020年8月</view>
+	<view class="total-con">
+		<view class="sort" @click="isSort=true">
+			<text class="iconfont icon-paixu"></text>
+			<text class="txt">{{sortIndex==0?'寄出单':'收件单'}}</text>
+		</view>
+		<text>北京共发货280单</text>
+		<text>上海共收件177单</text>
+		<view class="select" v-if="isSort">
+			<view :style="sortIndex==0?'color: #4285F4':''" @click="sortClick(0)">寄出单</view>
+			<view :style="sortIndex==1?'color: #4285F4':''" @click="sortClick(1)">收件单</view>
+		</view>
+	</view>
+	<scroll-view class="scroll-wrapper statistics" scroll-y="true" @scrolltolower="scrolltolower">
+		<view class="table">
+			<view class="tr">
+				<view class="th">城市</view>
+				<view class="th">寄件数量</view>
+				<view class="th">收件数量</view>
+			</view>
+			<view class="tr">
+				<view class="td">北京</view>
+				<view class="td send-num"><text>234</text></view>
+				<view class="td rep-num"><text>20</text></view>
+			</view>
+			<view class="tr">
+				<view class="td">上海</view>
+				<view class="td send-num"><text>234</text></view>
+				<view class="td rep-num"><text>20</text></view>
+			</view>
+		</view>
+	</scroll-view>
+</view>
+</template>
+<script>
+export default {
+	data() {
+		return {
+			isSort: false,
+			sortIndex: 0,
+			page: 1,
+			limit: 5,
+			total: 0,
+			dataList: []
+		}
+	},
+	onLoad(){
+		this.sortClick(1);
+	},
+	methods: {
+		sortClick: function(type){
+			this.isSort = false;
+			if(this.sortIndex == type) return false;
+			this.sortIndex = type;
+			
+			this.page = 1;
+			this.total = 0;
+			this.dataList = [];
+			this.getList()
+		},
+		scrolltolower: function(){
+			console.log('222')
+			if(Math.ceil(this.total / this.limit) >= this.page){
+				this.getList();
+			}
+		},
+		getList: function(){
+			// const that = this;
+			// uni.showLoading({ title: '加载中...' });
+			// that.$util.networkRequest({
+			// 	url: "/Invoice/GetList",
+			// 	data: {
+			// 		page: that.page,
+			// 		limit: that.limit
+			// 	},
+			// 	success: function(res){
+			// 		let total = res.total;
+			// 		if(total == 0 || res.list.length == 0) return false;
+			// 		res.list.filter(item => {
+			// 			if(item.postTime != null && item.postTime != ""){
+			// 				item.postTime = that.$util.formatDate.format(item.postTime,"yyyy-MM-dd hh:mm")
+			// 			}
+			// 		});
+			// 		that.page++;
+			// 		that.total = total;
+			// 		that.dataList = that.dataList.concat(res.list);
+			// 	}
+			// })
+		}
+	}
+}
+</script>

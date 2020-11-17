@@ -1,0 +1,50 @@
+<template>
+	<view style="text-align: center;margin-top: 20%;">
+		正在授权登录跳转,请稍后...
+	</view>
+</template>
+<script>
+export default {
+	data() {
+		return {
+			accountCode: "",
+			appKey: "",
+			sign: "",
+			timestamp: ""
+		}
+	},
+	onLoad(options) {
+		const that = this;
+		uni.request({
+			url: that.apiUrl + "/OpenService/GetAccountLoginFlag",
+			method: "POST",
+			header: {
+				appKey: options.appKey,
+				sign: options.sign,
+				timestamp: options.timestamp,
+				appId: that.appId,
+			},
+			data: {accountCode: options.accountCode},
+			success: res => {
+				if(res.data == 200){
+					uni.setStorage({key: 'token', data: data});
+					uni.switchTab({ url: "/pages/index/index" });
+				}
+				else {
+					uni.showModal({
+					    title: '提示',
+					    content: res.data.message,
+						showCancel: false,
+						success: function (res) {
+							uni.navigateTo({ url: "/pages/logs/logs" });
+						}
+					});
+				}
+			},
+			fail: (err) => {
+				
+			}
+		})
+	}
+}
+</script>

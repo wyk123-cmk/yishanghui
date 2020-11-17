@@ -1,0 +1,24 @@
+
+.details.data-v-b9506f38{
+	background-color: #FFFFFF;
+	margin: 15px;
+	padding: 14px;
+}
+.details .title.data-v-b9506f38{
+	font-weight: bold;
+	padding-top: 4px;
+	display: block;
+}
+.details .title text.data-v-b9506f38{
+	font-weight: normal;
+	color: #989898;
+	padding-left: 15px;
+	float: right;
+}
+.details .con.data-v-b9506f38{
+	font-size: 12px;
+	color: #999999;
+	padding-top: 7px;
+	line-height: 22px;
+}
+

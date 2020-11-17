@@ -1,0 +1,245 @@
+.search-con{
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 15px;
+	background-color: #FFFFFF;
+}
+.search-con .years{
+	display: flex;
+	align-items: center;
+	border: 1px solid #4486f3;
+	border-radius: 3px;
+	overflow: hidden;
+	height: 28px;
+	line-height: 28px;
+}
+.search-con .years text{
+	width: 60px;
+	text-align: center;
+	color: #4486f3;
+}
+.search-con .years text.active{
+	background-color: #4486f3;
+	color: #FFFFFF;
+}
+.search-con .choice-time{
+	display: flex;
+	align-items: center;
+}
+.search-con .choice-time .iconfont{
+	color: #999999;
+}
+.search-con .choice-time .txt{
+	margin: 0 8px;
+}
+.money-list{
+	display: flex;
+	padding: 20px 15px 30px;
+	background-color: #FFFFFF;
+}
+.money-list > view{
+	width: calc(100% / 3 - 10px);
+	padding-left: 10px;
+}
+.money-list .title{
+	color: #666666;
+}
+.money-list .money{
+	font-size: 16px;
+	display: flex;
+	align-items: center;
+	margin-top: 8px;
+	line-height: 22px;
+}
+.money-list .money text{ 
+	font-size: 22px;
+	padding-left: 3px;
+}
+.big-title{
+	font-size: 16px;
+	font-weight: bold;
+}
+.more{
+	text-align: center;
+	color: #4486f3;
+	margin-top: 10px;
+}
+.con{
+	background-color: #FFFFFF;
+	margin: 10px 15px 0;
+	border-radius: 8px;
+	padding: 15px 15px 10px;
+}
+.delivery-num{
+	color: #999999;
+	font-size: 13px;
+	padding: 8px 0;
+}
+.employee .list{
+	border-bottom: 1px solid #F7F7F7;
+	position: relative;
+	padding: 20px 0;
+}
+.employee .list .name{
+	line-height: 18px;
+	font-size: 16px;
+}
+.employee .list .name text{
+	color: #999999;
+	padding-left: 15px;
+	font-size: 14px;
+}
+.employee .list .name,
+.employee .list .classify,
+.employee .list .classify > view,
+.statistics .local{
+	display: flex;
+	align-items: center;
+}
+.employee .list .classify > view{
+	margin-right: 15px;
+	color: #999999;
+	margin-top: 10px;
+}
+.employee .list .classify image{
+	width: 16px;
+	height: 16px;
+	margin-right: 5px;
+}
+.employee .list .total-num{
+	position: absolute;
+	top: 32px;
+	right: 0;
+	font-size: 16px;
+}
+.statistics .local{
+	border-top: 1px solid #F7F7F7;
+	border-bottom: 1px solid #F7F7F7;
+	padding: 10px;
+}
+.statistics .local > view{
+	width: 25%;
+	text-align: center;
+}
+.statistics .local > view text{
+	display: block;
+}
+.statistics .local > view text:last-child{
+	margin-top: 5px;
+	display: inline-block;
+	padding: 0 3px;
+	border-bottom: 2px solid #9D9D9D;
+}
+.statistics .local > view text.send{
+	border-color: #5585EC;
+}
+.statistics .local > view text.rep{
+	border-color: #ED8345;
+}
+.statistics .local .title{
+	width: 30%;
+	text-align: left;
+	height: 60px;
+	line-height: 60px;
+	border-right: 1px solid #F7F7F7;
+}
+.table .tr{
+	border-bottom: 1px solid #F7F7F7;
+	display: flex;
+	align-items: center;
+	padding: 12px 0;
+}
+.table .tr .th,
+.table .tr .td{
+	text-align: center;
+	width: 31%;
+}
+.table .tr .th{
+	color: #999999;
+	font-size: 13px;
+}
+.table .tr .th:first-child,
+.table .tr .td:first-child{
+	margin-right: 2%;
+}
+.table .td text{
+	padding: 1px 10px;
+	color: #FFFFFF;
+}
+.table .send-num text{
+	background-color: #5585EC;
+}
+.table .rep-num text{
+	background-color: #ED8345;
+}
+.e-s-t{
+	font-size: 18px;
+	padding: 10px 15px 5px;
+	font-weight: bold;
+}
+.e-time{
+	font-size: 16px;
+	font-weight: bold;
+	margin-left: 15px;
+}
+.total-con{
+	background-color: #f7f7f7;
+	padding: 15px 15px;
+	margin-top: 15px;
+	color: #999999;
+	position: relative;
+}
+.total-con > text{
+	padding-right: 20px;
+}
+.total-con .sort{
+	float: right;
+	display: flex;
+	align-items: center;
+	color: #999999;
+}
+.total-con .sort > .txt{
+	color: #4285F4;
+	padding-left: 2px;
+}
+.select{
+	position: absolute;
+	top: 50px;
+	right: 0;
+	z-index: 1;
+	background-color: #FFFFFF;
+	border: 1px solid #F7F7F7;
+	border-radius: 3px;
+}
+.select view{
+	width: 70px;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 10px;
+}
+.scroll-wrapper{
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 140px;
+	bottom: 0;
+	overflow-y: auto;
+}
+.scroll-wrapper .list{
+	margin: 0 15px 0 20px;
+}
+
+
+
+
+
+
+
+.qiun-charts {
+	
+}
+.charts {
+	width: 100%;
+	height: 500upx;
+	margin-left: -20px;
+}

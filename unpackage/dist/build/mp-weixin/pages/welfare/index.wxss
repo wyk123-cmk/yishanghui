@@ -1,0 +1,2 @@
+.scroll-wrapper.data-v-653099b2{position:absolute;top:0;left:0;right:0;bottom:0}.item-list.data-v-653099b2{min-height:130px;margin:15px 15px 0;position:relative;overflow:hidden}.item-list image.data-v-653099b2{display:block;width:100%;min-height:134px;border-radius:8px}.item-list .name.data-v-653099b2,
+.item-list .time.data-v-653099b2{position:absolute;left:15px;color:#fff}.item-list .name.data-v-653099b2{font-size:22px;top:15px}.item-list .time.data-v-653099b2{background-color:rgba(0,0,0,.5);font-size:12px;line-height:24px;padding:0 8px;border-radius:5px;bottom:10px}

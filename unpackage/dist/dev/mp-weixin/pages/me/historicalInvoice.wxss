@@ -1,0 +1,68 @@
+.historical-list.data-v-b053bf76{
+	background-color: #FFFFFF;
+	margin: 10px 10px 0;
+	border-radius: 5px;
+	padding: 15px;
+}
+.historical-list .item-head.data-v-b053bf76{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+}
+.historical-list .bill-type.data-v-b053bf76{
+	color: #4285f4;
+	padding-right: 10px;
+}
+.historical-list .time.data-v-b053bf76{
+	font-size: 12px;
+}
+.historical-list .samll-title.data-v-b053bf76{
+	font-size: 15px;
+	font-weight: bold;
+	padding: 20px 0;
+	display: block;
+}
+.scroll-wrapper.data-v-b053bf76{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding-bottom: 20px;
+}
+.item-bottom.data-v-b053bf76{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	-webkit-box-align: flex-top;
+	-webkit-align-items: flex-top;
+	        align-items: flex-top;
+}
+.item-bottom > view.data-v-b053bf76{
+	width: 33%;
+	font-size: 12px;
+}
+.item-bottom text.data-v-b053bf76{
+	display: block;
+	color: #999;
+	padding-top: 5px;
+	word-wrap:break-word; 
+	word-break:break-all;
+	overflow: hidden;
+}
+.item-bottom .amount.data-v-b053bf76{
+	text-align: right;
+}
+.item-bottom .amount text.data-v-b053bf76{
+	font-size: 22px;
+	font-weight: bold;
+	display: inline;
+	color: #333;
+}
+

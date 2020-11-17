@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "寄快递",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "send-time-picker": "/components/sendTime-picker/sendTime-picker"
+  }
+}

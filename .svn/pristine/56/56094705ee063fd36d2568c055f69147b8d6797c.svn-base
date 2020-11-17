@@ -1,0 +1,345 @@
+<template>
+	<view>
+		<page-imges :show="showImage"></page-imges>
+		<view class="notice">
+			<text class="title">公告</text>
+			<!-- -#ifdef H5 -->
+			<!-- <Marquee class="notice-txt" loop="-1" scrolldelay="200"><text>{{dataInfo.notice}}</text></Marquee> -->
+			<!-- -#endif -->
+			<!-- -#ifdef MP-WEIXIN -->
+			<view class="notice-txt">
+				<view class="marquee-inner-wrapper">
+					<text class="first-marquee">{{dataInfo.notice}}</text>
+					<text class="second-marquee">{{dataInfo.notice}}</text>
+				</view>
+			</view>
+			<!-- -#endif -->
+		</view>
+		<view class="logo">
+			<image mode="widthFix" src="../../static/images/logo-img.svg"></image>
+			<text>仪商汇快运</text>
+		</view>
+		<swiper class="swiper" style="" :circular="true" :indicator-dots="false" :autoplay="true" :interval="2300">
+			<swiper-item v-for="(item, i) in dataInfo.slides" :key="i" @click="ImgRous(item.link)">
+				<image mode="aspectFit" :src="item.image" style="width:100%;height:198px;"></image>
+			</swiper-item>
+		</swiper>
+		<view class="menu-con">
+			<view class="item-list" @click="goPage('index/expressDelivery?type=big')">
+				<image mode="widthFix" src="../../static/images/jj1.svg"></image>
+				<view>寄大件<text>仪器仪表整机设备</text></view>
+			</view>
+			<view class="item-list" @click="goPage('index/expressDelivery?type=small')">
+				<image mode="widthFix" src="../../static/images/jj2.svg"></image>
+				<view>
+					寄快递
+					<image mode="aspectFit" class="discount" src="../../static/images/9zhe.svg"></image>
+					<text>一小时取件</text>
+				</view>
+			</view>
+			<view class="item-list" @click="goPage(1)">
+				<image mode="widthFix" src="../../static/images/jj3.svg"></image>
+				<view>批量寄<text>方便快捷</text></view>
+			</view>
+			<view class="item-list" @click="goPage('me/moreCoupon')">
+				<image mode="widthFix" src="../../static/images/jj4.svg"></image>
+				<view>领券中心<text :style="isCoupon?'color:red':'color:#999'">{{isCoupon?"您有未领取的优惠券":"领取更多优惠券"}}</text></view>
+			</view>
+			<view class="item-list" @click="goPage(2)">
+				<image mode="widthFix" src="../../static/images/jj5.svg"></image>
+				<view>电子面单<text>自助打印面单</text></view>
+			</view>
+			<view style="clear: both;"></view>
+		</view>
+	</view>
+</template>
+<script>
+	export default {
+		data() {
+			return {
+				isCoupon: false,
+				dataInfo: [],
+				showImage: false
+			}
+		},
+		onShow() {
+			let app = getApp();
+			app.isToken(this);
+			this.showImage = app.globalData.isDiscountActive;
+			this.isNewCoupon();
+			this.getInfo();
+			//清空寄快递信息
+			this.$store.state.expressDeliveryInfo = {
+				type: "",
+				companyCode: "",
+				sendAddress: {},
+				repAddress: {},
+				goodInfo: {},
+				insuredPrice: {},
+				service: {}
+			}
+		},
+		methods: {
+			isNewCoupon() {
+				const that = this;
+				that.$util.networkRequest({
+					url: "/Coupon/IsNewCoupon",
+					method: "POST",
+					success: res => {
+						that.isCoupon = res;
+					}
+				})
+			},
+			getInfo() {
+				const that = this;
+				that.$util.networkRequest({
+					url: "/SysInfo/GetNoticeAndSlideShow",
+					success: res => {
+						res.slides.filter(item => {
+							if (item.image != null && item.image != "") {
+								item.image = item.image.replace(/\s*/g, "");
+							}
+						});
+						that.dataInfo = res;
+					}
+				})
+			},
+			ImgRous(url) {
+				// #ifdef MP-WEIXIN
+				uni.navigateTo({
+					url: "/pages/web-view/index?url=" + url
+				});
+				// #endif
+				// #ifdef H5
+				window.location.href = url;
+				// #endif
+			},
+			goPage(_url) {
+				if (uni.getStorageSync("token") == "" || uni.getStorageSync("token") == undefined) {
+					uni.navigateTo({
+						url: "/pages/logs/logs"
+					});
+				} else {
+					if (_url == 1) {
+						//批量寄
+						uni.showModal({
+							title: '提示',
+							content: 'PC端敬请期待',
+							showCancel: false,
+						});
+						return false;
+					}
+					if (_url == 2) {
+						//打印面单
+						this.goPrinting();
+						return false;
+					}
+					uni.navigateTo({
+						url: '/pages/' + _url
+					})
+				}
+			},
+			//自助打印面单
+			goPrinting() {
+				let url = "http://express.1718china.cn/page/pc-md/";
+				if (this.$util.IsPC() == true) {
+					window.location.href = "http://express.1718china.cn/page/pc-md/";
+					return false;
+				}
+				uni.showModal({
+					title: '提示',
+					content: '打印面单功能，手机端暂时无法使用，请登录电脑后访问http://express.1718china.cn使用',
+					showCancel: false,
+				});
+			},
+		}
+	}
+</script>
+
+
+<style scoped>
+	.notice {
+		padding: 12px 15px;
+		display: box;
+		display: -webkit-box;
+	}
+
+	.notice .title {
+		background-color: #FFF5E9;
+		color: #FD9523;
+		font-size: 12px;
+		line-height: 18px;
+		height: 18px;
+		padding: 0 8px;
+		margin-right: 8px;
+		align-items: center;
+	}
+
+	view image {
+		width: 20px;
+		height: 20px;
+	}
+
+	.notice .notice-txt {
+		display: block;
+		
+		width: -webkit-calc(100% - 45px);
+		overflow: hidden;
+	}
+
+	.notice .notice-txt text {
+		font-size: 13px;
+		color: #999999;
+		-webkit-text-size-adjust: none;
+
+	}
+
+	/* .item {
+		width: 100%;
+	} */
+
+	.marquee-inner-wrapper {
+		background: #eee;
+		margin: 0 auto;
+		white-space: nowrap;
+		position: relative;
+		-webkit-text-size-adjust: none;
+		font-size: 13px;
+	}
+
+	.marquee-inner-wrapper text {
+		position: absolute;
+		top: 0;
+		left: 100%;
+		height: 100%;
+		-webkit-text-size-adjust: none;
+		font-size: 13px;
+	}
+
+	#affiche {
+		color: red;
+		display: block;
+		width: 96%;
+		height: 30px;
+		margin: 0 auto;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.affiche_text {
+		position: absolute;
+		top: 0;
+		left: 100%;
+		line-height: 30px;
+		display: block;
+		word-break: keep-all;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+	}
+.first-marquee {
+		-webkit-animation: 100s first-marquee linear infinite normal;
+		-webkit-text-size-adjust: none;
+		padding-right: 70%;
+		line-height: 21px;
+		font-size: 13px;
+	}
+
+	.second-marquee {
+		-webkit-animation: 100s first-marquee linear 50s infinite normal;
+		-webkit-text-size-adjust: none;
+		padding-right: 53%;
+		line-height: 21px;
+		font-size: 13px;
+	}
+
+	@-webkit-keyframes first-marquee {
+		0% {
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+		}
+
+		/* 向左移动 */
+		100% {
+			-webkit-transform: translate3d(-200%, 0, 0);
+			transform: translate3d(-200%, 0, 0);
+			display: none;
+		}
+	}
+
+	@-webkit-keyframes second-marquee {
+		0% {
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+		}
+
+		/* 向左移动 */
+		100% {
+			-webkit-transform: translate3d(-200%, 0, 0);
+			transform: translate3d(-200%, 0, 0);
+			display: none;
+		}
+	}
+	
+	.logo {
+		display: flex;
+		align-items: center;
+		padding: 10px 15px 15px;
+		font-size: 22px;
+		font-weight: bold;
+		color: #4285F4;
+	}
+
+	.logo image {
+		width: 50px;
+		height: 50px;
+		margin-right: 10px;
+	}
+
+	.swiper {
+		height: 198px;
+	}
+
+	.swiper image {
+		width: 100%;
+		height: auto;
+	}
+
+	.menu-con {
+		border-radius: 4px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+		margin: 15px;
+	}
+
+	.item-list {
+		width: calc(50% - 26px);
+		padding: 25px 10px 25px 15px;
+		float: left;
+		border-right: 1px solid #f7f7f7;
+		border-bottom: 1px solid #f7f7f7;
+		font-size: 15px;
+		display: flex;
+		display: -webkit-flex;
+		align-items: center;
+		height: 38px;
+	}
+
+	.item-list>image {
+		width: 30px;
+		height: 30px;
+		margin-right: 10px;
+	}
+
+	.item-list text {
+		display: block;
+		font-size: 12px;
+		color: #999;
+	}
+
+	.item-list .discount {
+		width: 46px;
+		height: 17px;
+		float: right;
+		/* padding-top: 2px; */
+	}
+</style>

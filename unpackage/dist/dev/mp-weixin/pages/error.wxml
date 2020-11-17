@@ -1,0 +1,1 @@
+<view class="data-v-6dde595f"><view class="error-msg data-v-6dde595f"><image mode="widthFix" src="../static/images/set.png" class="data-v-6dde595f"></image><view class="title data-v-6dde595f">系统例行维护</view><text class="data-v-6dde595f">{{msg}}</text></view></view>

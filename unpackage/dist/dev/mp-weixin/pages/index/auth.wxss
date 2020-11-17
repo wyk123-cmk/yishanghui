@@ -1,0 +1,10 @@
+
+.btn.data-v-f1fff104{
+	background-color: #4285F4;
+	color: #FFFFFF;
+	width: 100px;
+	padding: 8px 0;
+	border-radius: 20px;
+	margin: 100px auto 0;
+}
+

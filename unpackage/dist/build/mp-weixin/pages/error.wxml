@@ -1,0 +1,1 @@
+<view class="data-v-a6828aa0"><view class="error-msg data-v-a6828aa0"><image mode="widthFix" src="../static/images/set.png" class="data-v-a6828aa0"></image><view class="title data-v-a6828aa0">系统例行维护</view><text class="data-v-a6828aa0">{{msg}}</text></view></view>

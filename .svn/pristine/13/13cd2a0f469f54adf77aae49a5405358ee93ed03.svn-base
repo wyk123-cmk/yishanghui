@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>月度报表</title>
+	<link rel="stylesheet" href="css/iconfont.css" />
+	<link rel="stylesheet" href="css/reportForms.css" />
+</head>
+<body class="page-bg">
+	<div id="app">
+		<div class="search-con">
+			<div class="years">
+				<span :class="dateType==0?'active':''" @click="dateClick(0)">按月</span>
+				<span :class="dateType==1?'active':''" @click="dateClick(1)">按年</span>
+			</div>
+			<div class="choice-time">
+				<span class="iconfont icon-fanhui-"></span>
+				<div class="txt">2020-08</div>
+				<span class="iconfont icon--right-jian"></span>
+			</div>
+		</div>
+		<div class="money-list">
+			<div>
+				<span class="title">结算金额</span>
+				<div class="money">¥<span>3278.89</span></div>
+			</div>
+			<div>
+				<span class="title">市场金额</span>
+				<div class="money">¥<span>4378.89</span></div>
+			</div>
+			<div>
+				<span class="title">节省金额</span>
+				<div class="money">¥<span>1221.00</span></div>
+			</div>
+		</div>
+		<!-- 发货单量 eachar -->
+		<div class="con">
+			<div class="big-title">8月发货单量</div>
+			<div class="delivery-num">共发货234单</div>
+			<div id="pie" ></div>
+		</div>
+		<!-- 员工发货统计 -->
+		<div class="employee con">
+			<div class="big-title">员工发货统计</div>
+			<div class="list">
+				<div class="name">张三<span>50单</span></div>
+				<div class="classify">
+					<div>
+						<img src="../../static/images/caigou.png" />
+						30单&nbsp;&nbsp;¥1652.67
+					</div>
+					<div>
+						<img src="../../static/images/kuaidixiaoge.png" />
+						20单&nbsp;&nbsp;¥264.34
+					</div>
+				</div>
+				<div class="total-num">¥1934.01</div>
+			</div>
+			<button id="place" class="more">查看全部</button>
+		</div>
+		<!-- 寄送地统计 -->
+		<div class="con statistics">
+			<div class="big-title">寄送地统计</div>
+			<div id="map"></div>
+			<div class="local">
+				<div class="title">寄送地统计</div>
+				<div>
+					<span>北京寄出</span>
+					<span class="send">234</span>
+				</div>
+				<div>
+					<span>上海收件</span>
+					<span class="rep">177</span>
+				</div>
+				<div>
+					<span>其他地寄出</span>
+					<span>78</span>
+				</div>
+			</div>
+			<div class="table">
+				<div class="tr">
+					<div class="th">城市</div>
+					<div class="th">寄件数量</div>
+					<div class="th">收件数量</div>
+				</div>
+				<div class="tr">
+					<div class="td">北京</div>
+					<div class="td send-num"><span>234</span></div>
+					<div class="td rep-num"><span>20</span></div>
+				</div>
+				<div class="tr">
+					<div class="td">上海</div>
+					<div class="td send-num"><span>234</span></div>
+					<div class="td rep-num"><span>20</span></div>
+				</div>
+			</div>
+			<button id="send" class="more">查看全部</button>
+		</div>
+		<a href="" class="btn-default-css">生成PDF并下载到本地</a>
+	</div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+<script type="text/javascript" src="js/map-china.js"></script>
+
+<!-- 微信 JS-SDK 如果不需要兼容小程序，则无需引用此 JS 文件。 -->  
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+<!-- uni 的 SDK -->
+<script type="text/javascript" src="https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.1.5.2.js"></script>
+<script type="text/javascript">
+new Vue({
+	el: '#app',
+	data: {
+		dateType: 0,
+		
+	},
+	mounted() {
+		const that = this;
+		document.addEventListener('UniAppJSBridgeReady', function() {
+			setChartPie();
+			setChartMap();
+			//员工发货统计 - 查看全部
+			document.getElementById("place").addEventListener('click', function(evt) {
+				console.log(that.dateType)
+				uni.navigateTo({ url: '/pages/me/placeDelivery' });
+			});
+			//寄送地统计 - 查看全部
+			document.getElementById("send").addEventListener('click', function(evt) {
+				uni.navigateTo({ url: '/pages/me/sendStatistics' });
+			});
+		});
+		this.initPicker();
+	},
+	methods: {
+		dateClick: function(type){
+			console.log(type)
+			if(this.dateType == type) return false;
+			this.dateType = type;
+			// this.setPickDate();
+		},
+		initPicker: function() {
+			
+		}
+	}
+})
+
+
+//环形
+function setChartPie(){
+	var pieChart = echarts.init(document.getElementById('pie'));
+	var option = {
+		legend: {
+			orient: 'vertical',
+			left: 'right',
+			top: 0,
+			icon: "circle",
+			itemWidth: 8,//图例的宽度
+			itemHeight: 8,//图例的高度
+			selectedMode: false,
+		},
+		series: [
+			{
+				hoverAnimation : false,
+				name: '发货单量',
+				type: 'pie', //环形图的type和饼图相同
+				radius: ['40%', '60%'], //饼图的半径，第一个为内半径，第二个为外半径
+				color: ["#5585EC", "#F4BD41"],
+				startAngle: 100, //设置起始角度
+				formatter: '{b}: {d}',
+				label: {
+					show: true,
+					 rich: {
+						money: {                       
+							fontSize: '16'
+						},
+						num: {
+							color: "#999999"
+						},
+					},
+					formatter: function(params){
+						return "{money|¥12000.11}\n{num|10单}"
+					}
+				},
+				labelLine: {
+					normal: {
+						show: true,
+					}
+				},
+				data:[
+					{value: 200, name:'快运'},
+					{value: 20, name:'快递'}
+				]
+			}
+		]
+	}
+	pieChart.setOption(option);
+}
+
+//地图
+function setChartMap(){
+	var mapChart = echarts.init(document.getElementById('map'));
+	var option = {
+		tooltip: {
+			trigger: 'item',
+			padding: 0,
+			formatter: function(params) {
+				var res = "";
+				var myseries = option.series;
+				(option.series).forEach(item => {
+					for(var i = 0; i < item.data.length; i++){
+						if(item.data[i].name == params.name){
+							var color = "#5585EC";
+							if(item.name == "收件地") 
+							color = "#ED8345";
+							res = "<div style='padding: 0 8px;border-radius:3px;background:"+color+"'>"+item.data[i].value+"</div>";
+						}
+					}
+				})
+				return res;
+			}
+		},
+		legend: {
+			orient: 'vertical',
+			left: 'left',
+			bottom: 10,
+			icon: "rect",
+			itemWidth: 10,//图例的宽度
+			itemHeight: 10,//图例的高度
+		},
+		color: ["#5585EC","#ED8345"],
+		series: [{
+			name: '寄件地',
+			type: 'map',
+			mapType: 'china',
+			itemStyle: {
+				normal: {
+					areaColor:'#FFFFFF' //区域背景色
+				},
+			},
+			data: [
+				{name:"南海诸岛",value:0},
+				{name: '北京', value: 200},
+				{name: '天津', value: 500},
+				{name: '上海', value: 300},
+				{name: '重庆', value: 400},
+				{name: '河北', value: 4330},
+				{name: '河南', value: 200},
+				{name: '云南', value: 380},
+				{name: '辽宁', value: 100},
+				{name: '黑龙江', value: 40}
+			],
+		},
+		{
+			name: '收件地',
+			type: 'map',
+			mapType: 'china',
+			data: [
+				{name: '广东', value: 400},
+				{name: '香港', value: 20}
+			]
+		}]
+	}
+	mapChart.setOption(option);
+}
+</script>
+</html>

@@ -1,0 +1,202 @@
+<style scoped>
+	@import '../../common/css/order/orderDetail.css';
+</style>
+<template>
+	<view>
+		<view class="transport-o border">
+			<view class="express">
+				<text class="city">{{fromCity}}</text>
+				<text>{{fromName}}</text>
+			</view>
+			<view class="status">
+				<image mode="widthFix" src="../../static/images/cjt.svg"></image>
+				<text v-if="detailData.status=='9'" style="color:green">{{detailData.statusText}}</text>
+				<text v-else-if="detailData.status=='3'" style="color:#E47800">{{detailData.statusText}}</text>
+				<text v-else-if="detailData.status=='4'" style="color:#4285f4">{{detailData.statusText}}</text>
+				<text v-else-if="detailData.status=='-1'||detailData.status=='1'" style="color:#999999">{{detailData.statusText}}</text>
+				<text v-else>{{detailData.statusText}}</text>
+			</view>
+			<view class="express">
+				<text class="city">{{toCity}}</text>
+				<text>{{toName}}</text>
+			</view>
+		</view>
+		<view class="user-info">
+			<view>
+				<text class="iconfont icon-ji1"></text>
+				<text class="name">{{fromName}}</text>
+				<text class="phone" @click="phoneCall(fromPhone)">{{fromPhone}}</text>
+				<text class="address">{{fromAddress}}</text>
+			</view>
+			<view>
+				<text class="iconfont icon-shou"></text>
+				<text class="name">{{toName}}</text>
+				<text class="phone" @click="phoneCall(toPhone)">{{toPhone}}</text>
+				<text class="address">{{toAddress}}</text>
+			</view>
+		</view>
+		<view class="item-list border">
+			<view class="samll-title">物品信息</view>
+			<view class="label">物品名称：{{goodName}}</view>
+			<view class="label">物品类型：{{goodType}}</view>
+			<view class="label">寄件数量：{{goodCount}} 件</view>
+			<view class="label" v-if="detailData.status==1||detailData.status==2">预估重量：{{weigth}} kg</view>
+			<view class="label" v-else>实际重量：{{Sweigth}} kg</view>
+			<view v-if="detailData.payType==1&&detailData.status!=9">
+				<view class="label" v-if="expressPrice!=null&&expressPrice!=''">
+					实际运费：
+					<text>￥{{expressPrice}}</text>
+					<text class="market" v-if="marketExpressPrice!=expressPrice">￥{{marketExpressPrice}}</text>
+				</view>
+				<view class="label" v-if="insuranceAmount!=null&&insuranceAmount!=''">保价费用：<text>{{insuranceAmount}}</text></view>
+				<view class="label" v-for="(item, index) in detailData.priceDetail" :key="index" v-show="item.amount>0">
+					{{item.charges}}
+					<text>￥{{item.amount.toFixed(2)}}</text>
+				</view>
+				<view class="label" v-if="detailData.subsidyAmount>0">活动抵扣：<text>￥-{{detailData.subsidyAmount}}</text></view>
+				<view class="label" v-if="detailData.couponAmount>0">支付优惠：<text>￥-{{detailData.couponAmount}}</text></view>
+				<view class="label price-title">{{detailData.status==1||detailData.status==2?"预估价格":"实付款"}}（含保费）<text>￥{{samount}}</text></view>
+			</view>
+		</view>
+		<view class="item-list border" v-if="detailData.takeDeliveryRemark!=null&&detailData.takeDeliveryRemark!=''&&detailData.takeDeliveryFileList.length!=0">
+			<view class="samll-title">提货单</view>
+			<view class="remark" v-if="detailData.takeDeliveryRemark!=null&&detailData.takeDeliveryRemark!=''">{{detailData.takeDeliveryRemark}}</view>
+			<view class="take-list" v-if="detailData.takeDeliveryFileList.length!=0">
+				<view class="pic" v-for="(img, j) in imgArr" :key="j" :style="'background-image:url('+img.path+')'" @click="preview(j)"></view>
+				<view class="file">
+					<view v-for="(f, j) in fileArr" :key="j" @click="downloadFile(f.path)">
+						<image mode="widthFix" src="../../static/images/pdf.png"></image>
+						<text class="name">{{f.fileName}}</text>
+						<text class="down">下载查看</text>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="item-list border">
+			<view class="samll-title">订单信息</view>
+			<view class="label">物流公司：{{detailData.expressCompanyName}}</view>
+			<view class="label" v-for="(item, i) in detailData.serviceList" :key="i">
+				{{item.serviceTitle}}：{{item.serviceValue}}
+			</view>
+			<view class="label" @click="setClip(mastCode)">订单编号：{{mastCode}}<text class="iconfont icon-copy"></text></view>
+			<view class="label" @click="setClip(detailData.expressCode)">运单号：{{detailData.expressCode}}<text class="iconfont icon-copy"></text></view>
+			<view class="label">下单时间：{{createDate}}</view>
+		</view>
+		<view class="item-list border" v-if="detailData.memo!=''&&detailData.memo!=null">
+			<view class="samll-title">寄件备注</view>
+			<view class="label">{{detailData.memo}}</view>
+		</view>
+	</view>
+</template>
+
+<script>
+export default {
+	data() {
+		return {
+			mastCode: "",
+			detailData: [],
+			fromCity: "",
+			fromName: "",
+			fromAddress: "",
+			fromPhone: "",
+			toCity: "",
+			toName: "",
+			toAddress: "",
+			toPhone: "",
+			goodName: "",
+			goodType: "",
+			goodCount: "",
+			weigth: "",
+			Sweigth: "",
+			marketExpressPrice: 0,
+			expressPrice: 0,
+			insuranceAmount: "",
+			priceTitle: "实付款",
+			samount: "",
+			createDate: "",
+			imgArr: [],
+			fileArr: []
+		}
+	},
+	onLoad(options){
+		this.mastCode = options.mastCode;
+	},
+	onShow(){
+		const that = this;
+		uni.showLoading({ title: '加载中...' });
+		that.$util.networkRequest({
+			url: "/Express/Get",
+			data: {mastCode: this.mastCode},
+			success: function(res){
+				that.detailData = res;
+				that.fromCity = res.expressFrom.areaInfo.city;
+				that.fromName = res.expressFrom.name;
+				that.fromAddress = res.expressFrom.areaInfo.province +
+									res.expressFrom.areaInfo.city +
+									res.expressFrom.areaInfo.area +
+									res.expressFrom.address;
+				that.fromPhone = res.expressFrom.phone;
+				that.toCity = res.expressTo.areaInfo.city;
+				that.toName = res.expressTo.name;
+				that.toAddress = res.expressTo.areaInfo.province +
+									res.expressTo.areaInfo.city +
+									res.expressTo.areaInfo.area +
+									res.expressTo.address;
+				that.toPhone = res.expressTo.phone;
+				that.goodName = res.estimateGoods.name;
+				that.goodType = res.estimateGoods.category;
+				that.goodCount = res.estimateGoods.count;
+				that.weigth = res.estimateGoods.weight;
+				that.Sweigth = res.goods.weight;
+				that.marketExpressPrice = res.marketExpressPrice.toFixed(2);
+				that.expressPrice = res.expressPrice.toFixed(2);
+				that.insuranceAmount = res.insurancePrice.toFixed(2);
+				that.samount = res.price.toFixed(2);
+				that.createDate = that.$util.formatDate.format(res.createTime, "yyyy-MM-dd hh:mm:ss");
+				let arr = res.takeDeliveryFileList;
+				that.imgArr = [];
+				that.fileArr = [];
+				arr.forEach(item => {
+				    let type = (item.fileName).split('.')[1];
+				    if(type == 'pdf'){
+				        that.fileArr.push(item);
+				    }else{
+				        that.imgArr.push(item);
+				    }
+				});
+			}
+		});
+	},
+	methods: {
+		//预览
+		preview: function(index){
+			var urls = [];
+			for(var i = 0; i < this.imgArr.length; i++){
+				urls.push(this.imgArr[i].path)
+			}
+			uni.previewImage({
+				current: index,
+				urls: urls,
+			});
+		},
+		//下载
+		downloadFile: function(path){
+			this.$util.downloadFile(path);
+		},
+		//拨打电话
+		phoneCall(tel){
+			console.log('tel:',tel)
+			uni.makePhoneCall({
+			    phoneNumber: tel //仅为示例
+			});
+		},
+		//复制
+		setClip: function(val){
+			let that = this;
+			uni.setClipboardData({ data: val, success: () => {
+				uni.showToast({ title: "内容已复制", icon: 'success' });
+			}});
+		}
+	}
+}
+</script>

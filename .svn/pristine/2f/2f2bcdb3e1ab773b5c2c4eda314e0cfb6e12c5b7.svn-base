@@ -1,0 +1,349 @@
+<template>
+	<view class="page_view">
+		<view class="heard-custom" :style="{marginTop: t+'px', height: h+'px', 'line-height': h+'px'}">
+			<text class="iconfont icon-fanhui-" @click="goback()"></text>
+			<text class="title_txt">选择地址</text>
+			<view>
+				<!-- #ifdef H5 -->
+				<text class="wanc" @click="Enter()">确定({{num}})</text>
+				<!-- #endif -->
+				</view>
+	
+		</view>
+		<view class="contenr">
+			<view class="ser_suo">
+				<view class="search-btn" >
+					<input type="text" v-model="keyword" @input="inputSearch" class="inp_op" placeholder="请输入姓名/电话/公司" />
+					<text class="iconfont icon-chaxun"></text>
+				</view>
+			</view>
+			<scroll-view class="scroll-wrapper" scroll-y="true" @scrolltolower="scrolltolower">
+				<view class="invoice-item-list" v-for="(item,index) in companyList" :key="index">
+					<checkbox-group class="checkbox-radio" @change="checkboxChange($event,item.id)">
+						<view class="chek_view" >
+							<checkbox v-if="item.isShare" checked="true" disabled="true" class="checkbox_gray"/>
+							<checkbox :value="item.id"  class="checkbox-qx" v-else/>
+							<view class="menm">
+								<view class="addres_inf">
+									{{item.name}}<text>{{item.phone}}</text>
+								</view>
+								<view class="desc_add">{{item.areaInfo.province+item.areaInfo.city+item.areaInfo.area+item.address}}</view>
+								
+							</view>
+						</view>
+					</checkbox-group>
+	
+				</view>
+			</scroll-view>
+			<!-- #ifdef MP-WEIXIN -->
+				<text class="wanc_mp" @click="Enter()">确定({{num}})</text>
+			<!-- #endif -->
+		
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				t: 0,
+				h: 44,
+				companyPage: 1,
+				limit: 10,
+				keyword: "",
+				num:0,
+				total:0,
+				checkData:[],
+				isChoose:false,
+				companyList: [ ],
+				serviceKey:"",
+			}
+		},
+		created() {
+		
+			var that = this;
+			//#ifdef MP-WEIXIN
+			uni.getSystemInfo({ //获取设备信息
+				success: (res) => {
+					//获取右上角胶囊的布局信息
+					let rect = uni.getMenuButtonBoundingClientRect ? uni.getMenuButtonBoundingClientRect() : null;
+					let height = 44;
+					if (rect != null) {
+						height = (rect.bottom + rect.top) - (res.statusBarHeight * 2);
+					}
+					that.t = res.statusBarHeight;
+					that.h = height;
+				}
+			});
+			//#endif
+		
+		},
+		onShow() {
+			this.init();
+		},
+		methods: {
+			init(){
+				const that = this;
+				that.getList(that.companyPage, 1, function(res){
+					that.companyPage++;
+					that.total = res.total;
+					that.companyList = that.companyList.concat(res.list);
+				})
+			},
+			getList: function(page, type, callback){
+				const that = this;
+				uni.showLoading({ title: '加载中...' });
+				that.$util.networkRequest({
+					url: "/AddressBook/GetListByPage",
+					data: {
+						page: page,
+						limit: that.limit,
+						bookType: type, //1=个人2=企业
+						keyword: that.keyword
+					},
+					success: function(res){
+						let total = res.total;
+						if(total == 0 || res.list.length == 0) return false;
+						if(callback) callback(res);
+					}
+				})
+			},
+			scrolltolower(){
+				if (Math.ceil(this.total / this.limit) >= this.companyPage) {
+					this.init();
+				}
+			},
+			inputSearch(e){
+				this.keyword=e.detail.value;
+				this.companyPage=1;
+				this.companyList=[];
+				this.init();
+			},
+			checkboxChange(e,id){
+				// console.log("324");
+				if(e.detail.value.length > 0){
+					
+					this.checkData.push(parseInt(id));
+					
+				}else{
+					
+					this.checkData = this.checkData.filter(el => {
+						return el!= id;
+					});
+				}
+				this.num=this.checkData.length;
+				console.log(this.checkData);
+				
+			},
+			Enter(){
+				let that = this;
+				let param = this.checkData;
+					
+				that.$util.networkRequest({
+					url: "/AddressBook/batchShareAddress",
+					data: {
+						idList:param
+						},
+					method: "POST",
+					success: res => {
+						console.log(res);
+						if(res){
+							uni.navigateBack({
+								
+							})
+						}
+						// this.memList = res;
+					}
+				})
+			},
+			goback() {
+				uni.navigateBack({
+				
+				})
+				// // #ifdef H5
+				// this.$router.go(-1)
+				// // #endif
+				// // #ifdef MP-WEIXIN
+				// uni.navigateBack({
+			
+				// })
+				// // #endif
+			},
+		}
+	}
+</script>
+
+<style scoped>
+
+	page {
+		background-color: #f7f7f7;
+	}
+	.scroll-wrapper{
+	   height:550px;
+	}
+.addres_inf{
+	font-size:15px;
+	color:black;
+	
+}
+.addres_inf text{
+	font-size:14px;
+	color:#666666;
+	margin-left: 15px;
+}
+.menm {
+		background-color: #FFFFFF;
+		/* padding: 10px 15px; */
+		font-size: 15px;
+		width: 80%;
+		
+		display: flex;
+		flex-direction: column;
+		line-height: 22px;
+		position: relative;
+	}
+
+	.menm text {
+		color: #666666;
+		margin-left: 20px;
+		margin-right: auto;
+	}
+
+.desc_add{
+	font-size:14px;
+	color:black;
+	width:90%;
+}
+	.page_view {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		overflow-y: auto;
+		background-color: #f7f7f7;
+		overflow-x: hidden;
+	}
+
+	.chek_view {
+		background-color: #FFFFFF;
+		padding: 10px 15px;
+		font-size: 15px;
+		margin-top: 10px;
+		display: flex;
+		align-items: center;
+	}
+
+	.dianhua {
+		color: #666666;
+		margin-left: 20px;
+	}
+
+	.ser_suo {
+		background-color: #FFFFFF;
+		padding: 10px 0px;
+	}
+
+	.search-btn {
+		height: 35px;
+		display: flex;
+		display: -webkit-flex;
+		background: #f7f7f6;
+		margin: 0 15px;
+		border-radius: 15px;
+		align-items: center;
+		justify-content: flex-start;
+		color: #999;
+		position: relative;
+	}
+
+	.inp_op {
+		position: absolute;
+		left: 30px;
+	}
+
+	.search-btn .iconfont {
+		padding-right: 5px;
+		color: #999;
+		padding-left: 10px;
+	}
+
+	.contenr {
+		position: fixed;
+		top: 44px;
+		width: 100%;
+	}
+
+	.heard-custom {
+		/* background: #FFFFFF; */
+		position: fixed;
+		width: 90%;
+		display: flex;
+		padding: 0px 5%;
+		z-index: 10;
+		align-items: center;
+		text-align: center;
+	}
+
+	/* #ifdef MP-WEIXIN */
+	.contenr {
+		position: fixed;
+		top: 65px;
+		width: 100%;
+	}
+
+	/* #endif */
+	.heard-custom .news {
+		position: absolute;
+		padding: 0 15px;
+	}
+
+	.wanc {
+		background-color: #007AFF;
+		color: #FFFFFF;
+		font-size: 13px;
+		padding: 0px 10px;
+		height: 25px;
+		line-height: 25px;
+		text-align: center;
+		border-radius: 3px;
+		align-self: flex-end;
+		display: block;
+	}
+	.wanc_mp{
+		position: fixed;
+		bottom: 10px;
+		background-color: #007AFF;
+		color: #FFFFFF;
+		font-size: 13px;
+		padding: 0px 10px;
+		height: 35px;
+		line-height: 35px;
+		text-align: center;
+		border-radius: 3px;
+		margin:20px auto;
+		width:120px;
+		display: block;
+	}
+
+
+	.heard-custom .title_txt {
+		text-align: center;
+		font-size: 14px;
+		width: 70%;
+
+		align-self: center;
+		margin-left: auto;
+	}
+	/* #ifdef MP-WEIXIN */
+	.heard-custom .title_txt {
+		text-align: center;
+		font-size: 14px;
+		width: 95%;
+	
+		align-self: center;
+		margin-left: auto;
+	}
+	/* #endif */
+</style>

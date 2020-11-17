@@ -1,0 +1,229 @@
+<template>
+
+	<view @click="hidePopup" v-if="isActive" class="hiop">
+		<view class="v-modal"></view>
+		<view class="mint-popup">
+			<image mode="widthFix" v-if="discountSF" src="../../static/images/SFsx.png" :style="isPC==true?'width:40%':'width:90%'"></image>
+			<view v-if="!discountSF&&discountYHJ">
+				<image v-if="isPC==true" mode="aspectFit" src="../../static/images/yhq1.png" :style="isPC==true?clientHeight:''"></image>
+				<image v-else mode="widthFix" src="../../static/images/yhq1.png"></image>
+			</view>
+			<view class="kuayue" v-if="discountKY" :style="isPC==true?'width:40%':'width:90%'">
+				<image mode="widthFix" v-if="discountKY" :src="urls" style="width:100%;height:100%"></image>
+				<image src="../../static/images/guanbi.png" style="width: 30px;
+	    height: 30px; position: absolute;
+	    right: 0px;
+	    top: 0px;" @click="CloseImg()"></image>
+				
+			</view>
+			
+		</view>
+	</view>
+
+</template>
+<script>
+	export default {
+		name: "pageImges",
+		props: {
+			show: {
+				type: Boolean,
+				default: false
+			},
+		},
+		data() {
+			return {
+				isActive: false,
+				
+				discountYHJ: false,
+				discountSF: false,
+				isPC: false,
+				clientHeight: 0,
+				discountKY: false,
+				urls: "",
+				path: "",
+				timer:""
+			}
+		},
+		created() {
+			let globalData = getApp().globalData;
+			var that = this;
+			that.$util.networkRequest({
+				url: "/SysInfo/GetPopularizePhotoConfigInfo",
+				method: "Get",
+				success: function(data) {
+					if(data == null) return false;
+					// that.path="/pages/index/expressDelivery?type=big&companyCode=ky001"
+					that.path=data.path;
+					globalData.flag = data.flag;
+					globalData.KYImg = data.url;
+					let discountKY = uni.getStorageSync('flag');
+					if (discountKY!==globalData.flag) {
+
+						globalData.isDiscountActive = true;
+						globalData.isDiscountKY = true;
+						uni.setStorage({
+							key: "flag",
+							data: globalData.flag
+						});
+						that.urls = globalData.KYImg.trim();
+						that.isActive = globalData.isDiscountActive;
+						that.discountKY = true;
+
+					}
+					else{
+						globalData.isDiscountActive = false;
+						globalData.isDiscountKY = false;
+						globalData.discountKY = false;
+					}
+					// else{
+					// var time=4*60*60*1000;//四个小时
+					// // console.log(time);
+					// 	  setInterval(function(){
+					// 	          globalData.isDiscountActive = true;
+					// 	          globalData.isDiscountKY = true;
+					// 	          uni.setStorage({
+					// 	          	key: "flag",
+					// 	          	data: globalData.flag
+					// 	          });
+					// 	          that.urls = globalData.KYImg.trim();
+					// 	          that.isActive = globalData.isDiscountActive;
+					// 	          that.discountKY = true;
+					// 	        },time)
+						// console.log("233");
+						//   setInterval(this.get, 3000);
+				
+					// }
+
+				}
+			});
+
+
+			if (this.$util.IsPC()) {
+				this.isPC = true;
+				this.clientHeight = 'height:' + (document.body.clientHeight - 200) + 'px';
+			} else {
+				this.isPC = false;
+			}
+		},
+		mounted() {
+			// var interval3=setInterval(function(){
+			     
+			//      uni.removeStorageSync('flag');
+			// },5000);
+		},
+		watch: {
+			show() {
+				this.isActive = this.show;
+			}
+		},
+		methods: {
+			get(){
+				console.log("324");
+				let globalData = getApp().globalData;
+				globalData.isDiscountActive = true;
+				this.isActive=true;
+					    	this.discountKY = true;
+							
+							this.urls = globalData.KYImg.trim();
+			},
+			CloseImg(){
+				this.isActive=false;
+				this.discountKY=false;
+			},
+			hidePopup: function() {
+				getApp().globalData.isDiscountActive = this.isActive = false;
+				if (this.discountKY == true) {
+					//跨越
+					if (this.path.indexOf('http') > -1) {
+						// #ifdef MP-WEIXIN
+						uni.navigateTo({
+							url: "/pages/web-view/index?url=" + this.path
+						});
+						// #endif
+						// #ifdef H5
+						window.location.href = this.path;
+						// #endif
+					}
+					else{
+						var pages = getCurrentPages();
+						let currentPage=pages[pages.length - 1];
+						let curPage ='/'+pages[pages.length - 1].route; // 当前页面路径
+						// console.log(currentPage);
+						// var paths=this.path.substring(0,this.path.indexOf('?'));
+						// console.log(paths);
+						if(curPage=="/pages/index/index"){
+							this.isLogs(this.path);
+						
+						}
+						else{
+							uni.redirectTo({
+								url:this.path
+							})
+						
+						}
+						
+					}
+				}
+				if (this.discountYHJ == true) {
+					//优惠券
+					this.isLogs("/pages/me/moreCoupon");
+				}
+			},
+			isLogs(_url) {
+				if (uni.getStorageSync("token") == "" || uni.getStorageSync("token") == undefined) {
+					uni.navigateTo({
+						url: "/pages/logs/logs?url=" + _url
+					});
+					return false;
+				}
+				uni.navigateTo({
+					url: _url
+				});
+			}
+		}
+	}
+</script>
+<style scoped>
+	.v-modal {
+		position: fixed;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 999;
+	}
+.hiop{
+	
+}
+.guanbi{
+	width: 30px;
+	    height: 30px;
+	    position: absolute;
+	    right: 0px;
+	    top: 0px;
+}
+.kuayue{
+	position: relative;
+	margin: 0px auto;
+}
+	.mint-popup {
+		position: fixed;
+		top: 50%;
+		left: 0;
+		right: 0;
+		-webkit-transform: translate3d(0, -50%, 0);
+		transform: translate3d(0, -50%, 0);
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		-webkit-transition: .2s ease-out;
+		transition: .2s ease-out;
+		z-index: 1000;
+	}
+
+	.mint-popup image {
+		display: block;
+		width: 90%;
+		margin: 0 auto;
+	}
+</style>

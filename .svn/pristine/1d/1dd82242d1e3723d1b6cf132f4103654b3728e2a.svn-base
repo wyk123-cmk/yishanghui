@@ -1,0 +1,118 @@
+<template>
+	<view>
+		<navigator url="/pages/me/explain?type=2" class="head-right orange">提现说明</navigator>
+		<view class="head-con">
+			<text class="iconfont icon-weixin"></text>
+			提现到微信 {{userName}}
+		</view>
+		<view class="con">
+			<text class="small-title">提现金额</text>
+			<view class="label-input">
+				￥<input type="digit" v-model="cashMoney" />
+			</view>
+			<view class="all-amount">
+				当前账户奖励金<text class="num">{{amount}}</text>元，<text class="all" @click="btnCashAll">全部提现</text>
+			</view>
+			<button class="bounty" @click="btnCash">立即提现</button>
+		</view>
+	</view>
+</template>
+<script>
+export default {
+	data() {
+		return {
+			amount: '0.00',
+			cashMoney: "",
+			isExplain: false,
+			userName: "",
+		}
+	},
+	onLoad(){
+		this.getReferralInfo();
+		//判断是否授权
+		// #ifdef H5
+			this.h5_userInfo();
+		// #endif
+		// #ifdef MP-WEIXIN
+			this.wx_userInfo();
+		// #endif
+	},
+	methods: {
+		btnCashAll() {
+			this.cashMoney = this.amount > 0 ? this.amount.toFixed(2) : "";
+		},
+		getReferralInfo: function(){
+			const that = this;
+			that.$util.networkRequest({
+				url: "/Referral/GetReferralInfo",
+				success: data => {
+					that.amount = data.amount.toFixed(2);
+				},
+			});
+		},
+		btnCash: function(){
+			const that = this;
+			if(parseFloat(that.cashMoney) <= 0 || !that.$util.isNotEmpty(that.cashMoney)){
+				that.$util.showToast("提现金额不正确！");
+				return false;
+			}
+			uni.showLoading({ title: "请稍后...", mask: true });
+			that.$util.networkRequest({
+				url: "/Referral/Cash",
+				method: "POST",
+				data: {value: this.cashMoney},
+				success: data => {
+					if(data){
+						uni.redirectTo({url:'/pages/me/cashApply?nickName='+that.userName+"&amount="+that.cashMoney});
+					}
+				},
+				error: data => {
+					if(data.errCode == 2201){
+						uni.showModal({
+						    title: '提示',
+						    content: '请先完善您的个人信息',
+							showCancel: false,
+							success: function () {
+								uni.navigateTo({url:'/pages/logs/peopleInfo?type=1'});
+							}
+						});
+					}
+				}
+			});
+		},
+		h5_userInfo: function(){
+			let that = this;
+			that.$util.networkRequest({
+				url: "/Account/GetUserWxInfo",
+				success: data => {
+					if(data.UnAuthorized){
+						uni.showModal({
+							title: '提示',
+							content: '请先关注“仪商汇”微信公众号',
+							showCancel: false,
+							success: function () {
+								that.$util.navigateBack(that)
+							}
+						});
+					}else{
+						that.userName = data.nick;
+					}
+				},
+			});
+		},
+		wx_userInfo: function(){
+			let that = this
+			uni.getUserInfo({
+				provider: 'weixin',
+				success: function(infoRes) {
+					that.userName = JSON.parse(infoRes.rawData).nickName;
+				}
+			})
+		}
+	}
+}
+</script>
+<style scoped>
+@import '../../common/css/me/wallet.css';
+</style>
+

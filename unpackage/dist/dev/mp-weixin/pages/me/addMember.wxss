@@ -1,0 +1,28 @@
+
+.form.data-v-5fc22c46{
+	background-color: #FFFFFF;
+	margin-top: 8px;
+	padding: 15px;
+}
+.form label.data-v-5fc22c46{
+	border: 1px solid #f7f7f7;
+	padding: 15px;
+	margin-bottom: 15px;
+	border-radius: 4px;
+	display: box;
+	display: -webkit-box;
+}
+.form label input.data-v-5fc22c46{
+	height: 20px;
+	line-height: 20px;
+	font-size: 14px;
+	width: 70%;
+	margin-left: 10px;
+}
+.btn-default-css.data-v-5fc22c46 {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+

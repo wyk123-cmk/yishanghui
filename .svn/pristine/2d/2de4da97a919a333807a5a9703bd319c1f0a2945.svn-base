@@ -1,0 +1,238 @@
+<template>
+<view class="page-bg">
+	<!-- 物流公司保价 -->
+	<view class="price-item-list">
+		<view class="big-title">
+			<text>必填</text>顺丰保价
+		</view>
+		<view class="input-price">
+			<view>
+				¥<input type="text" placeholder="输入保价金额" />
+			</view>
+			<view>
+				<text class="money">¥ 0.00</text>
+				<text>预估费用</text>
+			</view>
+		</view>
+		<view class="explain" @click="companyPopup">
+			<text class="iconfont icon-yiwen"></text>
+			<text>顺丰保价说明</text>
+			<text class="iconfont icon--right-jian"></text>
+		</view>
+	</view>
+	<!-- 平台保价 -->
+	<view class="price-item-list">
+		<view class="big-title">
+			<text>选填</text>平台保险 · 承保综合险
+		</view>
+		<view class="input-price">
+			<view>
+				¥<input type="text" placeholder="输入保价金额" />
+			</view>
+			<view>
+				<text class="money">¥ 0.00</text>
+				<text>预估费用</text>
+			</view>
+		</view>
+		<view class="additional">
+			<view>附加险(不收费)</view>
+			<view><text class="iconfont icon-dui"></text>国内公路货物运输盗抢险</view>
+			<view><text class="iconfont icon-dui"></text>货物运输罢工险</view>
+			<view><text class="iconfont icon-dui"></text>货运险附加哄抢责任条款</view>
+			<view><text class="iconfont icon-dui"></text>偷窃提货不着险</view>
+		</view>
+		<view class="explain" @click="platformPopup">
+			<text class="iconfont icon-yiwen"></text>
+			<text>平台保险说明</text>
+			<text class="iconfont icon--right-jian"></text>
+		</view>
+	</view>
+	<view class="agree">
+		<checkbox class="check" :checked="false"></checkbox>
+			请阅读并同意
+			<text>《投保须知》</text>
+			<text>《保险条款》</text>
+			<text>《服务协议》</text>
+	</view>
+	<view class="footer">
+		<view>
+			预估保费: ¥<text>0.00</text>
+		</view>
+		<button>我要投保</button>
+	</view>
+	<view v-if="isPopup" @click="isPopup=false">
+		<view class="v-model"></view>
+		<view class="popup-txt" v-html="popupHtml"></view>
+	</view>
+</view>
+</template>
+<script>
+	export default {
+		data() {
+			return {
+				isPopup: false,
+				popupHtml: "",
+				companyHtml: "顺丰保价说明",
+				platformHtml: "平台保险说明"
+			}
+		},
+		onLoad(options) {
+			const that = this;
+			that.type = options.type;
+			that.code = options.code;
+			that.mark = options.mark;
+			
+		},
+		methods: {
+			companyPopup: function(){
+				this.popupHtml = this.companyHtml;
+				this.isPopup = true;
+			},
+			platformPopup: function(){
+				this.popupHtml = this.platformHtml;
+				this.isPopup = true;
+			},
+		}
+	}
+</script>
+<style scoped>
+.page-bg{
+	padding-bottom: 100px;
+}
+.price-item-list{
+	background-color: #FFFFFF;
+	border-radius: 10px;
+	margin: 15px 15px 10px;
+	padding: 10px;
+	box-shadow: 0 1px 5px #e4e4e4;
+}
+.price-item-list .big-title{
+	font-weight: bold;
+	font-size: 16px;
+}
+.price-item-list .big-title text{
+	display: block;
+	background-color: #4285F4;
+	border-radius: 3px;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: normal;
+	padding: 2px 5px;
+	margin-right: 10px;
+}
+.price-item-list .input-price{
+	padding: 30px 0 20px 20px;
+}
+.price-item-list .input-price > view{
+	width: 40%;
+}
+.price-item-list .input-price > view text{
+	display: block;
+	color: #999999;
+}
+.price-item-list .input-price > view:first-child{
+	font-size: 16px;
+	font-weight: bold;
+	width: 60%;
+}
+.price-item-list .input-price input{
+	width: 80%;
+	margin-left: 5px;
+	font-weight: normal;
+	line-height: 20px;
+}
+.price-item-list .input-price .money{
+	color: #FF0000;
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+.price-item-list .explain{
+	border-top: 1px solid #F5F5F5;
+	padding-top: 10px;
+	position: relative;
+	color: #999999;
+}
+.price-item-list .explain .icon-yiwen{
+	color: #4285F4;
+	font-size: 20px;
+	margin-right: 5px;
+}
+.price-item-list .explain .icon--right-jian{
+	position: absolute;
+	right: 0;
+	font-size: 14px;
+}
+.additional{
+	border-top: 1px solid #F5F5F5;
+	margin: 0 20px 20px;
+	padding-top: 10px;
+}
+.additional > view{
+	margin-top: 8px;
+	color: #999999;
+}
+.additional > view text{
+	padding-right: 5px;
+	color: #4285F4;
+	font-size: 14px;
+}
+.agree{
+	margin: 0 10px;
+}
+.agree .check{
+	margin-top: -2px;
+	margin-right: -4px;
+	float: left;
+}
+.agree text{
+	color: #4285F4;
+}
+.footer{
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #FFFFFF;
+	border-top: 1px solid #F5F5F5;
+	padding: 15px;
+}
+.footer view{
+	float: left;
+	color: #FF0000;
+	height: 40px;
+	line-height: 40px;
+}
+.footer view text{
+	font-size: 24px;
+	padding-left: 3px;
+}
+.footer button{
+	float: right;
+	background-color: #4285F4;
+	width: 100px;
+	line-height: 40px;
+	color: #FFFFFF;
+}
+.popup-txt{
+	position: fixed;
+	top: 44px;
+	left: 15px;
+	right: 15px;
+	bottom: 50px;
+	overflow-y: auto;
+	z-index: 1000;
+	padding: 20px 15px;
+	background-color: #FFFFFF;
+}
+
+.price-item-list .big-title,
+.price-item-list .input-price,
+.price-item-list .input-price > view:first-child,
+.price-item-list .explain{
+	display: flex;
+	align-items: center;
+}
+
+</style>
+

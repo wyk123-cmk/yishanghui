@@ -1,0 +1,332 @@
+<template>
+	<view>
+		<view class="tops">
+			<view class="con">
+				<text class="iconfont icon-ji1"></text>
+				<view class="add_ji">山西省运城市河津市西群殴两项</view>
+			</view>
+			<view class="con">
+				<text class="iconfont icon-shou" style="color:#ffaa00"></text>
+				<view class="add_ji">山西省运城市河津市西群殴两项</view>
+			</view>
+			<view class="ot_top">
+				<view>编号：2344566676</view>
+				<view class="right_time">创建时间：2020-08-12</view>
+			</view>
+		</view>
+		<view class="jjxx">
+			<view class="name">寄件信息</view>
+			<view class="jj_ones">
+				寄件时间
+				<text>2020-02-12</text>
+			</view>
+			<view class="jj_ones">
+				物品名称
+				<text>气象仪</text>
+			</view>
+			<view class="jj_ones">
+				物品重量
+				<text>34kg</text>
+			</view>
+			<view class="jj_ones">
+				物品体积
+				<text>0.3m³</text>
+			</view>
+			<view class="jj_ones">
+				车型要求
+				<text>9.6顿/5米/平板车</text>
+			</view>
+			<view class="jj_ones">
+				其他要求
+				<text>装卸货、全程高速、其他要求装卸货、全程高 速、其他要求</text>
+			</view>
+		</view>
+		<view class="jjxx" style="border-top: 10px solid #EEEEEE;">
+			<view class="name">报价信息</view>
+			<view class="jj_ones">
+				精准装车
+				<text>34kg</text>
+			</view>
+			<view class="jj_ones">
+				报价时间
+				<text>34kg</text>
+			</view>
+		</view>
+		<view class="bot">
+			<view class="libj" @click="baojia(2)">拒绝报价</view>
+			<view class="libj" @click="baojia(1)">立即报价</view>
+
+		</view>
+		<view class="mask" v-if="isShow" @click="Cloase()"></view>
+		<view class="sele" v-if="baojiaS">
+			<view class="tit">整车报价</view>
+			<view class="zxbj">
+				<view class="zx">在线报价</view>
+				<view class="chexin">
+					<view class="sele_chexi_list" v-if="dropS">
+						<view v-for="(item,index) in cxList" :key="index" @click="selectItm()">{{item}}</view>
+					</view>
+					<view class="sele_chexi" @click="drop()">精准装车<text class="iconfont icon-icon-test"></text></view>
+				</view>
+			</view>
+			<view class="je">
+				<input type="text" placeholder="输入金额" /><label>元</label>
+			</view>
+			<view class="subnmit">提交</view>
+		</view>
+		<view class="sele" v-if="baojiaR">
+			<view class="tit">拒绝报价</view>
+			<view class="yuanyin">
+				<textarea placeholder="拒绝原因"></textarea>
+			</view>
+			<view class="subnmit">提交</view>
+		</view>
+
+
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				isShow: false,
+				baojiaS: false,
+				baojiaR: false,
+				cxList: ['车型1', '车型2'],
+				dropS: false
+			}
+		},
+		methods: {
+			baojia(type) {
+				if (type == 1) {
+					this.isShow = true;
+					this.baojiaS = true;
+					this.baojiaR = false;
+				} else {
+					this.isShow = true;
+					this.baojiaS = false;
+					this.baojiaR = true;
+				}
+
+			},
+			Cloase(){
+				this.isShow = false;
+				this.baojiaS = false;
+				this.baojiaR = false;
+			},
+			drop() {
+				this.dropS = true;
+			},
+			selectItm() {
+				this.dropS = false;
+			}
+		}
+	}
+</script>
+
+<style scoped>
+	.tops {
+		padding: 0px 15px;
+		border-bottom: 10px solid #EEEEEE;
+	}
+
+	.yuanyin {
+		padding: 10px 15px;
+		border-bottom: 1px solid #EEEEEE;
+
+	}
+
+	.yuanyin textarea {
+		width: 90%;
+		padding: 5%;
+		height: 100px;
+		border: 1px solid #EEEEEE;
+		text-align: left;
+	}
+
+	.zxbj {
+		display: flex;
+		/* justify-content: space-around; */
+		padding: 10px 15px;
+		align-items: center;
+	}
+
+	.zx {
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	.chexin {
+		margin-left: auto;
+		align-self: flex-end;
+		display: flex;
+		position: relative;
+	}
+
+	.sele_chexi {
+		height: 40px;
+		line-height: 40px;
+		border: 1px solid #EEEEEE;
+		margin-right: 10px;
+		width: 130px;
+	}
+
+	.sele_chexi_list {
+		position: absolute;
+		top: 42px;
+		z-index: 100;
+
+	}
+
+	.sele_chexi_list view {
+		height: 40px;
+		line-height: 40px;
+		border: 1px solid #EEEEEE;
+		width: 130px;
+		background-color: #FFFFFF;
+	}
+
+	.je {
+		display: flex;
+		padding: 10px 15px;
+		font-size: 16px;
+		align-items: center;
+		position: relative;
+		border-bottom: 1px solid #EEEEEE;
+	}
+
+	.je label {
+		position: absolute;
+		top: 18px;
+		right: 33px;
+	}
+
+	.je input {
+		align-self: flex-end;
+		width: 130px;
+		height: 40px;
+		line-height: 40px;
+		border: 1px solid #EEEEEE;
+		margin-right: 10px;
+		margin-left: auto;
+	}
+
+	.tit {
+		width: 100%;
+		height: 45px;
+		line-height: 45px;
+		text-align: center;
+		font-size: 15px;
+		border-bottom: 1px solid #EEEEEE;
+	}
+
+	.sele {
+		width: 80%;
+		position: absolute;
+		top: 20%;
+		left:10%;
+		border-radius: 10px;
+		background-color: #FFFFFF;
+		padding-bottom: 6px;
+		z-index:1000;
+	}
+
+	.right_time {
+		margin-left: 30px;
+	}
+
+	.mask {
+		position: fixed;
+		z-index: 999;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		background: rgba(0, 0, 0, .6);
+		text-align: center;
+	}
+
+	.bot {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		width: 90%;
+		margin: 30px auto;
+	}
+
+	.libj {
+
+		height: 40px;
+		line-height: 40px;
+		width: 40%;
+		background-color: #007AFF;
+		color: #FFFFFF;
+		text-align: center;
+		border-radius: 5px;
+	}
+
+	.subnmit {
+		height: 40px;
+		line-height: 40px;
+		width: 80%;
+		background-color: #007AFF;
+		color: #FFFFFF;
+		text-align: center;
+		border-radius: 5px;
+		margin: 20px auto;
+	}
+
+	.iconfont icon-shou {
+		color: #E7501E;
+	}
+
+	.ot_top {
+		display: flex;
+		align-items: center;
+		padding: 8px 0px;
+		color: #666666;
+		font-size: 13px;
+	}
+
+	.con {
+		display: flex;
+		align-items: center;
+		padding: 8px 0px;
+	}
+
+	.con .iconfont {
+		font-size: 20px;
+	}
+
+	.add_ji {
+		margin-left: 10px;
+	}
+
+	.name {
+		font-size: 16px;
+		font-weight: bold;
+		height: auto;
+		line-height: 40px;
+		padding: 0px 15px;
+		border-bottom: 1px solid #EEEEEE;
+	}
+
+	.jj_ones {
+		color: #666666;
+		height: auto;
+		line-height: 40px;
+		padding: 0px 15px;
+		font-size: 15px;
+		border-bottom: 1px solid #EEEEEE;
+		display: flex;
+	}
+
+	.jj_ones text {
+		color: black;
+		margin-left: 30px;
+		width: 60%;
+		height: auto;
+		display: block;
+	}
+</style>

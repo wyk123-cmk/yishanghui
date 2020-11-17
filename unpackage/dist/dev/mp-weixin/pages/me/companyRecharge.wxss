@@ -1,0 +1,128 @@
+.main.data-v-38334586{
+	padding-bottom: 26px;
+	background-color: #F7F7F7;
+}
+.main-top.data-v-38334586{
+	background: -webkit-linear-gradient(#ff822e 1%, #fff 60%);
+	background: linear-gradient(#ff822e 1%, #fff 60%);
+	padding: 20px 15px;
+}
+.bank-img.data-v-38334586{
+	position: absolute;
+	right: -30px;
+	bottom: -30px;
+	width: 120px;
+	height: 120px;
+}
+.card-con.data-v-38334586{
+	background: -webkit-linear-gradient(315deg, #fef7d3, #fbe5b4);
+	background: linear-gradient(135deg, #fef7d3, #fbe5b4);
+	border-radius: 10px;
+	padding: 15px 10px;
+	position: relative;
+	box-shadow: 0 0 4px #ffc8a3;
+	overflow: hidden;
+}
+.card-con > view.data-v-38334586{
+	color: #bb6838;
+	position: relative;
+	z-index: 2;
+}
+.card-con .cmp-name.data-v-38334586{
+	width: 85%;
+	margin-bottom: 15px;
+	margin-top: 3px;
+}
+.card-con .bank.data-v-38334586{
+	font-size: 12px;
+}
+.card-con .bank-num.data-v-38334586{
+	font-size: 26px;
+	width: 100%;
+}
+.card-con .copy.data-v-38334586{
+	position: absolute;
+	top: 20px;
+	right: 10px;
+	text-align: center;
+	-webkit-transform: scale(0.8);
+	        transform: scale(0.8);
+}
+.card-con .copy .iconfont.data-v-38334586{
+	color: #918263;
+}
+.card-con text.data-v-38334586{
+	display: block;
+}
+.tips.data-v-38334586{
+	padding-top: 10px;
+	text-align: justify;
+	line-height: 20px;
+}
+.tips text.data-v-38334586{
+	color: #999;
+	font-size: 12px;
+}
+.amount.data-v-38334586,
+.voucher.data-v-38334586{
+	background: #fff;
+	padding: 15px;
+	margin-top: 10px;
+}
+.amount > view.data-v-38334586{
+	display: -webkit-box;
+	display: flex; 
+	display: -webkit-flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-flow: row;
+	        flex-flow: row; 
+	padding-top: 10px;
+	font-size: 24px;
+}
+.amount > view input.data-v-38334586{
+	font-size: 24px;
+	color: #e60000;
+}
+.voucher.data-v-38334586{
+	margin-bottom: 20px;
+}
+.voucher textarea.data-v-38334586{
+	width: calc(100% - 20px);
+	width: -webkit-calc(100% - 20px);
+	height: 70px;
+	margin-top: 10px;
+	border: 1px solid #eee;
+	padding: 10px;
+	border-radius: 4px;
+}
+.upload-box.data-v-38334586{
+	margin-top: 20px;
+}
+.upload-box .img-list.data-v-38334586,
+.upload-box .add-pic.data-v-38334586{
+	display: inline-block;
+	position: relative;
+	margin-bottom: 10px;
+	width: 68px;
+	height: 68px;
+	border: 1px solid #F5F5F5;
+	margin-right: 10px;
+}
+.upload-box .img-list .iconfont.data-v-38334586{
+	color: #FF0000;
+	position: absolute;
+	top: -8px;
+	right: -5px;
+}
+.upload-box image.data-v-38334586{
+	width: 68px;
+	height: 68px;
+}
+.input-view.data-v-38334586{
+	width: 68px;
+}
+

@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "特价线路",
+  "navigationBarBackgroundColor": "#4486f3",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "address-picker": "/components/address-picker/address-picker"
+  }
+}

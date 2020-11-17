@@ -1,0 +1,287 @@
+.user-info-list,
+.user-info-list .con{
+	display: flex;
+	display: -webkit-flex;
+	align-items: flex-start;
+}
+.user-info-list{
+	justify-content: space-between;
+}
+.user-info-list{
+	border-top: 1px solid #EEEEEE;
+	padding: 20px 15px;
+}
+.user-info-list text{
+	display: block;
+}
+.user-info-list .con{
+	width: 80%;
+}
+.user-info-list .con > view{
+	padding-left: 10px;
+}
+.user-info-list .con .s-t{
+	font-size: 16px;
+	font-weight: bold;
+}
+.user-info-list .con .address-input{
+	color: #B8B8B8;
+	line-height: 16px;
+	margin-top: 3px;
+}
+.user-info-list .con .iconfont{
+	font-size: 24px;
+	margin-top: 8px;
+}
+.user-info-list .con .iconfont.icon-shou{
+	color: #EF9A42;
+}
+.user-info-list .address-icon{
+	text-align: center;
+	font-size: 12px;
+	color: #4285F4;
+	border-left: 1px solid #EEEEEE;
+	padding: 3px 0 3px 15px ;
+}
+.user-info-list .address-icon .iconfont{
+	font-size: 24px;
+	line-height: 20px;
+}
+.loading{
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
+	font-size: 12px;
+	color: green;
+	color: #666;
+	background-color: #F7F7F7;
+	padding: 5px 10px 0;
+}
+.loading image{
+	width: 15px;
+	height: 15px;
+	margin-right: 5px;
+}
+.form{
+	border-top: 6px solid #F7F7F7;
+	display: block;
+	padding: 0 15px;
+}
+.form .label-item{
+	display: block;
+	padding: 15px 0;
+	border-top: 1px solid #F7F7F7;
+}
+.form .label-item > view{
+	float: right;
+	font-weight: bold;
+}
+.form .label-item .icon--right-jian{
+	color: #DBDBDB;
+	font-size: 14px;
+	padding-left: 5px;
+}
+.form .label-item .input-txt{
+	font-weight: normal;
+	color: #999999;
+}
+.form .label-item .money{
+	float: left;
+}
+.form .label-item .money text{
+	padding: 2px 5px;
+	background-color: #FF0000;
+	color: #FFFFFF;
+	border-radius: 6px;
+	margin-left: 5px;
+	font-weight: normal;
+	font-size: 10px;
+}
+.form .label-item .red{
+	color: #FF0000;
+	font-weight: normal;
+}
+.form .label-item picker{
+	float: left;
+}
+.bill-express-tips{
+	font-size: 12px;
+	padding: 3px 15px;
+	color: #999999;
+	background-color: #F7F7F7;
+}
+.estimate-price-box{
+	border-top: 6px solid #F7F7F7;
+	padding: 10px 15px;
+}
+.estimate-price-box .estimate-list .con{
+	margin: 10px 0 2px;
+	border: 1px solid #eee;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 15px;
+	border-radius: 4px;
+}
+.estimate-price-box .estimate-list .con.active{
+	background: url(../../static/images/icon-active.png) no-repeat bottom right;
+	background-size: 28px;
+	border: 1px solid #0f84f3;
+}
+.estimate-price-box .estimate-list text{
+	display: block;
+}
+.estimate-price-box .estimate-list .name{
+	line-height: 24px;
+}
+.estimate-price-box .estimate-list .name text{
+	font-size: 12px;
+}
+.estimate-price-box .estimate-list .name .flex{
+	display: flex;
+	display: -webkit-flex;
+}
+.estimate-price-box .estimate-list .name .flex text{
+	color: #999999;
+	padding-left: 8px;
+}
+.estimate-price-box .estimate-list .price{
+	text-align: right;
+	color: #ff8c04;
+}
+.estimate-price-box .estimate-list .price text{
+	display: inline;
+	font-size: 22px;
+}
+.estimate-price-box .estimate-list .original{
+	font-size: 12px;
+	color: #999;
+	text-decoration: line-through;
+}
+.estimate-price-box .estimate-list .note{
+	text-align: right;
+	color: #FF0000;
+	font-size: 12px;
+}
+.form .label-item image{
+	width: 24px;
+	height: 24px;
+	display: block;
+	float: left;
+	padding-right: 3px;
+	margin-top: -2px;
+}
+.agree-con{
+	text-align: center;
+	background-color: #F7F7F7;
+	padding: 15px 0 95px;
+}
+.agree-con checkbox{
+	display: block;
+	font-size: 14px;
+}
+.agree-con text{
+	font-size: 12px;
+	color: #4285f4;
+}
+.footer{
+	height: 60px;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #FFFFFF;
+}
+.footer .yhq{
+	background-color: #f8ead6;
+	font-size: 12px;
+	padding: 0 15px;
+	color: #ff8c04;
+	line-height: 20px;
+	position: absolute;
+	top: -20px;
+	left: 0;
+	right: 0;
+}
+.footer .yhq text{
+	color: #ff8c04;
+	float: right;
+}
+.footer button{
+	float: right;
+    line-height: 60px;
+    color: #FFFFFF;
+    background-color: #4285F4;
+    padding: 0 20px;
+	border-radius: 0;
+}
+.footer .estimate{
+	padding: 12px 15px 0;
+}
+.footer .estimate text{
+	color: #FF0000;
+}
+.footer .tips{
+	padding-left: 15px;
+	font-size: 12px;
+    color: #999999;
+}
+.popup-txt{
+	position: fixed;
+	top: 44px;
+	left: 15px;
+	right: 15px;
+	bottom: 50px;
+	overflow-y: auto;
+	z-index: 1000;
+	padding: 20px 15px;
+	background-color: #FFFFFF;
+}
+.company-password-box{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+	padding-bottom: 30px;
+	background-color: #FFFFFF;
+}
+.company-password-box .title{
+	text-align: center;
+	height: 42px;
+	line-height: 42px;
+	border-bottom: 1px solid #eee;
+	position: relative;
+}
+.company-password-box .title .icon-quxiao{
+	position: absolute;
+	top: 0;
+	right: 15px;
+	height: 42px;
+}
+.company-password-box .money{
+	text-align: center;
+	line-height: 80px;
+}
+.company-password-box .money text{
+	font-size: 28px;
+	padding-left: 3px;
+}
+.company-password-box input{
+	border-bottom: 1px solid #EEEEEE;
+	margin: 0 45px 20px;
+	height: 40px;
+	line-height: 40px;
+}
+.label-item.remark > view{
+	display: flex;
+	align-items: center;
+}
+.label-item.remark input{
+	text-align: right;
+	font-weight: normal;
+	line-height: 30px;
+}
+.label-item.remark .iconfont{
+	
+}

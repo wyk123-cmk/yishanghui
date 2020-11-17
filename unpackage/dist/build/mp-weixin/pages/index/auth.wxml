@@ -1,0 +1,1 @@
+<view style="text-align:center;margin-top:20%;" class="data-v-87f517cc">正在授权登录跳转,请稍后...<navigator class="btn data-v-87f517cc" url="/pages/index/index" open-type="switchTab">去首页</navigator></view>
